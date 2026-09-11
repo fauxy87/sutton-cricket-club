@@ -1,0 +1,75 @@
+name: Sync Play-Cricket data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v4
+
+      - name: Download and prepare Play-Cricket data
+        env:
+          PLAY_CRICKET_API_TOKEN: ${{ secrets.PLAY_CRICKET_API_TOKEN }}
+          PLAY_CRICKET_SITE_ID: ${{ vars.PLAY_CRICKET_SITE_ID }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          token = os.environ.get('PLAY_CRICKET_API_TOKEN', '').strip()
+          site_id = os.environ.get('PLAY_CRICKET_SITE_ID', '').strip()
+          if not token:
+              raise SystemExit('Missing repository secret PLAY_CRICKET_API_TOKEN')
+          if not site_id:
+              raise SystemExit('Missing repository variable PLAY_CRICKET_SITE_ID')
+
+          season = datetime.now(timezone.utc).year
+          base = 'https://play-cricket.com/api/v2'
+
+          def get(endpoint, params):
+              params = dict(params)
+              params['api_token'] = token
+              url = f"{base}/{endpoint}?{urllib.parse.urlencode(params)}"
+              req = urllib.request.Request(url, headers={'User-Agent':'Sutton-CC-Website/1.0'})
+              with urllib.request.urlopen(req, timeout=60) as r:
+                  return json.load(r)
+
+          matches = get('matches.json', {'site_id': site_id, 'season': season})
+          results = get('result_summary.json', {'site_id': site_id, 'season': season})
+          teams = get(f'sites/{site_id}/teams.json', {})
+
+          payload = {
+              'generated_at': datetime.now(timezone.utc).isoformat(),
+              'season': season,
+              'site_id': site_id,
+              'matches': matches.get('matches', []),
+              'results': results.get('result_summary', []),
+              'teams': teams.get('teams', []),
+          }
+
+          out = Path('data/play-cricket.json')
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          print(f"Wrote {len(payload['matches'])} matches and {len(payload['results'])} results")
+          PY
+
+      - name: Commit refreshed data
+        run: |
+          if git diff --quiet -- data/play-cricket.json; then
+            echo "No Play-Cricket changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/play-cricket.json
+          git commit -m "Update Play-Cricket data"
+          git push
