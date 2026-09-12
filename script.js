@@ -168,6 +168,10 @@ function renderSnapshot(el, results, upcoming, teams) {
     <div class="season-stat"><strong>${competitions}</strong><span>Competitions</span></div>`;
 }
 
+function unavailableCard(title = 'Play-Cricket data unavailable') {
+  return `<article class="result-card"><h3>${escapeHtml(title)}</h3><p>Please try again shortly. The website will refresh automatically after the next successful sync.</p></article>`;
+}
+
 async function loadPlayCricket() {
   const fixtureBox = document.getElementById('live-fixtures');
   const resultBox = document.getElementById('live-results');
@@ -195,13 +199,16 @@ async function loadPlayCricket() {
       .sort((a,b) => parseUKDate(b.match_date) - parseUKDate(a.match_date));
 
     if (fixtureBox) fixtureBox.innerHTML = allUpcoming.length ? allUpcoming.slice(0, 18).map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures found</h3><p>There are no future fixtures currently published in Play-Cricket.</p></article>';
-    if (resultBox && allResults.length) resultBox.innerHTML = allResults.slice(0, 18).map(resultCard).join('');
+    if (resultBox) resultBox.innerHTML = allResults.length ? allResults.slice(0, 18).map(resultCard).join('') : '<article class="result-card"><h3>No results found</h3><p>No completed results are currently published in Play-Cricket.</p></article>';
 
     if (homeNext) {
       if (allUpcoming[0]) formatHomeFixture(allUpcoming[0]);
       else homeNext.innerHTML = '<div class="fixture-top"><span class="tag">Next match</span><span>Play-Cricket</span></div><h3>No upcoming fixture</h3><p class="versus">No future fixture is currently published.</p>';
     }
-    if (homeResult && allResults[0]) formatHomeResult(allResults[0]);
+    if (homeResult) {
+      if (allResults[0]) formatHomeResult(allResults[0]);
+      else homeResult.innerHTML = '<div class="fixture-top"><span class="tag">Recent result</span><span>Play-Cricket</span></div><h3>No recent result</h3><p class="versus">No completed result is currently published.</p>';
+    }
 
     const activeTeams = new Set([...(data.matches || []), ...allResults].map(itemTeamKey).filter(k => k !== 'other')).size;
     renderSnapshot(homeSnapshot, allResults, allUpcoming, activeTeams);
@@ -224,6 +231,22 @@ async function loadPlayCricket() {
 
     activateTeamFilters();
   } catch (err) {
+    if (fixtureBox) fixtureBox.innerHTML = unavailableCard();
+    if (resultBox) resultBox.innerHTML = unavailableCard();
+    if (teamFixtures) teamFixtures.innerHTML = unavailableCard();
+    if (teamResults) teamResults.innerHTML = unavailableCard();
+    if (homeNext) homeNext.innerHTML = '<div class="fixture-top"><span class="tag">Next match</span><span>Play-Cricket</span></div><h3>Fixture data unavailable</h3><p class="versus">Please try again shortly.</p>';
+    if (homeResult) homeResult.innerHTML = '<div class="fixture-top"><span class="tag">Recent result</span><span>Play-Cricket</span></div><h3>Result data unavailable</h3><p class="versus">Please try again shortly.</p>';
+    if (homeSnapshot) homeSnapshot.innerHTML = '<div class="season-stat"><strong>—</strong><span>Season data temporarily unavailable</span></div>';
+    if (teamSnapshot) teamSnapshot.innerHTML = '<div class="season-stat"><strong>—</strong><span>Season data temporarily unavailable</span></div>';
+
+    const status = document.getElementById('play-cricket-status');
+    if (status) status.textContent = 'Play-Cricket data is temporarily unavailable.';
+    const homeStatus = document.getElementById('home-play-cricket-status');
+    if (homeStatus) homeStatus.textContent = 'Play-Cricket data is temporarily unavailable.';
+    const teamStatus = document.getElementById('team-play-cricket-status');
+    if (teamStatus) teamStatus.textContent = 'Play-Cricket data is temporarily unavailable.';
+
     console.info('Play-Cricket sync not active yet:', err.message);
   }
 }
