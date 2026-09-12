@@ -1,0 +1,126 @@
+name: Sync Play-Cricket league tables
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 */6 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v4
+
+      - name: Download league tables
+        env:
+          PLAY_CRICKET_API_TOKEN: ${{ secrets.PLAY_CRICKET_API_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          token = os.environ.get('PLAY_CRICKET_API_TOKEN', '').strip()
+          if not token:
+              raise SystemExit('Missing repository secret PLAY_CRICKET_API_TOKEN')
+
+          season = datetime.now(timezone.utc).year
+          base = 'https://play-cricket.com/api/v2'
+
+          def get(endpoint, params=None):
+              params = dict(params or {})
+              params['api_token'] = token
+              url = f"{base}/{endpoint}?{urllib.parse.urlencode(params)}"
+              req = urllib.request.Request(url, headers={'User-Agent':'Sutton-CC-Website/1.0'})
+              with urllib.request.urlopen(req, timeout=60) as r:
+                  return json.load(r)
+
+          targets = {
+              '1st': 'CCA Junior League 2 North',
+              '2nd': 'CCA Junior League 4 North',
+          }
+
+          leagues = get('league_sites.json').get('leagues', [])
+          candidates = []
+          for league in leagues:
+              name = str(league.get('name') or '').lower()
+              if 'cambridgeshire' in name or 'huntingdonshire' in name:
+                  candidates.append(league)
+
+          found = {}
+          searched = []
+          for league in candidates:
+              league_id = league.get('league_id') or league.get('id')
+              if not league_id:
+                  continue
+              try:
+                  comps = get('competitions.json', {
+                      'season': season,
+                      'league_id': league_id,
+                      'competition_type': 'divisions',
+                  }).get('competitions', [])
+              except Exception as exc:
+                  print(f"Could not read divisions for {league.get('name')}: {exc}")
+                  continue
+              searched.append({'league_id': league_id, 'name': league.get('name')})
+              for key, wanted in targets.items():
+                  if key in found:
+                      continue
+                  for comp in comps:
+                      cname = str(comp.get('name') or '').strip()
+                      if cname.lower() == wanted.lower() or wanted.lower() in cname.lower():
+                          found[key] = {
+                              'division_id': comp.get('id'),
+                              'division_name': cname,
+                              'league_id': league_id,
+                              'league_name': league.get('name'),
+                          }
+                          break
+
+          tables = {}
+          for key, target in targets.items():
+              info = found.get(key)
+              if not info:
+                  tables[key] = {'target': target, 'error': 'Division not found'}
+                  continue
+              try:
+                  raw = get('league_table.json', {'division_id': info['division_id']})
+                  table = (raw.get('league_table') or [{}])[0]
+                  tables[key] = {
+                      **info,
+                      'target': target,
+                      'name': table.get('name') or info['division_name'],
+                      'headings': table.get('headings') or {},
+                      'values': table.get('values') or [],
+                      'key': table.get('key') or '',
+                  }
+              except Exception as exc:
+                  tables[key] = {**info, 'target': target, 'error': str(exc)}
+
+          payload = {
+              'generated_at': datetime.now(timezone.utc).isoformat(),
+              'season': season,
+              'tables': tables,
+              'searched_leagues': searched,
+          }
+          out = Path('data/league-tables.json')
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          print(json.dumps({k: {'division_id': v.get('division_id'), 'rows': len(v.get('values', [])), 'error': v.get('error')} for k,v in tables.items()}, indent=2))
+          PY
+
+      - name: Commit refreshed tables
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/league-tables.json
+          if git diff --cached --quiet; then
+            echo "No league table changes"
+            exit 0
+          fi
+          git commit -m "Update Play-Cricket league tables"
+          git push
