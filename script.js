@@ -20,18 +20,40 @@ if (year) year.textContent = new Date().getFullYear();
 const SUTTON_SITE_ID = '6168';
 
 function teamKey(name = '') {
-  const n = String(name).toLowerCase();
-  if (n.includes('1st xi') || n === '1st') return '1st';
-  if (n.includes('2nd xi') || n === '2nd') return '2nd';
+  const n = String(name).trim().toLowerCase();
+
   if (n.includes('development') || n.includes('sunday')) return 'development';
   if (n.includes('u14') || n.includes('under 14')) return 'u14';
-  if (n.includes('women') || n.includes('womens') || n.includes("women's") || n.includes('girls')) return 'women';
+  if (
+    n.includes('women') ||
+    n.includes('womens') ||
+    n.includes("women's") ||
+    n.includes('girls') ||
+    n.includes('hardball') ||
+    n.includes('softball')
+  ) return 'women';
+  if (n.includes('1st xi') || n === '1st') return '1st';
+  if (n.includes('2nd xi') || n === '2nd') return '2nd';
+
   return 'other';
 }
 
 function suttonTeamName(item = {}) {
   if (String(item.home_club_id || '') === SUTTON_SITE_ID) return item.home_team_name || '';
   if (String(item.away_club_id || '') === SUTTON_SITE_ID) return item.away_team_name || '';
+
+  const homeClub = String(item.home_club_name || '').toLowerCase();
+  const awayClub = String(item.away_club_name || '').toLowerCase();
+  const homeTeam = String(item.home_team_name || '').toLowerCase();
+  const awayTeam = String(item.away_team_name || '').toLowerCase();
+
+  if (homeClub.includes('sutton cc') || homeClub.includes('sutton cricket') || homeTeam.includes('sutton')) {
+    return item.home_team_name || '';
+  }
+  if (awayClub.includes('sutton cc') || awayClub.includes('sutton cricket') || awayTeam.includes('sutton')) {
+    return item.away_team_name || '';
+  }
+
   return '';
 }
 
