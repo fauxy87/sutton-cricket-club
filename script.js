@@ -151,7 +151,7 @@ function formatHomeResult(r) {
   const away = sideLabel(r.away_club_name, r.away_team_name);
   const hs = scoreText(r, 'home');
   const as = scoreText(r, 'away');
-  box.innerHTML = `<div class="fixture-top"><span class="tag">Recent result</span><span>${escapeHtml(r.match_date || '')}</span></div><h3>${escapeHtml(resultDescription(r) || 'Latest result')}</h3><p class="versus">${escapeHtml(home)}${hs ? ' ' + escapeHtml(hs) : ''} <strong>—</strong> ${escapeHtml(away)}${as ? ' ' + escapeHtml(as) : ''}</p><p class="fixture-meta">Live from Play-Cricket</p>`;
+  box.innerHTML = `<div class="fixture-top"><span class="tag">Recent result</span><span>${escapeHtml(r.match_date || '')}</span></div><h3>${escapeHtml(resultDescription(r) || 'Latest result')}</h3><p class="versus">${escapeHtml(home)}${hs ? ' ' + escapeHtml(hs) : ''} <strong>—</strong> ${escapeHtml(away)}${as ? ' ' + escapeHtml(as) : ''}</p><p class="fixture-meta">Synced from Play-Cricket</p>`;
 }
 
 function uniqueCompetitionCount(items) {
@@ -215,7 +215,7 @@ async function loadPlayCricket() {
 
     const stamp = data.generated_at ? new Date(data.generated_at).toLocaleString('en-GB') : 'recently';
     const status = document.getElementById('play-cricket-status');
-    if (status) status.innerHTML = `<span class="status-dot"></span>Live from Play-Cricket · ${escapeHtml(stamp)}`;
+    if (status) status.innerHTML = `<span class="status-dot"></span>Synced from Play-Cricket · ${escapeHtml(stamp)}`;
     const homeStatus = document.getElementById('home-play-cricket-status');
     if (homeStatus) homeStatus.textContent = `Fixtures and results last synced from Play-Cricket: ${stamp}`;
 
@@ -226,7 +226,7 @@ async function loadPlayCricket() {
       if (teamResults) teamResults.innerHTML = results.length ? results.slice(0,3).map(resultCard).join('') : '<article class="result-card"><h3>No recent results</h3><p>No results are currently available for this team.</p></article>';
       renderSnapshot(teamSnapshot, results, upcoming, 1);
       const teamStatus = document.getElementById('team-play-cricket-status');
-      if (teamStatus) teamStatus.textContent = `Live Play-Cricket data · last synced ${stamp}`;
+      if (teamStatus) teamStatus.textContent = `Play-Cricket data · last synced ${stamp}`;
     }
 
     activateTeamFilters();
