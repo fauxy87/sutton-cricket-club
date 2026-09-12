@@ -105,13 +105,17 @@ function sideLabel(club, team) {
 }
 
 function scoreText(r, side) {
-  const runs = r[`${side}_team_runs`] ?? r[`${side}_runs`];
-  const wickets = r[`${side}_team_wickets`] ?? r[`${side}_wickets`];
-  const overs = r[`${side}_team_overs`] ?? r[`${side}_overs`];
+  const direct = r[`${side}_team_score`] ?? r[`${side}_score`] ?? r[`${side}_innings_score`];
+  if (direct !== undefined && direct !== null && String(direct).trim() !== '') return String(direct).trim();
+
+  const runs = r[`${side}_team_runs`] ?? r[`${side}_runs`] ?? r[`${side}_innings_runs`];
+  const wickets = r[`${side}_team_wickets`] ?? r[`${side}_wickets`] ?? r[`${side}_innings_wickets`];
+  const overs = r[`${side}_team_overs`] ?? r[`${side}_overs`] ?? r[`${side}_innings_overs`];
   if (runs === undefined || runs === null || runs === '') return '';
-  let s = String(runs);
-  if (wickets !== undefined && wickets !== null && wickets !== '') s += `/${wickets}`;
-  if (overs !== undefined && overs !== null && overs !== '') s += ` (${overs})`;
+
+  let s = String(runs).trim();
+  if (wickets !== undefined && wickets !== null && String(wickets).trim() !== '') s += `/${String(wickets).trim()}`;
+  if (overs !== undefined && overs !== null && String(overs).trim() !== '') s += ` (${String(overs).trim()})`;
   return s;
 }
 
@@ -268,28 +272,44 @@ async function loadPlayerStats() {
     const res = await fetch(`data/player-stats.json?v=${Date.now()}`, {cache:'no-store'});
     if (!res.ok) throw new Error('Statistics have not been generated yet');
     const data = await res.json();
-    const batting = data.batting || [];
-    const bowling = data.bowling || [];
+    const batting = Array.isArray(data.batting) ? data.batting.slice() : [];
+    const bowling = Array.isArray(data.bowling) ? data.bowling.slice() : [];
+    const highScoreNumber = value => {
+      const n = parseInt(String(value ?? '').replace(/[^0-9-]/g, ''), 10);
+      return Number.isFinite(n) ? n : 0;
+    };
+    const numberValue = value => {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : 0;
+    };
+    const averageValue = value => {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+    };
+    const battingByRuns = batting.slice().sort((a,b) => numberValue(b.runs) - numberValue(a.runs) || highScoreNumber(b.high_score) - highScoreNumber(a.high_score) || String(a.name || '').localeCompare(String(b.name || '')));
+    const bowlingByWickets = bowling.slice().sort((a,b) => numberValue(b.wickets) - numberValue(a.wickets) || averageValue(a.average) - averageValue(b.average) || String(a.name || '').localeCompare(String(b.name || '')));
+    const battingByHighScore = batting.slice().sort((a,b) => highScoreNumber(b.high_score) - highScoreNumber(a.high_score) || numberValue(b.runs) - numberValue(a.runs) || String(a.name || '').localeCompare(String(b.name || '')));
 
     if (leadersBox) {
-      const topBat = batting[0];
-      const topBowl = bowling[0];
+      const topBat = battingByRuns[0];
+      const topBowl = bowlingByWickets[0];
+      const topHigh = battingByHighScore[0];
       leadersBox.innerHTML = `
         <article class="record-feature"><span>Leading run scorer</span><strong>${escapeHtml(topBat?.runs ?? '—')}</strong><h3>${escapeHtml(topBat?.name || 'No data yet')}</h3><p>High score ${escapeHtml(topBat?.high_score || '—')}</p></article>
         <article class="record-feature"><span>Leading wicket taker</span><strong>${escapeHtml(topBowl?.wickets ?? '—')}</strong><h3>${escapeHtml(topBowl?.name || 'No data yet')}</h3><p>Best ${escapeHtml(topBowl?.best || '—')}</p></article>
-        <article class="record-feature"><span>Highest score</span><strong>${escapeHtml((batting.slice().sort((a,b)=>parseInt(String(b.high_score||0))-parseInt(String(a.high_score||0)))[0]||{}).high_score || '—')}</strong><h3>${escapeHtml((batting.slice().sort((a,b)=>parseInt(String(b.high_score||0))-parseInt(String(a.high_score||0)))[0]||{}).name || 'No data yet')}</h3><p>From synced scorecards</p></article>`;
+        <article class="record-feature"><span>Highest score</span><strong>${escapeHtml(topHigh?.high_score || '—')}</strong><h3>${escapeHtml(topHigh?.name || 'No data yet')}</h3><p>From synced scorecards</p></article>`;
     }
 
     if (battingBox) {
-      battingBox.innerHTML = batting.slice(0,10).map((p,i)=>`<div class="stat-row"><span><strong>${i+1}. ${escapeHtml(p.name)}</strong><small>${p.innings} inns · HS ${escapeHtml(p.high_score)}</small></span><span><strong>${p.runs}</strong><small>Avg ${statValue(p.average)} · SR ${statValue(p.strike_rate)}</small></span></div>`).join('') || '<div class="stat-row"><span>No batting data yet</span></div>';
+      battingBox.innerHTML = battingByRuns.slice(0,10).map((p,i)=>`<div class="stat-row"><span><strong>${i+1}. ${escapeHtml(p.name)}</strong><small>${p.innings} inns · HS ${escapeHtml(p.high_score)}</small></span><span><strong>${p.runs}</strong><small>Avg ${statValue(p.average)} · SR ${statValue(p.strike_rate)}</small></span></div>`).join('') || '<div class="stat-row"><span>No batting data yet</span></div>';
     }
 
     if (bowlingBox) {
-      bowlingBox.innerHTML = bowling.slice(0,10).map((p,i)=>`<div class="stat-row"><span><strong>${i+1}. ${escapeHtml(p.name)}</strong><small>${escapeHtml(p.overs)} overs · Best ${escapeHtml(p.best)}</small></span><span><strong>${p.wickets}</strong><small>Avg ${statValue(p.average)} · Econ ${statValue(p.economy)}</small></span></div>`).join('') || '<div class="stat-row"><span>No bowling data yet</span></div>';
+      bowlingBox.innerHTML = bowlingByWickets.slice(0,10).map((p,i)=>`<div class="stat-row"><span><strong>${i+1}. ${escapeHtml(p.name)}</strong><small>${escapeHtml(p.overs)} overs · Best ${escapeHtml(p.best)}</small></span><span><strong>${p.wickets}</strong><small>Avg ${statValue(p.average)} · Econ ${statValue(p.economy)}</small></span></div>`).join('') || '<div class="stat-row"><span>No bowling data yet</span></div>';
     }
 
     if (milestoneBox) {
-      const milestones = batting.filter(p => parseInt(String(p.high_score||0)) >= 50).sort((a,b)=>parseInt(String(b.high_score))-parseInt(String(a.high_score))).slice(0,8);
+      const milestones = battingByHighScore.filter(p => highScoreNumber(p.high_score) >= 50).slice(0,8);
       milestoneBox.innerHTML = milestones.length ? milestones.map(p=>`<div class="board-row"><span>${escapeHtml(p.name)}</span><strong>${escapeHtml(p.high_score)} high score</strong></div>`).join('') : '<div class="board-row"><span>No 50+ scores found yet</span><strong>2026</strong></div>';
     }
 
