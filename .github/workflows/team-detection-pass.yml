@@ -1,0 +1,116 @@
+name: Team detection pass
+
+on:
+  push:
+    paths:
+      - '.github/workflows/team-detection-pass.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Tighten Sutton team detection
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('script.js')
+          text = path.read_text(encoding='utf-8')
+
+          text = text.replace(
+              "const SUTTON_SITE_ID = '6168';",
+              "const SUTTON_SITE_ID = '6168';\nconst SUTTON_TEAM_IDS = new Set(['63723','63724','277600','408696','395536','413277']);"
+          )
+
+          old = '''function suttonTeamName(item = {}) {
+            if (String(item.home_club_id || '') === SUTTON_SITE_ID) return item.home_team_name || '';
+            if (String(item.away_club_id || '') === SUTTON_SITE_ID) return item.away_team_name || '';
+
+            const homeClub = String(item.home_club_name || '').toLowerCase();
+            const awayClub = String(item.away_club_name || '').toLowerCase();
+            const homeTeam = String(item.home_team_name || '').toLowerCase();
+            const awayTeam = String(item.away_team_name || '').toLowerCase();
+
+            if (homeClub.includes('sutton cc') || homeClub.includes('sutton cricket') || homeTeam.includes('sutton')) {
+              return item.home_team_name || '';
+            }
+            if (awayClub.includes('sutton cc') || awayClub.includes('sutton cricket') || awayTeam.includes('sutton')) {
+              return item.away_team_name || '';
+            }
+
+            return '';
+          }'''
+
+          new = '''function suttonTeamName(item = {}) {
+            const homeTeamId = String(item.home_team_id || item.home_team?.id || '');
+            const awayTeamId = String(item.away_team_id || item.away_team?.id || '');
+
+            if (String(item.home_club_id || '') === SUTTON_SITE_ID || SUTTON_TEAM_IDS.has(homeTeamId)) {
+              return item.home_team_name || '';
+            }
+            if (String(item.away_club_id || '') === SUTTON_SITE_ID || SUTTON_TEAM_IDS.has(awayTeamId)) {
+              return item.away_team_name || '';
+            }
+
+            const homeClub = String(item.home_club_name || '').trim().toLowerCase();
+            const awayClub = String(item.away_club_name || '').trim().toLowerCase();
+            const homeTeam = String(item.home_team_name || '').trim().toLowerCase();
+            const awayTeam = String(item.away_team_name || '').trim().toLowerCase();
+            const clubLooksLikeSutton = value => value.includes('sutton cc') || value.includes('sutton cricket club');
+            const teamLooksLikeSutton = value => /^sutton(?:\s+cc)?(?:\b|\s|&)/.test(value);
+
+            if (clubLooksLikeSutton(homeClub) || teamLooksLikeSutton(homeTeam)) return item.home_team_name || '';
+            if (clubLooksLikeSutton(awayClub) || teamLooksLikeSutton(awayTeam)) return item.away_team_name || '';
+
+            return '';
+          }'''
+
+          if old not in text:
+              raise SystemExit('Expected Sutton team detection block not found')
+          text = text.replace(old, new, 1)
+
+          old_snapshot = '''function renderSnapshot(el, results, upcoming, teams) {
+            if (!el) return;
+            const competitions = uniqueCompetitionCount([...results, ...upcoming]);
+            el.innerHTML = `
+              <div class="season-stat"><strong>${results.length}</strong><span>Results recorded</span></div>
+              <div class="season-stat"><strong>${upcoming.length}</strong><span>Fixtures remaining</span></div>
+              <div class="season-stat"><strong>${teams}</strong><span>Active teams</span></div>
+              <div class="season-stat"><strong>${competitions}</strong><span>Competitions</span></div>`;
+          }'''
+
+          new_snapshot = '''function renderSnapshot(el, results, upcoming, teams, teamPage = false) {
+            if (!el) return;
+            const competitions = uniqueCompetitionCount([...results, ...upcoming]);
+            const thirdCard = teamPage
+              ? `<div class="season-stat"><strong>${results.length + upcoming.length}</strong><span>Matches listed</span></div>`
+              : `<div class="season-stat"><strong>${teams}</strong><span>Active teams</span></div>`;
+            el.innerHTML = `
+              <div class="season-stat"><strong>${results.length}</strong><span>Results recorded</span></div>
+              <div class="season-stat"><strong>${upcoming.length}</strong><span>Fixtures remaining</span></div>
+              ${thirdCard}
+              <div class="season-stat"><strong>${competitions}</strong><span>Competitions</span></div>`;
+          }'''
+
+          if old_snapshot not in text:
+              raise SystemExit('Expected renderSnapshot block not found')
+          text = text.replace(old_snapshot, new_snapshot, 1)
+          text = text.replace('renderSnapshot(teamSnapshot, results, upcoming, 1);', 'renderSnapshot(teamSnapshot, results, upcoming, 1, true);', 1)
+
+          path.write_text(text, encoding='utf-8')
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add script.js
+          git commit -m "Tighten Sutton team detection and snapshots"
+          git pull --rebase origin main
+          git push origin HEAD:main
