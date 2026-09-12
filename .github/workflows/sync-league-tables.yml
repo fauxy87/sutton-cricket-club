@@ -2,6 +2,10 @@ name: Sync Play-Cricket league tables
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-league-tables.yml'
   schedule:
     - cron: '47 */6 * * *'
 
