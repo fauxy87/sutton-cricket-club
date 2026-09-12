@@ -1,0 +1,9 @@
+/* Homepage contact / get involved */
+#contact{position:relative;overflow:hidden;background:radial-gradient(circle at 86% 20%,rgba(242,207,36,.14),transparent 24%),linear-gradient(135deg,#073e22,#0b5d31);padding:72px 0}
+#contact::after{content:"";position:absolute;right:-100px;bottom:-160px;width:360px;height:360px;border-radius:50%;border:1px solid rgba(255,255,255,.08);box-shadow:0 0 0 55px rgba(255,255,255,.02),0 0 0 110px rgba(255,255,255,.015)}
+#contact .container{position:relative;z-index:1}
+#contact h2{font-family:Montserrat,Arial,sans-serif;margin:8px 0 12px;max-width:720px}
+#contact p:not(.eyebrow){color:#dce9e1;max-width:700px;margin:0}
+.contact-actions{display:flex;gap:12px;flex-wrap:wrap}
+.contact-actions .btn{min-width:150px;text-align:center}
+@media(max-width:760px){#contact{padding:58px 0}.contact-actions{width:100%}.contact-actions .btn{flex:1 1 180px}}
