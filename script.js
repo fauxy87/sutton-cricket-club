@@ -18,6 +18,7 @@ const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
 const SUTTON_SITE_ID = '6168';
+const SUTTON_TEAM_IDS = new Set(['63723','63724','277600','408696','395536','413277']);
 
 function teamKey(name = '') {
   const n = String(name).trim().toLowerCase();
@@ -39,20 +40,25 @@ function teamKey(name = '') {
 }
 
 function suttonTeamName(item = {}) {
-  if (String(item.home_club_id || '') === SUTTON_SITE_ID) return item.home_team_name || '';
-  if (String(item.away_club_id || '') === SUTTON_SITE_ID) return item.away_team_name || '';
+  const homeTeamId = String(item.home_team_id || item.home_team?.id || '');
+  const awayTeamId = String(item.away_team_id || item.away_team?.id || '');
 
-  const homeClub = String(item.home_club_name || '').toLowerCase();
-  const awayClub = String(item.away_club_name || '').toLowerCase();
-  const homeTeam = String(item.home_team_name || '').toLowerCase();
-  const awayTeam = String(item.away_team_name || '').toLowerCase();
-
-  if (homeClub.includes('sutton cc') || homeClub.includes('sutton cricket') || homeTeam.includes('sutton')) {
+  if (String(item.home_club_id || '') === SUTTON_SITE_ID || SUTTON_TEAM_IDS.has(homeTeamId)) {
     return item.home_team_name || '';
   }
-  if (awayClub.includes('sutton cc') || awayClub.includes('sutton cricket') || awayTeam.includes('sutton')) {
+  if (String(item.away_club_id || '') === SUTTON_SITE_ID || SUTTON_TEAM_IDS.has(awayTeamId)) {
     return item.away_team_name || '';
   }
+
+  const homeClub = String(item.home_club_name || '').trim().toLowerCase();
+  const awayClub = String(item.away_club_name || '').trim().toLowerCase();
+  const homeTeam = String(item.home_team_name || '').trim().toLowerCase();
+  const awayTeam = String(item.away_team_name || '').trim().toLowerCase();
+  const clubLooksLikeSutton = value => value.includes('sutton cc') || value.includes('sutton cricket club');
+  const teamLooksLikeSutton = value => /^sutton(?:\s+cc)?(?:|\s|&)/.test(value);
+
+  if (clubLooksLikeSutton(homeClub) || teamLooksLikeSutton(homeTeam)) return item.home_team_name || '';
+  if (clubLooksLikeSutton(awayClub) || teamLooksLikeSutton(awayTeam)) return item.away_team_name || '';
 
   return '';
 }
@@ -162,13 +168,16 @@ function uniqueCompetitionCount(items) {
   return new Set(items.map(x => x.competition_name).filter(Boolean)).size;
 }
 
-function renderSnapshot(el, results, upcoming, teams) {
+function renderSnapshot(el, results, upcoming, teams, teamPage = false) {
   if (!el) return;
   const competitions = uniqueCompetitionCount([...results, ...upcoming]);
+  const thirdCard = teamPage
+    ? `<div class="season-stat"><strong>${results.length + upcoming.length}</strong><span>Matches listed</span></div>`
+    : `<div class="season-stat"><strong>${teams}</strong><span>Active teams</span></div>`;
   el.innerHTML = `
     <div class="season-stat"><strong>${results.length}</strong><span>Results recorded</span></div>
     <div class="season-stat"><strong>${upcoming.length}</strong><span>Fixtures remaining</span></div>
-    <div class="season-stat"><strong>${teams}</strong><span>Active teams</span></div>
+    ${thirdCard}
     <div class="season-stat"><strong>${competitions}</strong><span>Competitions</span></div>`;
 }
 
@@ -228,7 +237,7 @@ async function loadPlayCricket() {
       const results = allResults.filter(r => itemTeamKey(r) === teamPageKey);
       if (teamFixtures) teamFixtures.innerHTML = upcoming.length ? upcoming.slice(0,3).map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures</h3><p>No future fixtures are currently published for this team.</p></article>';
       if (teamResults) teamResults.innerHTML = results.length ? results.slice(0,3).map(resultCard).join('') : '<article class="result-card"><h3>No recent results</h3><p>No results are currently available for this team.</p></article>';
-      renderSnapshot(teamSnapshot, results, upcoming, 1);
+      renderSnapshot(teamSnapshot, results, upcoming, 1, true);
       const teamStatus = document.getElementById('team-play-cricket-status');
       if (teamStatus) teamStatus.textContent = `Play-Cricket data · last synced ${stamp}`;
     }
