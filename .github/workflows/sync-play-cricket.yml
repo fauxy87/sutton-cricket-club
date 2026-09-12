@@ -21,7 +21,8 @@ jobs:
           PLAY_CRICKET_SITE_ID: ${{ vars.PLAY_CRICKET_SITE_ID }}
         run: |
           python - <<'PY'
-          import json, os, urllib.parse, urllib.request
+          import json, os, urllib.parse, urllib.request, time
+          from collections import defaultdict
           from datetime import datetime, timezone
           from pathlib import Path
 
@@ -47,29 +48,173 @@ jobs:
           results = get('result_summary.json', {'site_id': site_id, 'season': season})
           teams = get(f'sites/{site_id}/teams.json', {})
 
+          match_rows = matches.get('matches', [])
+          result_rows = results.get('result_summary', [])
+
           payload = {
               'generated_at': datetime.now(timezone.utc).isoformat(),
               'season': season,
               'site_id': site_id,
-              'matches': matches.get('matches', []),
-              'results': results.get('result_summary', []),
+              'matches': match_rows,
+              'results': result_rows,
               'teams': teams.get('teams', []),
           }
 
-          out = Path('data/play-cricket.json')
-          out.parent.mkdir(parents=True, exist_ok=True)
-          out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-          print(f"Wrote {len(payload['matches'])} matches and {len(payload['results'])} results")
+          data_dir = Path('data')
+          data_dir.mkdir(parents=True, exist_ok=True)
+          (data_dir / 'play-cricket.json').write_text(
+              json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
+          )
+
+          # Cache full scorecards so normal 6-hour syncs only request new/changed matches.
+          cache_path = data_dir / 'play-cricket-scorecards.json'
+          try:
+              cache = json.loads(cache_path.read_text(encoding='utf-8'))
+          except Exception:
+              cache = {'matches': {}}
+          cached = cache.setdefault('matches', {})
+
+          fetched = 0
+          for row in result_rows:
+              mid = str(row.get('id') or row.get('match_id') or '').strip()
+              if not mid:
+                  continue
+              updated = str(row.get('last_updated') or '')
+              old = cached.get(mid, {})
+              if old.get('_last_updated') == updated and old.get('detail'):
+                  continue
+              try:
+                  detail = get('match_detail.json', {'match_id': mid})
+                  cached[mid] = {'_last_updated': updated, 'detail': detail}
+                  fetched += 1
+                  time.sleep(0.15)
+              except Exception as exc:
+                  print(f'Could not fetch scorecard {mid}: {exc}')
+
+          cache['generated_at'] = datetime.now(timezone.utc).isoformat()
+          cache['season'] = season
+          cache_path.write_text(json.dumps(cache, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+
+          def num(v, default=0):
+              try: return int(v or 0)
+              except Exception: return default
+
+          def overs_to_balls(v):
+              s = str(v or '').strip()
+              if not s: return 0
+              if '.' in s:
+                  a,b = s.split('.',1)
+                  return num(a)*6 + num(b)
+              return num(s)*6
+
+          players = defaultdict(lambda: {
+              'name':'', 'runs':0, 'innings':0, 'not_outs':0, 'balls':0,
+              'fours':0, 'sixes':0, 'high_score':0, 'high_score_not_out':False,
+              'wickets':0, 'runs_conceded':0, 'balls_bowled':0, 'maidens':0,
+              'best_wickets':0, 'best_runs':9999
+          })
+
+          processed = 0
+          for entry in cached.values():
+              if not isinstance(entry, dict) or 'detail' not in entry:
+                  continue
+              md = entry.get('detail', {}).get('match_details', [])
+              if not md:
+                  continue
+              d = md[0]
+              if str(d.get('season') or season) != str(season):
+                  continue
+              home_is_sutton = str(d.get('home_club_id') or '') == site_id
+              away_is_sutton = str(d.get('away_club_id') or '') == site_id
+              if not (home_is_sutton or away_is_sutton):
+                  continue
+              sutton_team_id = str(d.get('home_team_id') if home_is_sutton else d.get('away_team_id'))
+              processed += 1
+
+              for inn in d.get('innings', []) or []:
+                  batting_id = str(inn.get('team_batting_id') or '')
+                  if batting_id == sutton_team_id:
+                      for b in inn.get('bat', []) or []:
+                          pid = str(b.get('batsman_id') or b.get('batsman_name') or '')
+                          if not pid: continue
+                          p = players[pid]
+                          p['name'] = b.get('batsman_name') or p['name']
+                          runs = num(b.get('runs'))
+                          p['runs'] += runs
+                          p['innings'] += 1
+                          how = str(b.get('how_out') or '').lower().strip()
+                          is_no = how in ('no','not out','retired not out')
+                          if is_no: p['not_outs'] += 1
+                          p['balls'] += num(b.get('balls'))
+                          p['fours'] += num(b.get('fours'))
+                          p['sixes'] += num(b.get('sixes'))
+                          if runs > p['high_score'] or (runs == p['high_score'] and is_no):
+                              p['high_score'] = runs
+                              p['high_score_not_out'] = is_no
+                  else:
+                      for bw in inn.get('bowl', []) or []:
+                          pid = str(bw.get('bowler_id') or bw.get('bowler_name') or '')
+                          if not pid: continue
+                          p = players[pid]
+                          p['name'] = bw.get('bowler_name') or p['name']
+                          wk = num(bw.get('wickets'))
+                          rc = num(bw.get('runs'))
+                          p['wickets'] += wk
+                          p['runs_conceded'] += rc
+                          p['balls_bowled'] += overs_to_balls(bw.get('overs'))
+                          p['maidens'] += num(bw.get('maidens'))
+                          if wk > p['best_wickets'] or (wk == p['best_wickets'] and rc < p['best_runs']):
+                              p['best_wickets'] = wk
+                              p['best_runs'] = rc
+
+          batting = []
+          bowling = []
+          for pid,p in players.items():
+              if p['runs'] or p['innings']:
+                  outs = max(0, p['innings'] - p['not_outs'])
+                  avg = round(p['runs']/outs, 2) if outs else None
+                  sr = round(p['runs']*100/p['balls'], 2) if p['balls'] else None
+                  batting.append({
+                      'player_id':pid,'name':p['name'],'runs':p['runs'],'innings':p['innings'],
+                      'not_outs':p['not_outs'],'average':avg,'balls':p['balls'],'strike_rate':sr,
+                      'fours':p['fours'],'sixes':p['sixes'],
+                      'high_score':f"{p['high_score']}{'*' if p['high_score_not_out'] else ''}"
+                  })
+              if p['wickets'] or p['balls_bowled']:
+                  avg = round(p['runs_conceded']/p['wickets'], 2) if p['wickets'] else None
+                  econ = round(p['runs_conceded']/(p['balls_bowled']/6), 2) if p['balls_bowled'] else None
+                  bowling.append({
+                      'player_id':pid,'name':p['name'],'wickets':p['wickets'],
+                      'runs_conceded':p['runs_conceded'],'balls':p['balls_bowled'],
+                      'overs':f"{p['balls_bowled']//6}.{p['balls_bowled']%6}",'maidens':p['maidens'],
+                      'average':avg,'economy':econ,
+                      'best':f"{p['best_wickets']}-{p['best_runs']}" if p['best_wickets'] else '-'
+                  })
+
+          batting.sort(key=lambda x:(x['runs'], num(str(x['high_score']).rstrip('*'))), reverse=True)
+          bowling.sort(key=lambda x:(x['wickets'], -x['runs_conceded']), reverse=True)
+
+          stats = {
+              'generated_at': datetime.now(timezone.utc).isoformat(),
+              'season': season,
+              'scorecards_processed': processed,
+              'batting': batting,
+              'bowling': bowling,
+          }
+          (data_dir / 'player-stats.json').write_text(
+              json.dumps(stats, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
+          )
+          print(f"Wrote {len(match_rows)} matches, {len(result_rows)} results; fetched {fetched} scorecards; processed {processed}")
           PY
 
       - name: Commit refreshed data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/play-cricket.json
+          git add data/play-cricket.json data/play-cricket-scorecards.json data/player-stats.json
           if git diff --cached --quiet; then
             echo "No Play-Cricket changes"
             exit 0
           fi
-          git commit -m "Update Play-Cricket data"
+          git commit -m "Update Play-Cricket data and player stats"
           git push
