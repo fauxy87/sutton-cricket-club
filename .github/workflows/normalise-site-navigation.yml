@@ -1,0 +1,111 @@
+name: Normalise site navigation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/normalise-site-navigation.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Standardise navigation and Fantasy links
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          links = [
+              ('Home', 'index.html', 'home'),
+              ('Teams', 'teams.html', 'teams'),
+              ('Fixtures', 'fixtures.html', 'fixtures'),
+              ('Juniors', 'juniors.html', 'juniors'),
+              ('News', 'news.html', 'news'),
+              ('Honours', 'honours.html', 'honours'),
+              ('Highlights', 'gallery.html', 'highlights'),
+              ('Fantasy', 'fantasy.html', 'fantasy'),
+              ('Sponsors', 'sponsors.html', 'sponsors'),
+              ('Contact', 'join.html', 'contact'),
+          ]
+
+          def section_for(name):
+              if name == 'index.html': return 'home'
+              if name == 'teams.html' or name.startswith('team-'): return 'teams'
+              if name == 'fixtures.html' or name == 'match.html': return 'fixtures'
+              if name == 'juniors.html' or name.startswith('junior-'): return 'juniors'
+              if name == 'news.html' or name.startswith('news-'): return 'news'
+              if name in ('honours.html', 'player.html'): return 'honours'
+              if name == 'gallery.html': return 'highlights'
+              if name == 'fantasy.html': return 'fantasy'
+              if name == 'sponsors.html': return 'sponsors'
+              if name == 'join.html': return 'contact'
+              return ''
+
+          def nav_html(active):
+              return '<nav class="main-nav">' + ''.join(
+                  f'<a{" class=\"active\"" if key == active else ""} href="{href}">{label}</a>'
+                  for label, href, key in links
+              ) + '</nav>'
+
+          brand = '<a class="brand" href="index.html" aria-label="Sutton Cricket Club home"><div><strong>Sutton Cricket Club</strong><span>Cambridgeshire · Founded 1877</span></div></a>'
+
+          for path in Path('.').glob('*.html'):
+              text = path.read_text(encoding='utf-8')
+              original = text
+              active = section_for(path.name)
+
+              text = text.replace('assets/sutton-cc-badge.jpg', 'assets/sutton-cc-badge.png')
+              text = text.replace('href="index.html#contact"', 'href="join.html"')
+              text = text.replace('Station Road, Sutton, Cambridgeshire', 'Sutton, Cambridgeshire')
+              text = text.replace('Sutton Cricket Club · Station Road · Founded 1877', 'Sutton Cricket Club · Cambridgeshire · Founded 1877')
+
+              if '<nav class="main-nav">' in text:
+                  text = re.sub(r'<nav class="main-nav">.*?</nav>', nav_html(active), text, count=1, flags=re.S)
+                  text = re.sub(r'<a class="brand"[^>]*>.*?</a>', brand, text, count=1, flags=re.S)
+
+              # Bring the three older short-form news reports into the full site layout.
+              if path.name.startswith('news-') and '<header class="site-header">' not in text:
+                  title_m = re.search(r'<title>(.*?)</title>', text, re.S)
+                  h1_m = re.search(r'<h1>(.*?)</h1>', text, re.S)
+                  p_m = re.search(r'<p>(.*?)</p>', text, re.S)
+                  title = title_m.group(1) if title_m else 'Club News | Sutton Cricket Club'
+                  heading = h1_m.group(1) if h1_m else 'Club news'
+                  body = p_m.group(1) if p_m else ''
+                  text = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title><link rel="stylesheet" href="styles.css"></head><body><header class="site-header"><div class="container nav-wrap">{brand}<button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>{nav_html('news')}</div></header><main><section class="page-hero"><div class="container"><p class="eyebrow">Club news</p><h1>{heading}</h1></div></section><section class="section"><div class="container"><a class="text-link" href="news.html">← Club news</a><p style="max-width:760px;font-size:1.15rem;margin-top:28px">{body}</p></div></section></main><footer><div class="container">Sutton Cricket Club · Cambridgeshire · Founded 1877</div></footer><script src="script.js"></script></body></html>'''
+
+              if path.name == 'index.html':
+                  text = text.replace('<a href="gallery.html">Highlights</a><a href="sponsors.html">Sponsors</a>', '<a href="gallery.html">Highlights</a><a href="fantasy.html">Fantasy</a><a href="sponsors.html">Sponsors</a>')
+                  if 'Fantasy Cricket</strong>' not in text:
+                      marker = '<a class="quick-card" href="sponsors.html"><span class="quick-icon">🤝</span><strong>Sponsors</strong><span>Support local cricket</span></a>'
+                      fantasy = '<a class="quick-card" href="fantasy.html"><span class="quick-icon">🏆</span><strong>Fantasy Cricket</strong><span>Pick your Sutton team</span></a>'
+                      text = text.replace(marker, fantasy + marker)
+                  text = text.replace('<span>Live</span>', '<span>Play-Cricket</span>')
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+
+          css = Path('home-hero.css')
+          if css.exists():
+              text = css.read_text(encoding='utf-8')
+              text = text.replace('.quick-grid{grid-template-columns:repeat(4,1fr)}', '.quick-grid{grid-template-columns:repeat(5,1fr)}')
+              css.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' home-hero.css
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Standardise navigation and add Fantasy Cricket"
+            git push
+          fi
