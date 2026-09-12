@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/sync-league-tables.yml'
+      - 'data/play-cricket.json'
   schedule:
     - cron: '47 */6 * * *'
 
@@ -34,6 +35,11 @@ jobs:
 
           season = datetime.now(timezone.utc).year
           base = 'https://www.play-cricket.com/api/v2'
+          source_path = Path('data/play-cricket.json')
+          if not source_path.exists():
+              raise SystemExit('data/play-cricket.json is missing; run the main Play-Cricket sync first')
+
+          source = json.loads(source_path.read_text(encoding='utf-8'))
 
           def get(endpoint, params=None):
               params = dict(params or {})
@@ -44,77 +50,104 @@ jobs:
                   return json.load(r)
 
           targets = {
-              '1st': 'CCA Junior League 2 North',
-              '2nd': 'CCA Junior League 4 North',
+              '1st': {
+                  'team_id': '63723',
+                  'competition_name': 'CCA Junior League 2 North',
+              },
+              '2nd': {
+                  'team_id': '63724',
+                  'competition_name': 'CCA Junior League 4 North',
+              },
           }
 
-          leagues = get('league_sites.json').get('leagues', [])
-          candidates = []
-          for league in leagues:
-              name = str(league.get('name') or '').lower()
-              if 'cambridgeshire' in name or 'huntingdonshire' in name:
-                  candidates.append(league)
+          rows = []
+          for key in ('matches', 'results'):
+              value = source.get(key, [])
+              if isinstance(value, list):
+                  rows.extend(value)
 
           found = {}
-          searched = []
-          for league in candidates:
-              league_id = league.get('league_id') or league.get('id')
-              if not league_id:
-                  continue
-              try:
-                  comps = get('competitions.json', {
-                      'season': season,
-                      'league_id': league_id,
-                      'competition_type': 'divisions',
-                  }).get('competitions', [])
-              except Exception as exc:
-                  print(f"Could not read divisions for {league.get('name')}: {exc}")
-                  continue
-              searched.append({'league_id': league_id, 'name': league.get('name')})
-              for key, wanted in targets.items():
-                  if key in found:
+          for key, target in targets.items():
+              wanted_team = target['team_id']
+              wanted_comp = target['competition_name'].lower()
+              for row in rows:
+                  if str(row.get('season') or season) != str(season):
                       continue
-                  for comp in comps:
-                      cname = str(comp.get('name') or '').strip()
-                      if cname.lower() == wanted.lower() or wanted.lower() in cname.lower():
-                          found[key] = {
-                              'division_id': comp.get('id') or comp.get('division_id'),
-                              'division_name': cname,
-                              'league_id': league_id,
-                              'league_name': league.get('name'),
-                          }
-                          break
+                  team_ids = {
+                      str(row.get('home_team_id') or ''),
+                      str(row.get('away_team_id') or ''),
+                  }
+                  comp_name = str(row.get('competition_name') or '').strip()
+                  comp_id = row.get('competition_id') or row.get('division_id')
+                  if wanted_team in team_ids and wanted_comp == comp_name.lower() and comp_id:
+                      found[key] = {
+                          'division_id': str(comp_id),
+                          'division_name': comp_name,
+                          'league_id': str(row.get('league_id') or ''),
+                          'league_name': str(row.get('league_name') or ''),
+                          'source': 'play-cricket.json competition_id',
+                      }
+                      break
 
           tables = {}
           for key, target in targets.items():
               info = found.get(key)
-              if not info or not info.get('division_id'):
-                  tables[key] = {'target': target, 'error': 'Division not found'}
+              if not info:
+                  tables[key] = {
+                      'target': target['competition_name'],
+                      'error': 'Division not found in Sutton match data',
+                  }
                   continue
+
               try:
                   raw = get('league_table.json', {'division_id': info['division_id']})
-                  table = (raw.get('league_table') or [{}])[0]
+                  league_tables = raw.get('league_table') or raw.get('league_tables') or []
+                  if isinstance(league_tables, dict):
+                      table = league_tables
+                  elif league_tables:
+                      table = league_tables[0]
+                  else:
+                      table = raw
+
+                  headings = table.get('headings') or raw.get('headings') or {}
+                  values = table.get('values') or raw.get('values') or []
+                  if not values:
+                      raise RuntimeError('League table API returned no rows')
+
                   tables[key] = {
                       **info,
-                      'target': target,
-                      'name': table.get('name') or info['division_name'],
-                      'headings': table.get('headings') or {},
-                      'values': table.get('values') or [],
-                      'key': table.get('key') or '',
+                      'target': target['competition_name'],
+                      'name': table.get('name') or raw.get('name') or info['division_name'],
+                      'headings': headings,
+                      'values': values,
+                      'key': table.get('key') or raw.get('key') or '',
                   }
               except Exception as exc:
-                  tables[key] = {**info, 'target': target, 'error': str(exc)}
+                  tables[key] = {
+                      **info,
+                      'target': target['competition_name'],
+                      'error': f'{type(exc).__name__}: {exc}',
+                  }
 
           payload = {
               'generated_at': datetime.now(timezone.utc).isoformat(),
               'season': season,
               'tables': tables,
-              'searched_leagues': searched,
+              'division_source': 'Existing Sutton Play-Cricket match data',
           }
           out = Path('data/league-tables.json')
           out.parent.mkdir(parents=True, exist_ok=True)
           out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-          print(json.dumps({k: {'division_id': v.get('division_id'), 'rows': len(v.get('values', [])), 'error': v.get('error')} for k,v in tables.items()}, indent=2))
+
+          summary = {
+              k: {
+                  'division_id': v.get('division_id'),
+                  'rows': len(v.get('values', [])),
+                  'error': v.get('error'),
+              }
+              for k, v in tables.items()
+          }
+          print(json.dumps(summary, indent=2))
           PY
 
       - name: Commit refreshed tables
