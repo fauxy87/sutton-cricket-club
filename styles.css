@@ -18,3 +18,44 @@ footer .container::before{content:"";position:absolute;left:0;top:50%;transform:
 footer .container::after{content:"Sutton Cricket Club · Cambridgeshire";display:block;margin-left:auto;color:#9fb0a5;font-size:.82rem;font-weight:700}
 @media(max-width:850px){.nav-wrap{min-height:76px}.brand::before,.brand-badge{width:44px;height:48px;flex-basis:44px}.brand strong{font-size:.95rem}.main-nav{top:76px;box-shadow:0 16px 25px rgba(7,62,34,.12);border-top:1px solid var(--line);gap:4px}.main-nav a{padding:12px 14px}.nav-toggle{display:grid;place-items:center}footer .container{padding-left:52px;display:block}footer .container::after{margin:4px 0 0}}
 @media(max-width:520px){.brand strong{font-size:.88rem}.brand::before,.brand-badge{width:40px;height:44px;flex-basis:40px}footer .container::after{font-size:.76rem}}
+
+/* Accessibility and mobile usability */
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:6px}
+.main-nav a:focus-visible,.btn:focus-visible,.quick-card:focus-visible,.team-card:focus-visible,.join-card:focus-visible,.text-link:focus-visible,.read-more:focus-visible,.match-link:focus-visible{outline-color:var(--yellow);box-shadow:0 0 0 4px rgba(242,207,36,.2)}
+.filter-btn,.news-filter,.nav-toggle,.btn,.main-nav a{min-height:44px}
+.filter-btn,.news-filter,.nav-toggle{cursor:pointer}
+a,button{touch-action:manipulation}
+img{max-width:100%}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+@media(max-width:850px){
+  .main-nav{max-height:calc(100vh - 76px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .main-nav a{display:flex;align-items:center;min-height:46px}
+  .section{padding:58px 0}
+  .hero,.page-hero,.team-page-hero,.article-hero,.honours-hero{padding:64px 0}
+  .section-heading{align-items:flex-start;flex-direction:column;gap:10px}
+  .hero-actions .btn,.contact-actions .btn{min-width:148px;text-align:center}
+  .filter-row,.news-filter-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+  .filter-btn,.news-filter{flex:0 0 auto}
+  .team-directory-card{grid-template-columns:58px 1fr;gap:14px}
+  .team-directory-card>*:last-child{grid-column:2}
+  .junior-list div,.board-row,.stat-row{align-items:flex-start}
+}
+@media(max-width:520px){
+  .container{width:min(100% - 22px,1160px)}
+  h1{font-size:clamp(2.45rem,14vw,4rem)}
+  h2{font-size:clamp(1.8rem,9vw,2.6rem)}
+  .hero-copy,.page-intro,.team-page-hero p,.article-hero p,.honours-hero p{font-size:1.05rem}
+  .quick-card,.fixture-card,.team-card,.news-card,.record-feature,.package-card,.sponsor-logo-card,.player-card,.result-card,.junior-program,.team-info-card,.join-card{padding:20px}
+  .hero-actions,.contact-actions{display:grid;grid-template-columns:1fr;width:100%}
+  .hero-actions .btn,.contact-actions .btn{width:100%;min-width:0}
+  .season-snapshot{grid-template-columns:1fr}
+  .match-row{grid-template-columns:1fr;gap:8px}
+  .match-side{grid-column:auto}
+  .brand span{font-size:.72rem}
+  .brand{min-width:0}
+  .brand>div{min-width:0}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
