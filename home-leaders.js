@@ -1,6 +1,7 @@
 function hlEsc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
 function hlPlayerLink(p){const id=encodeURIComponent(String(p?.player_id||''));const name=hlEsc(p?.name||'No data yet');return id?`<a href="player.html?id=${id}">${name}</a>`:name;}
 function hlNum(v){const n=Number(v);return Number.isFinite(n)?n:0;}
+function hlAverage(v){const n=Number(v);return Number.isFinite(n)?n:Number.POSITIVE_INFINITY;}
 function hlHigh(v){const n=parseInt(String(v??'').replace(/[^0-9-]/g,''),10);return Number.isFinite(n)?n:0;}
 async function loadHomeLeaders(){
   const box=document.getElementById('home-player-leaders');
@@ -12,7 +13,7 @@ async function loadHomeLeaders(){
     const batting=Array.isArray(data.batting)?data.batting:[];
     const bowling=Array.isArray(data.bowling)?data.bowling:[];
     const topBat=batting.slice().sort((a,b)=>hlNum(b.runs)-hlNum(a.runs)||hlHigh(b.high_score)-hlHigh(a.high_score)||String(a.name||'').localeCompare(String(b.name||'')))[0];
-    const topBowl=bowling.slice().sort((a,b)=>hlNum(b.wickets)-hlNum(a.wickets)||hlNum(a.average||Infinity)-hlNum(b.average||Infinity)||String(a.name||'').localeCompare(String(b.name||'')))[0];
+    const topBowl=bowling.slice().sort((a,b)=>hlNum(b.wickets)-hlNum(a.wickets)||hlAverage(a.average)-hlAverage(b.average)||String(a.name||'').localeCompare(String(b.name||'')))[0];
     const high=batting.slice().sort((a,b)=>hlHigh(b.high_score)-hlHigh(a.high_score)||hlNum(b.runs)-hlNum(a.runs)||String(a.name||'').localeCompare(String(b.name||'')))[0];
     box.innerHTML=`
       <article class="record-feature home-leader-card"><span>Leading run scorer</span><strong>${hlEsc(topBat?.runs??'—')}</strong><h3>${hlPlayerLink(topBat)}</h3><p>${topBat?`Avg ${hlEsc(topBat.average??'—')} · HS ${hlEsc(topBat.high_score||'—')}`:'No batting data yet'}</p></article>
