@@ -1,1 +1,0 @@
-The site uses assets/sutton-cc-badge.png as its favicon and social sharing image. This small file exists only as a marker for the September 2026 site finishing pass and can be removed later if desired.
