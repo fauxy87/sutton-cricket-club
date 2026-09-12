@@ -13,7 +13,7 @@
 .nav-toggle{width:44px;height:44px;border:1px solid var(--line);border-radius:9px;color:var(--dark);cursor:pointer}
 footer{position:relative;background:linear-gradient(135deg,#08150e,#0b2417);color:#d7e1da;padding:34px 0;border-top:4px solid var(--yellow)}
 footer .container{position:relative;padding-left:58px;min-height:48px;display:flex;align-items:center}
-footer .container::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:42px;height:46px;background:url("./assets/sutton-cc-badge.png?v=20260912") center/contain no-repeat;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
+footer .container::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:42px;height:46px;background:url("./assets/sutton-cc-badge.png?v=20260912b") center/contain no-repeat;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
 footer .container::after{content:"Sutton Cricket Club · Cambridgeshire";display:block;margin-left:auto;color:#9fb0a5;font-size:.82rem;font-weight:700}
 @media(max-width:850px){.nav-wrap{min-height:76px}.brand-badge{width:44px;height:48px;flex-basis:44px}.brand strong{font-size:.95rem}.main-nav{top:76px;box-shadow:0 16px 25px rgba(7,62,34,.12);border-top:1px solid var(--line);gap:4px}.main-nav a{padding:12px 14px}.nav-toggle{display:grid;place-items:center}footer .container{padding-left:52px;display:block}footer .container::after{margin:4px 0 0}}
 @media(max-width:520px){.brand strong{font-size:.88rem}.brand-badge{width:40px;height:44px;flex-basis:40px}footer .container::after{font-size:.76rem}}
