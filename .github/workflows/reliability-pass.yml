@@ -1,0 +1,123 @@
+name: Website reliability pass
+
+on:
+  push:
+    paths:
+      - '.github/workflows/reliability-pass.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  reliability:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Improve Play-Cricket display reliability
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('script.js')
+          text = path.read_text(encoding='utf-8')
+
+          old_score = '''function scoreText(r, side) {
+            const runs = r[`${side}_team_runs`] ?? r[`${side}_runs`];
+            const wickets = r[`${side}_team_wickets`] ?? r[`${side}_wickets`];
+            const overs = r[`${side}_team_overs`] ?? r[`${side}_overs`];
+            if (runs === undefined || runs === null || runs === '') return '';
+            let s = String(runs);
+            if (wickets !== undefined && wickets !== null && wickets !== '') s += `/${wickets}`;
+            if (overs !== undefined && overs !== null && overs !== '') s += ` (${overs})`;
+            return s;
+          }'''
+
+          new_score = '''function scoreText(r, side) {
+            const direct = r[`${side}_team_score`] ?? r[`${side}_score`] ?? r[`${side}_innings_score`];
+            if (direct !== undefined && direct !== null && String(direct).trim() !== '') return String(direct).trim();
+
+            const runs = r[`${side}_team_runs`] ?? r[`${side}_runs`] ?? r[`${side}_innings_runs`];
+            const wickets = r[`${side}_team_wickets`] ?? r[`${side}_wickets`] ?? r[`${side}_innings_wickets`];
+            const overs = r[`${side}_team_overs`] ?? r[`${side}_overs`] ?? r[`${side}_innings_overs`];
+            if (runs === undefined || runs === null || runs === '') return '';
+
+            let s = String(runs).trim();
+            if (wickets !== undefined && wickets !== null && String(wickets).trim() !== '') s += `/${String(wickets).trim()}`;
+            if (overs !== undefined && overs !== null && String(overs).trim() !== '') s += ` (${String(overs).trim()})`;
+            return s;
+          }'''
+
+          if old_score not in text:
+            raise SystemExit('Expected scoreText block not found')
+          text = text.replace(old_score, new_score, 1)
+
+          old_arrays = '''    const batting = data.batting || [];
+              const bowling = data.bowling || [];'''
+          new_arrays = '''    const batting = Array.isArray(data.batting) ? data.batting.slice() : [];
+              const bowling = Array.isArray(data.bowling) ? data.bowling.slice() : [];
+              const highScoreNumber = value => {
+                const n = parseInt(String(value ?? '').replace(/[^0-9-]/g, ''), 10);
+                return Number.isFinite(n) ? n : 0;
+              };
+              const numberValue = value => {
+                const n = Number(value);
+                return Number.isFinite(n) ? n : 0;
+              };
+              const averageValue = value => {
+                const n = Number(value);
+                return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+              };
+              const battingByRuns = batting.slice().sort((a,b) => numberValue(b.runs) - numberValue(a.runs) || highScoreNumber(b.high_score) - highScoreNumber(a.high_score) || String(a.name || '').localeCompare(String(b.name || '')));
+              const bowlingByWickets = bowling.slice().sort((a,b) => numberValue(b.wickets) - numberValue(a.wickets) || averageValue(a.average) - averageValue(b.average) || String(a.name || '').localeCompare(String(b.name || '')));
+              const battingByHighScore = batting.slice().sort((a,b) => highScoreNumber(b.high_score) - highScoreNumber(a.high_score) || numberValue(b.runs) - numberValue(a.runs) || String(a.name || '').localeCompare(String(b.name || '')));'''
+
+          if old_arrays not in text:
+            raise SystemExit('Expected stats array block not found')
+          text = text.replace(old_arrays, new_arrays, 1)
+
+          old_leaders = '''      const topBat = batting[0];
+                const topBowl = bowling[0];'''
+          new_leaders = '''      const topBat = battingByRuns[0];
+                const topBowl = bowlingByWickets[0];
+                const topHigh = battingByHighScore[0];'''
+          if old_leaders not in text:
+            raise SystemExit('Expected leaders block not found')
+          text = text.replace(old_leaders, new_leaders, 1)
+
+          old_high = '''<article class="record-feature"><span>Highest score</span><strong>${escapeHtml((batting.slice().sort((a,b)=>parseInt(String(b.high_score||0))-parseInt(String(a.high_score||0)))[0]||{}).high_score || '—')}</strong><h3>${escapeHtml((batting.slice().sort((a,b)=>parseInt(String(b.high_score||0))-parseInt(String(a.high_score||0)))[0]||{}).name || 'No data yet')}</h3><p>From synced scorecards</p></article>'''
+          new_high = '''<article class="record-feature"><span>Highest score</span><strong>${escapeHtml(topHigh?.high_score || '—')}</strong><h3>${escapeHtml(topHigh?.name || 'No data yet')}</h3><p>From synced scorecards</p></article>'''
+          if old_high not in text:
+            raise SystemExit('Expected highest-score card not found')
+          text = text.replace(old_high, new_high, 1)
+
+          old_bat_table = '''      battingBox.innerHTML = batting.slice(0,10).map((p,i)=>'''
+          new_bat_table = '''      battingBox.innerHTML = battingByRuns.slice(0,10).map((p,i)=>'''
+          if old_bat_table not in text:
+            raise SystemExit('Expected batting table not found')
+          text = text.replace(old_bat_table, new_bat_table, 1)
+
+          old_bowl_table = '''      bowlingBox.innerHTML = bowling.slice(0,10).map((p,i)=>'''
+          new_bowl_table = '''      bowlingBox.innerHTML = bowlingByWickets.slice(0,10).map((p,i)=>'''
+          if old_bowl_table not in text:
+            raise SystemExit('Expected bowling table not found')
+          text = text.replace(old_bowl_table, new_bowl_table, 1)
+
+          old_milestones = '''      const milestones = batting.filter(p => parseInt(String(p.high_score||0)) >= 50).sort((a,b)=>parseInt(String(b.high_score))-parseInt(String(a.high_score))).slice(0,8);'''
+          new_milestones = '''      const milestones = battingByHighScore.filter(p => highScoreNumber(p.high_score) >= 50).slice(0,8);'''
+          if old_milestones not in text:
+            raise SystemExit('Expected milestone fallback not found')
+          text = text.replace(old_milestones, new_milestones, 1)
+
+          path.write_text(text, encoding='utf-8')
+
+      - name: Commit reliability improvements
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add script.js
+          git commit -m "Improve score and statistics reliability"
+          git pull --rebase origin main
+          git push origin HEAD:main
