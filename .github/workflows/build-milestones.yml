@@ -1,0 +1,170 @@
+name: Build season milestones
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'data/play-cricket-scorecards.json'
+      - 'data/play-cricket.json'
+      - '.github/workflows/build-milestones.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v4
+
+      - name: Build milestone data
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          site_id = '6168'
+          data_dir = Path('data')
+          scorecard_path = data_dir / 'play-cricket-scorecards.json'
+          summary_path = data_dir / 'play-cricket.json'
+
+          cache = json.loads(scorecard_path.read_text(encoding='utf-8'))
+          summary = json.loads(summary_path.read_text(encoding='utf-8'))
+          matches = cache.get('matches', cache)
+          season = cache.get('season') or summary.get('season') or datetime.now(timezone.utc).year
+
+          result_lookup = {}
+          for row in summary.get('results', []) or []:
+              mid = str(row.get('id') or row.get('match_id') or '').strip()
+              if mid:
+                  result_lookup[mid] = row
+
+          def number(value):
+              try:
+                  return int(value or 0)
+              except (TypeError, ValueError):
+                  return 0
+
+          def text(value):
+              return str(value or '').strip()
+
+          milestones = []
+
+          for match_id, entry in matches.items():
+              if not isinstance(entry, dict):
+                  continue
+              detail = entry.get('detail') or entry
+              details = detail.get('match_details', []) if isinstance(detail, dict) else []
+              if not details:
+                  continue
+
+              d = details[0]
+              if str(d.get('season') or season) != str(season):
+                  continue
+
+              home_is_sutton = str(d.get('home_club_id') or '') == site_id
+              away_is_sutton = str(d.get('away_club_id') or '') == site_id
+              if not (home_is_sutton or away_is_sutton):
+                  continue
+
+              sutton_team_id = str(d.get('home_team_id') if home_is_sutton else d.get('away_team_id') or '')
+              sutton_team = text(d.get('home_team_name') if home_is_sutton else d.get('away_team_name')) or 'Sutton CC'
+              opponent = text(d.get('away_team_name') if home_is_sutton else d.get('home_team_name'))
+
+              result_row = result_lookup.get(str(match_id), {})
+              match_date = text(d.get('match_date') or result_row.get('match_date'))
+              competition = text(d.get('competition_name') or result_row.get('competition_name'))
+
+              for innings_no, inn in enumerate(d.get('innings', []) or [], start=1):
+                  batting_id = str(inn.get('team_batting_id') or inn.get('batting_team_id') or '')
+
+                  if batting_id == sutton_team_id:
+                      for bat in inn.get('bat', []) or []:
+                          runs = number(bat.get('runs'))
+                          if runs < 50:
+                              continue
+                          how_out = text(bat.get('how_out')).lower()
+                          not_out = how_out in {'no', 'not out', 'retired not out'}
+                          milestones.append({
+                              'kind': '100' if runs >= 100 else '50',
+                              'category': 'batting',
+                              'player_id': str(bat.get('batsman_id') or ''),
+                              'player': text(bat.get('batsman_name')) or 'Player',
+                              'value': f"{runs}{'*' if not_out else ''}",
+                              'runs': runs,
+                              'not_out': not_out,
+                              'match_id': str(match_id),
+                              'date': match_date,
+                              'team': sutton_team,
+                              'opponent': opponent,
+                              'competition': competition,
+                              'innings': innings_no,
+                          })
+                  elif batting_id:
+                      for bowl in inn.get('bowl', []) or []:
+                          wickets = number(bowl.get('wickets'))
+                          if wickets < 4:
+                              continue
+                          runs_conceded = number(bowl.get('runs'))
+                          milestones.append({
+                              'kind': '5W' if wickets >= 5 else '4W',
+                              'category': 'bowling',
+                              'player_id': str(bowl.get('bowler_id') or ''),
+                              'player': text(bowl.get('bowler_name')) or 'Player',
+                              'value': f'{wickets}-{runs_conceded}',
+                              'wickets': wickets,
+                              'runs_conceded': runs_conceded,
+                              'match_id': str(match_id),
+                              'date': match_date,
+                              'team': sutton_team,
+                              'opponent': opponent,
+                              'competition': competition,
+                              'innings': innings_no,
+                          })
+
+          def date_key(item):
+              raw = item.get('date') or ''
+              try:
+                  return datetime.strptime(raw, '%d/%m/%Y')
+              except ValueError:
+                  try:
+                      return datetime.fromisoformat(raw)
+                  except ValueError:
+                      return datetime.min
+
+          milestones.sort(key=lambda item: (date_key(item), item.get('category') == 'batting', number(item.get('runs') or item.get('wickets'))), reverse=True)
+
+          payload = {
+              'generated_at': datetime.now(timezone.utc).isoformat(),
+              'season': season,
+              'source': 'Play-Cricket scorecards',
+              'counts': {
+                  'fifties': sum(1 for x in milestones if x['kind'] == '50'),
+                  'hundreds': sum(1 for x in milestones if x['kind'] == '100'),
+                  'four_wickets': sum(1 for x in milestones if x['kind'] == '4W'),
+                  'five_wickets': sum(1 for x in milestones if x['kind'] == '5W'),
+              },
+              'milestones': milestones,
+          }
+
+          (data_dir / 'milestones.json').write_text(
+              json.dumps(payload, indent=2, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+          print(f"Wrote {len(milestones)} season milestones")
+          PY
+
+      - name: Commit milestone data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/milestones.json
+          if git diff --cached --quiet; then
+            echo "No milestone changes"
+            exit 0
+          fi
+          git commit -m "Update season milestones"
+          git push
