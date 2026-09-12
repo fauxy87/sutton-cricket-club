@@ -6,7 +6,6 @@ if (button && nav) {
     const isOpen = nav.classList.toggle('open');
     button.setAttribute('aria-expanded', String(isOpen));
   });
-
   document.querySelectorAll('.main-nav a').forEach(link => {
     link.addEventListener('click', () => {
       nav.classList.remove('open');
@@ -18,14 +17,26 @@ if (button && nav) {
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
+const SUTTON_SITE_ID = '6168';
+
 function teamKey(name = '') {
   const n = String(name).toLowerCase();
-  if (n.includes('1st')) return '1st';
-  if (n.includes('2nd')) return '2nd';
+  if (n.includes('1st xi') || n === '1st') return '1st';
+  if (n.includes('2nd xi') || n === '2nd') return '2nd';
   if (n.includes('development') || n.includes('sunday')) return 'development';
-  if (n.includes('women') || n.includes('womens') || n.includes("women's") || n.includes('girls') || n.includes('hardball') || n.includes('softball')) return 'women';
   if (n.includes('u14') || n.includes('under 14')) return 'u14';
-  return 'all';
+  if (n.includes('women') || n.includes('womens') || n.includes("women's") || n.includes('girls')) return 'women';
+  return 'other';
+}
+
+function suttonTeamName(item = {}) {
+  if (String(item.home_club_id || '') === SUTTON_SITE_ID) return item.home_team_name || '';
+  if (String(item.away_club_id || '') === SUTTON_SITE_ID) return item.away_team_name || '';
+  return '';
+}
+
+function itemTeamKey(item = {}) {
+  return teamKey(suttonTeamName(item));
 }
 
 function activateTeamFilters() {
@@ -65,96 +76,117 @@ function parseUKDate(value) {
 }
 
 function escapeHtml(value) {
-  return String(value ?? '').replace(/[&<>'\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));
+  return String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 }
 
 function sideLabel(club, team) {
-  const clubText = String(club || '').replace('Sutton CC, Cambs', 'Sutton CC');
-  return [clubText, team].filter(Boolean).join(' ');
+  const c = String(club || '').replace(' CC, Cambs', '').replace(' CC', '').trim();
+  return [c, team].filter(Boolean).join(' ');
 }
 
 function scoreText(r, side) {
-  const runs = r[`${side}_team_runs`] ?? r[`${side}_runs`] ?? r[`${side}_score`];
+  const runs = r[`${side}_team_runs`] ?? r[`${side}_runs`];
   const wickets = r[`${side}_team_wickets`] ?? r[`${side}_wickets`];
   const overs = r[`${side}_team_overs`] ?? r[`${side}_overs`];
   if (runs === undefined || runs === null || runs === '') return '';
   let s = String(runs);
-  if (wickets !== undefined && wickets !== null && wickets !== '' && !String(runs).includes('/')) s += `/${wickets}`;
+  if (wickets !== undefined && wickets !== null && wickets !== '') s += `/${wickets}`;
   if (overs !== undefined && overs !== null && overs !== '') s += ` (${overs})`;
   return s;
 }
 
 function resultDescription(r) {
-  return r.result_description || r.result || r.result_text || r.result_summary || r.outcome || r.result_name || '';
+  return r.result_description || r.result || r.result_text || r.result_summary || r.competition_name || '';
 }
 
-function suttonTeamKey(m) {
-  const homeIsSutton = String(m.home_club_id || '') === '6168' || String(m.home_club_name || '').toLowerCase().includes('sutton');
-  const awayIsSutton = String(m.away_club_id || '') === '6168' || String(m.away_club_name || '').toLowerCase().includes('sutton');
-  const teamName = homeIsSutton ? m.home_team_name : awayIsSutton ? m.away_team_name : `${m.home_team_name || ''} ${m.away_team_name || ''}`;
-  return teamKey(teamName);
+function fixtureCard(m) {
+  const home = sideLabel(m.home_club_name, m.home_team_name);
+  const away = sideLabel(m.away_club_name, m.away_team_name);
+  const meta = [m.ground_name, m.competition_name].filter(Boolean).join(' · ') || 'Venue to be confirmed';
+  return `<article class="result-card" data-team="${itemTeamKey(m)}"><span class="tag">${escapeHtml(m.match_date || '')}${m.match_time ? ' · ' + escapeHtml(m.match_time) : ''}</span><h3>${escapeHtml(home)} v ${escapeHtml(away)}</h3><p>${escapeHtml(meta)}</p></article>`;
+}
+
+function resultCard(r) {
+  const home = sideLabel(r.home_club_name, r.home_team_name);
+  const away = sideLabel(r.away_club_name, r.away_team_name);
+  const hs = scoreText(r, 'home');
+  const as = scoreText(r, 'away');
+  const scoreline = `${home}${hs ? ' ' + hs : ''} — ${away}${as ? ' ' + as : ''}`;
+  return `<article class="result-card" data-team="${itemTeamKey(r)}"><span class="tag">${escapeHtml(r.match_date || '')}</span><h3>${escapeHtml(scoreline)}</h3><p>${escapeHtml(resultDescription(r))}</p></article>`;
+}
+
+function formatHomeFixture(m) {
+  const box = document.getElementById('home-next-match');
+  if (!box || !m) return;
+  const home = sideLabel(m.home_club_name, m.home_team_name);
+  const away = sideLabel(m.away_club_name, m.away_team_name);
+  const team = suttonTeamName(m) || 'Sutton CC';
+  box.innerHTML = `<div class="fixture-top"><span class="tag">Next match</span><span>${escapeHtml(m.match_date || '')}</span></div><h3>${escapeHtml(team)}</h3><p class="versus">${escapeHtml(home)} <strong>v</strong> ${escapeHtml(away)}</p><p class="fixture-meta">${escapeHtml([m.ground_name, m.match_time].filter(Boolean).join(' · ') || m.competition_name || 'Details on Play-Cricket')}</p>`;
+}
+
+function formatHomeResult(r) {
+  const box = document.getElementById('home-latest-result');
+  if (!box || !r) return;
+  const home = sideLabel(r.home_club_name, r.home_team_name);
+  const away = sideLabel(r.away_club_name, r.away_team_name);
+  const hs = scoreText(r, 'home');
+  const as = scoreText(r, 'away');
+  box.innerHTML = `<div class="fixture-top"><span class="tag">Recent result</span><span>${escapeHtml(r.match_date || '')}</span></div><h3>${escapeHtml(resultDescription(r) || 'Latest result')}</h3><p class="versus">${escapeHtml(home)}${hs ? ' ' + escapeHtml(hs) : ''} <strong>—</strong> ${escapeHtml(away)}${as ? ' ' + escapeHtml(as) : ''}</p><p class="fixture-meta">Live from Play-Cricket</p>`;
 }
 
 async function loadPlayCricket() {
   const fixtureBox = document.getElementById('live-fixtures');
   const resultBox = document.getElementById('live-results');
-  if (!fixtureBox && !resultBox) return;
+  const homeNext = document.getElementById('home-next-match');
+  const homeResult = document.getElementById('home-latest-result');
+  const teamPageKey = document.body.dataset.teamPage;
+  const teamFixtures = document.getElementById('team-next-fixtures');
+  const teamResults = document.getElementById('team-recent-results');
+  if (!fixtureBox && !resultBox && !homeNext && !homeResult && !teamPageKey) return;
 
   try {
     const res = await fetch(`data/play-cricket.json?v=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) throw new Error('No synced data yet');
     const data = await res.json();
-    const now = new Date();
-    now.setHours(0,0,0,0);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const allUpcoming = (data.matches || [])
+      .filter(m => String(m.status || '').toLowerCase() !== 'deleted' && parseUKDate(m.match_date) >= today)
+      .sort((a,b) => parseUKDate(a.match_date) - parseUKDate(b.match_date));
+    const allResults = (data.results || [])
+      .filter(r => String(r.status || '').toLowerCase() !== 'deleted')
+      .sort((a,b) => parseUKDate(b.match_date) - parseUKDate(a.match_date));
 
     if (fixtureBox) {
-      const upcoming = (data.matches || [])
-        .filter(m => String(m.status || '').toLowerCase() !== 'deleted' && parseUKDate(m.match_date) >= now)
-        .sort((a,b) => parseUKDate(a.match_date) - parseUKDate(b.match_date))
-        .slice(0, 30);
-
-      fixtureBox.innerHTML = upcoming.length ? upcoming.map(m => {
-        const home = sideLabel(m.home_club_name, m.home_team_name);
-        const away = sideLabel(m.away_club_name, m.away_team_name);
-        const key = suttonTeamKey(m);
-        const comp = m.competition_name || m.league_name || m.competition_type || '';
-        const venue = m.ground_name && m.ground_name !== 'Add New Ground' ? m.ground_name : 'Venue to be confirmed';
-        const dateTime = `${m.match_date || ''}${m.match_time ? ' · ' + m.match_time : ''}`;
-        return `<article class="result-card" data-team="${key}"><span class="tag">${escapeHtml(dateTime)}</span><h3>${escapeHtml(home)} v ${escapeHtml(away)}</h3><p>${escapeHtml(venue)}${comp ? ' · ' + escapeHtml(comp) : ''}</p></article>`;
-      }).join('') : '<article class="result-card"><h3>No upcoming fixtures found</h3><p>Play-Cricket is connected, but there are no future fixtures in the current season data.</p></article>';
+      fixtureBox.innerHTML = allUpcoming.length ? allUpcoming.slice(0, 18).map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures found</h3><p>There are no future fixtures currently published in Play-Cricket.</p></article>';
     }
+    if (resultBox && allResults.length) resultBox.innerHTML = allResults.slice(0, 18).map(resultCard).join('');
 
-    if (resultBox) {
-      const results = (data.results || [])
-        .filter(r => String(r.status || '').toLowerCase() !== 'deleted')
-        .sort((a,b) => parseUKDate(b.match_date) - parseUKDate(a.match_date))
-        .slice(0, 30);
-
-      resultBox.innerHTML = results.length ? results.map(r => {
-        const home = sideLabel(r.home_club_name, r.home_team_name);
-        const away = sideLabel(r.away_club_name, r.away_team_name);
-        const hs = scoreText(r, 'home');
-        const as = scoreText(r, 'away');
-        const key = suttonTeamKey(r);
-        const result = resultDescription(r);
-        const scoreline = `${home}${hs ? ' ' + hs : ''} — ${away}${as ? ' ' + as : ''}`;
-        const fallback = r.competition_name || r.league_name || '';
-        return `<article class="result-card" data-team="${key}"><span class="tag">${escapeHtml(r.match_date || '')}</span><h3>${escapeHtml(scoreline)}</h3><p>${escapeHtml(result || fallback || 'Result recorded on Play-Cricket')}</p></article>`;
-      }).join('') : '<article class="result-card"><h3>No recent results found</h3><p>Play-Cricket is connected, but no result summaries were returned for the current season.</p></article>';
+    if (homeNext) {
+      if (allUpcoming[0]) formatHomeFixture(allUpcoming[0]);
+      else homeNext.innerHTML = '<div class="fixture-top"><span class="tag">Next match</span><span>Play-Cricket</span></div><h3>No upcoming fixture</h3><p class="versus">No future fixture is currently published.</p>';
     }
+    if (homeResult && allResults[0]) formatHomeResult(allResults[0]);
 
+    const stamp = data.generated_at ? new Date(data.generated_at).toLocaleString('en-GB') : 'recently';
     const status = document.getElementById('play-cricket-status');
-    if (status) {
-      const stamp = data.generated_at ? new Date(data.generated_at).toLocaleString('en-GB') : 'recently';
-      status.innerHTML = `<span class="status-dot"></span>Live from Play-Cricket · updated ${escapeHtml(stamp)}`;
+    if (status) status.innerHTML = `<span class="status-dot"></span>Live from Play-Cricket · ${escapeHtml(stamp)}`;
+    const homeStatus = document.getElementById('home-play-cricket-status');
+    if (homeStatus) homeStatus.textContent = `Fixtures and results last synced from Play-Cricket: ${stamp}`;
+
+    if (teamPageKey) {
+      const upcoming = allUpcoming.filter(m => itemTeamKey(m) === teamPageKey).slice(0, 3);
+      const results = allResults.filter(r => itemTeamKey(r) === teamPageKey).slice(0, 3);
+      if (teamFixtures) teamFixtures.innerHTML = upcoming.length ? upcoming.map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures</h3><p>No future fixtures are currently published for this team.</p></article>';
+      if (teamResults) teamResults.innerHTML = results.length ? results.map(resultCard).join('') : '<article class="result-card"><h3>No recent results</h3><p>No results are currently available for this team.</p></article>';
+      const teamStatus = document.getElementById('team-play-cricket-status');
+      if (teamStatus) teamStatus.textContent = `Live Play-Cricket data · last synced ${stamp}`;
     }
+
     activateTeamFilters();
   } catch (err) {
-    const status = document.getElementById('play-cricket-status');
-    if (status) status.textContent = 'Play-Cricket data unavailable';
-    if (fixtureBox) fixtureBox.innerHTML = '<article class="result-card"><h3>Fixtures temporarily unavailable</h3><p>Please try again shortly.</p></article>';
-    if (resultBox) resultBox.innerHTML = '<article class="result-card"><h3>Results temporarily unavailable</h3><p>Please try again shortly.</p></article>';
-    console.info('Play-Cricket sync unavailable:', err.message);
+    console.info('Play-Cricket sync not active yet:', err.message);
   }
 }
 loadPlayCricket();
