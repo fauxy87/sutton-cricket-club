@@ -35,9 +35,7 @@ function suttonTeamName(item = {}) {
   return '';
 }
 
-function itemTeamKey(item = {}) {
-  return teamKey(suttonTeamName(item));
-}
+function itemTeamKey(item = {}) { return teamKey(suttonTeamName(item)); }
 
 function activateTeamFilters() {
   const filterButtons = document.querySelectorAll('.filter-btn');
@@ -134,6 +132,20 @@ function formatHomeResult(r) {
   box.innerHTML = `<div class="fixture-top"><span class="tag">Recent result</span><span>${escapeHtml(r.match_date || '')}</span></div><h3>${escapeHtml(resultDescription(r) || 'Latest result')}</h3><p class="versus">${escapeHtml(home)}${hs ? ' ' + escapeHtml(hs) : ''} <strong>—</strong> ${escapeHtml(away)}${as ? ' ' + escapeHtml(as) : ''}</p><p class="fixture-meta">Live from Play-Cricket</p>`;
 }
 
+function uniqueCompetitionCount(items) {
+  return new Set(items.map(x => x.competition_name).filter(Boolean)).size;
+}
+
+function renderSnapshot(el, results, upcoming, teams) {
+  if (!el) return;
+  const competitions = uniqueCompetitionCount([...results, ...upcoming]);
+  el.innerHTML = `
+    <div class="season-stat"><strong>${results.length}</strong><span>Results recorded</span></div>
+    <div class="season-stat"><strong>${upcoming.length}</strong><span>Fixtures remaining</span></div>
+    <div class="season-stat"><strong>${teams}</strong><span>Active teams</span></div>
+    <div class="season-stat"><strong>${competitions}</strong><span>Competitions</span></div>`;
+}
+
 async function loadPlayCricket() {
   const fixtureBox = document.getElementById('live-fixtures');
   const resultBox = document.getElementById('live-results');
@@ -142,7 +154,9 @@ async function loadPlayCricket() {
   const teamPageKey = document.body.dataset.teamPage;
   const teamFixtures = document.getElementById('team-next-fixtures');
   const teamResults = document.getElementById('team-recent-results');
-  if (!fixtureBox && !resultBox && !homeNext && !homeResult && !teamPageKey) return;
+  const homeSnapshot = document.getElementById('home-season-snapshot');
+  const teamSnapshot = document.getElementById('team-season-snapshot');
+  if (!fixtureBox && !resultBox && !homeNext && !homeResult && !teamPageKey && !homeSnapshot) return;
 
   try {
     const res = await fetch(`data/play-cricket.json?v=${Date.now()}`, { cache: 'no-store' });
@@ -158,9 +172,7 @@ async function loadPlayCricket() {
       .filter(r => String(r.status || '').toLowerCase() !== 'deleted')
       .sort((a,b) => parseUKDate(b.match_date) - parseUKDate(a.match_date));
 
-    if (fixtureBox) {
-      fixtureBox.innerHTML = allUpcoming.length ? allUpcoming.slice(0, 18).map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures found</h3><p>There are no future fixtures currently published in Play-Cricket.</p></article>';
-    }
+    if (fixtureBox) fixtureBox.innerHTML = allUpcoming.length ? allUpcoming.slice(0, 18).map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures found</h3><p>There are no future fixtures currently published in Play-Cricket.</p></article>';
     if (resultBox && allResults.length) resultBox.innerHTML = allResults.slice(0, 18).map(resultCard).join('');
 
     if (homeNext) {
@@ -169,6 +181,9 @@ async function loadPlayCricket() {
     }
     if (homeResult && allResults[0]) formatHomeResult(allResults[0]);
 
+    const activeTeams = new Set([...(data.matches || []), ...allResults].map(itemTeamKey).filter(k => k !== 'other')).size;
+    renderSnapshot(homeSnapshot, allResults, allUpcoming, activeTeams);
+
     const stamp = data.generated_at ? new Date(data.generated_at).toLocaleString('en-GB') : 'recently';
     const status = document.getElementById('play-cricket-status');
     if (status) status.innerHTML = `<span class="status-dot"></span>Live from Play-Cricket · ${escapeHtml(stamp)}`;
@@ -176,10 +191,11 @@ async function loadPlayCricket() {
     if (homeStatus) homeStatus.textContent = `Fixtures and results last synced from Play-Cricket: ${stamp}`;
 
     if (teamPageKey) {
-      const upcoming = allUpcoming.filter(m => itemTeamKey(m) === teamPageKey).slice(0, 3);
-      const results = allResults.filter(r => itemTeamKey(r) === teamPageKey).slice(0, 3);
-      if (teamFixtures) teamFixtures.innerHTML = upcoming.length ? upcoming.map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures</h3><p>No future fixtures are currently published for this team.</p></article>';
-      if (teamResults) teamResults.innerHTML = results.length ? results.map(resultCard).join('') : '<article class="result-card"><h3>No recent results</h3><p>No results are currently available for this team.</p></article>';
+      const upcoming = allUpcoming.filter(m => itemTeamKey(m) === teamPageKey);
+      const results = allResults.filter(r => itemTeamKey(r) === teamPageKey);
+      if (teamFixtures) teamFixtures.innerHTML = upcoming.length ? upcoming.slice(0,3).map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures</h3><p>No future fixtures are currently published for this team.</p></article>';
+      if (teamResults) teamResults.innerHTML = results.length ? results.slice(0,3).map(resultCard).join('') : '<article class="result-card"><h3>No recent results</h3><p>No results are currently available for this team.</p></article>';
+      renderSnapshot(teamSnapshot, results, upcoming, 1);
       const teamStatus = document.getElementById('team-play-cricket-status');
       if (teamStatus) teamStatus.textContent = `Live Play-Cricket data · last synced ${stamp}`;
     }
