@@ -1,0 +1,27 @@
+/* Homepage junior cricket and club news polish */
+#juniors{position:relative;overflow:hidden;background:radial-gradient(circle at 86% 18%,rgba(242,207,36,.12),transparent 24%),linear-gradient(135deg,#062f1c,#0b5d31);padding:86px 0}
+#juniors::after{content:"";position:absolute;right:-120px;bottom:-170px;width:420px;height:420px;border:1px solid rgba(255,255,255,.08);border-radius:50%;box-shadow:0 0 0 65px rgba(255,255,255,.02),0 0 0 130px rgba(255,255,255,.015)}
+#juniors .container{position:relative;z-index:1}
+#juniors h2{font-family:Montserrat,Arial,sans-serif;max-width:620px;margin:8px 0 18px}
+#juniors .split>div:first-child>p:not(.eyebrow){max-width:620px;color:#dce9e1;font-size:1.08rem}
+#juniors .btn{margin-top:16px}
+#juniors .junior-list{display:grid;gap:12px}
+#juniors .junior-list div{position:relative;display:grid;grid-template-columns:1fr;gap:5px;padding:20px 22px;border:1px solid rgba(255,255,255,.15);border-radius:14px;background:rgba(255,255,255,.07);box-shadow:0 10px 24px rgba(0,0,0,.08);backdrop-filter:blur(4px)}
+#juniors .junior-list div::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:4px;background:var(--yellow)}
+#juniors .junior-list strong{font-family:Montserrat,Arial,sans-serif;font-size:1.08rem;color:#fff}
+#juniors .junior-list span{color:#d6e5db;font-size:.92rem}
+#news{background:#fff}
+#news .news-grid{grid-template-columns:1.2fr 1fr 1fr;align-items:stretch}
+#news .news-card{position:relative;overflow:hidden;min-height:260px;border-radius:16px;box-shadow:0 9px 26px rgba(7,62,34,.06);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+#news .news-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(7,62,34,.11);border-color:#bfd4c7}
+#news .news-card.feature{display:grid;grid-template-columns:145px 1fr;background:linear-gradient(135deg,#f9fbf9,#eef5f0)}
+#news .news-image.badge-feature{display:grid;place-items:center;background:linear-gradient(145deg,var(--dark),var(--green));min-height:100%}
+#news .news-image.badge-feature img{display:block!important;width:92px;height:108px;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.2))}
+#news .news-body{padding:26px}
+#news .news-card h3{font-family:Montserrat,Arial,sans-serif;font-size:1.28rem;margin:14px 0 12px;color:var(--dark)}
+#news .news-card h3 a:hover{color:var(--green)}
+#news .news-card p{color:var(--muted);margin:0}
+#news .news-card:not(.feature)::after{content:"Read more →";position:absolute;left:26px;bottom:22px;color:var(--green);font-size:.85rem;font-weight:800}
+#news .news-card:not(.feature) .news-body{padding-bottom:58px}
+@media(max-width:900px){#juniors .split{grid-template-columns:1fr;gap:36px}#news .news-grid{grid-template-columns:1fr 1fr}#news .news-card.feature{grid-column:1/-1}}
+@media(max-width:620px){#juniors{padding:64px 0}#news .news-grid{grid-template-columns:1fr}#news .news-card.feature{display:block}#news .news-image.badge-feature{min-height:160px}#news .news-card{min-height:auto}#news .news-card:not(.feature){min-height:230px}}
