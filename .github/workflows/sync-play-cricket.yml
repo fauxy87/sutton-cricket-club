@@ -2,6 +2,10 @@ name: Sync Play-Cricket data
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-play-cricket.yml'
   schedule:
     - cron: '17 */6 * * *'
 
@@ -66,7 +70,6 @@ jobs:
               json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
           )
 
-          # Cache full scorecards so normal 6-hour syncs only request new/changed matches.
           cache_path = data_dir / 'play-cricket-scorecards.json'
           try:
               cache = json.loads(cache_path.read_text(encoding='utf-8'))
