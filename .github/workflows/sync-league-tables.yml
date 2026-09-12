@@ -33,7 +33,7 @@ jobs:
               raise SystemExit('Missing repository secret PLAY_CRICKET_API_TOKEN')
 
           season = datetime.now(timezone.utc).year
-          base = 'https://play-cricket.com/api/v2'
+          base = 'https://www.play-cricket.com/api/v2'
 
           def get(endpoint, params=None):
               params = dict(params or {})
@@ -78,7 +78,7 @@ jobs:
                       cname = str(comp.get('name') or '').strip()
                       if cname.lower() == wanted.lower() or wanted.lower() in cname.lower():
                           found[key] = {
-                              'division_id': comp.get('id'),
+                              'division_id': comp.get('id') or comp.get('division_id'),
                               'division_name': cname,
                               'league_id': league_id,
                               'league_name': league.get('name'),
@@ -88,7 +88,7 @@ jobs:
           tables = {}
           for key, target in targets.items():
               info = found.get(key)
-              if not info:
+              if not info or not info.get('division_id'):
                   tables[key] = {'target': target, 'error': 'Division not found'}
                   continue
               try:
