@@ -5,11 +5,25 @@ on:
     paths:
       - '.github/workflows/site-audit.yml'
 
+permissions:
+  contents: write
+
 jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove obsolete homepage stylesheet reference
+        shell: python
+        run: |
+          from pathlib import Path
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace('  <link rel="stylesheet" href="home-middle.css" />\n', '')
+          path.write_text(text, encoding='utf-8')
 
       - name: Check internal links and assets
         shell: python
@@ -77,3 +91,16 @@ jobs:
                   print(' | '.join(row))
               sys.exit(1)
           print('No broken internal links or asset references found.')
+
+      - name: Commit audit fix
+        run: |
+          if git diff --quiet; then
+            echo "No fixes required"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Remove obsolete homepage stylesheet reference"
+          git pull --rebase origin main
+          git push origin HEAD:main
