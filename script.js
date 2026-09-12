@@ -206,3 +206,55 @@ async function loadPlayCricket() {
   }
 }
 loadPlayCricket();
+
+function statValue(v, suffix='') {
+  return (v === null || v === undefined || v === '') ? '—' : `${v}${suffix}`;
+}
+
+async function loadPlayerStats() {
+  const battingBox = document.getElementById('batting-leaders');
+  const bowlingBox = document.getElementById('bowling-leaders');
+  const leadersBox = document.getElementById('stats-leaders');
+  const milestoneBox = document.getElementById('milestone-board');
+  const status = document.getElementById('stats-status');
+  if (!battingBox && !bowlingBox && !leadersBox && !milestoneBox) return;
+
+  try {
+    const res = await fetch(`data/player-stats.json?v=${Date.now()}`, {cache:'no-store'});
+    if (!res.ok) throw new Error('Statistics have not been generated yet');
+    const data = await res.json();
+    const batting = data.batting || [];
+    const bowling = data.bowling || [];
+
+    if (leadersBox) {
+      const topBat = batting[0];
+      const topBowl = bowling[0];
+      leadersBox.innerHTML = `
+        <article class="record-feature"><span>Leading run scorer</span><strong>${escapeHtml(topBat?.runs ?? '—')}</strong><h3>${escapeHtml(topBat?.name || 'No data yet')}</h3><p>High score ${escapeHtml(topBat?.high_score || '—')}</p></article>
+        <article class="record-feature"><span>Leading wicket taker</span><strong>${escapeHtml(topBowl?.wickets ?? '—')}</strong><h3>${escapeHtml(topBowl?.name || 'No data yet')}</h3><p>Best ${escapeHtml(topBowl?.best || '—')}</p></article>
+        <article class="record-feature"><span>Highest score</span><strong>${escapeHtml((batting.slice().sort((a,b)=>parseInt(String(b.high_score||0))-parseInt(String(a.high_score||0)))[0]||{}).high_score || '—')}</strong><h3>${escapeHtml((batting.slice().sort((a,b)=>parseInt(String(b.high_score||0))-parseInt(String(a.high_score||0)))[0]||{}).name || 'No data yet')}</h3><p>From synced scorecards</p></article>`;
+    }
+
+    if (battingBox) {
+      battingBox.innerHTML = batting.slice(0,10).map((p,i)=>`<div class="stat-row"><span><strong>${i+1}. ${escapeHtml(p.name)}</strong><small>${p.innings} inns · HS ${escapeHtml(p.high_score)}</small></span><span><strong>${p.runs}</strong><small>Avg ${statValue(p.average)} · SR ${statValue(p.strike_rate)}</small></span></div>`).join('') || '<div class="stat-row"><span>No batting data yet</span></div>';
+    }
+
+    if (bowlingBox) {
+      bowlingBox.innerHTML = bowling.slice(0,10).map((p,i)=>`<div class="stat-row"><span><strong>${i+1}. ${escapeHtml(p.name)}</strong><small>${escapeHtml(p.overs)} overs · Best ${escapeHtml(p.best)}</small></span><span><strong>${p.wickets}</strong><small>Avg ${statValue(p.average)} · Econ ${statValue(p.economy)}</small></span></div>`).join('') || '<div class="stat-row"><span>No bowling data yet</span></div>';
+    }
+
+    if (milestoneBox) {
+      const milestones = batting.filter(p => parseInt(String(p.high_score||0)) >= 50).sort((a,b)=>parseInt(String(b.high_score))-parseInt(String(a.high_score))).slice(0,8);
+      milestoneBox.innerHTML = milestones.length ? milestones.map(p=>`<div class="board-row"><span>${escapeHtml(p.name)}</span><strong>${escapeHtml(p.high_score)} high score</strong></div>`).join('') : '<div class="board-row"><span>No 50+ scores found yet</span><strong>2026</strong></div>';
+    }
+
+    if (status) {
+      const stamp = data.generated_at ? new Date(data.generated_at).toLocaleString('en-GB') : 'recently';
+      status.textContent = `${data.scorecards_processed || 0} scorecards processed · updated ${stamp}`;
+    }
+  } catch (err) {
+    if (status) status.textContent = 'Statistics will appear after the next Play-Cricket sync.';
+    console.info('Player stats not active yet:', err.message);
+  }
+}
+loadPlayerStats();
