@@ -1,0 +1,24 @@
+/* Homepage statistics dashboard */
+.season-snapshot-section,.section:has(#home-league-positions),.section:has(#home-player-leaders){position:relative}
+.season-snapshot-section{padding:68px 0;background:linear-gradient(180deg,#fff,#f8faf8);border-bottom:1px solid var(--line)}
+.season-snapshot-section .section-heading,.section:has(#home-league-positions) .section-heading,.section:has(#home-player-leaders) .section-heading{margin-bottom:24px}
+.season-snapshot{gap:16px}
+.season-stat{position:relative;overflow:hidden;min-height:142px;padding:24px;border:1px solid #dce5df;border-radius:16px;box-shadow:0 8px 24px rgba(7,62,34,.055);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.season-stat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--yellow)}
+a.season-stat:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(7,62,34,.1);border-color:#b9d0c0}
+.season-stat strong{font-family:Montserrat,Arial,sans-serif;font-size:2.55rem;letter-spacing:-.04em;color:var(--dark)}
+.season-stat>span:first-child{font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--green)}
+.season-stat span{margin-top:9px}.season-stat small{display:block;margin-top:8px;color:var(--muted);font-weight:700}.season-stat b{display:block;margin-top:13px;color:var(--green);font-size:.86rem}
+#home-league-positions{grid-template-columns:repeat(2,minmax(0,1fr));max-width:820px}
+#home-league-positions .season-stat{min-height:180px;padding:28px}
+#home-league-positions .season-stat strong{font-size:3.2rem;color:var(--green)}
+#home-player-leaders{gap:16px}
+.home-leader-card{position:relative;overflow:hidden;min-height:210px;padding:26px;border-radius:16px;box-shadow:0 8px 24px rgba(7,62,34,.06);transition:transform .18s ease,box-shadow .18s ease}
+.home-leader-card::after{content:"";position:absolute;right:-34px;top:-34px;width:105px;height:105px;border-radius:50%;background:rgba(242,207,36,.12)}
+.home-leader-card:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(7,62,34,.11)}
+.home-leader-card>span{display:block;color:var(--green);font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.home-leader-card>strong{font-family:Montserrat,Arial,sans-serif;font-size:3rem;line-height:1;margin:18px 0 10px;color:var(--dark)}
+.home-leader-card h3{font-size:1.2rem;margin:0 0 8px}.home-leader-card h3 a{color:var(--green)}.home-leader-card h3 a:hover{text-decoration:underline}.home-leader-card p{margin:0;color:var(--muted);font-weight:600}
+#home-leaders-status{margin-top:18px;color:var(--muted);font-size:.86rem}
+@media(max-width:850px){#home-league-positions{grid-template-columns:1fr 1fr}.season-stat{min-height:132px}.home-leader-card{min-height:190px}}
+@media(max-width:620px){.season-snapshot-section{padding:52px 0}#home-league-positions{grid-template-columns:1fr}.season-snapshot{grid-template-columns:1fr 1fr}.season-stat{padding:20px}.season-stat strong{font-size:2.15rem}#home-league-positions .season-stat{min-height:150px}#home-league-positions .season-stat strong{font-size:2.7rem}.home-leader-card{min-height:auto;padding:22px}}
