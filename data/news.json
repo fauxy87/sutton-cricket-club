@@ -1,0 +1,56 @@
+{
+  "updated_at": "2026-09-13",
+  "articles": [
+    {
+      "id": "colin-coulson-memorial-275",
+      "title": "£275 raised in memory of Colin Coulson",
+      "date": "2026-08-23",
+      "category": "community",
+      "category_label": "Community",
+      "summary": "A memorial cricket match raised £275 for the British Heart Foundation in memory of Colin Coulson.",
+      "lead": "Players, friends and supporters came together for a memorial cricket match, raising £275 for the British Heart Foundation in memory of Colin Coulson.",
+      "body": [
+        "The club would like to thank everyone who played, supported and contributed to the memorial match.",
+        "A total of £275 was raised for the British Heart Foundation in Colin’s memory."
+      ],
+      "links": [
+        {"label": "More club news", "href": "news.html"},
+        {"label": "Contact the club", "href": "join.html"}
+      ]
+    },
+    {
+      "id": "telugu-seven-wicket-win",
+      "title": "Sutton win by seven wickets",
+      "date": "2026-08-15",
+      "category": "match",
+      "category_label": "Match Report",
+      "team": "1st XI",
+      "summary": "James Nuttall and Michael Grady led the chase after Telugu Association were restricted to 80.",
+      "lead": "Telugu Association were restricted to 80 before Sutton reached 81/3. James Nuttall scored 26 and Michael Grady finished 21 not out.",
+      "body": [
+        "Sutton completed the chase for the loss of three wickets to secure a seven-wicket victory."
+      ],
+      "links": [
+        {"label": "Fixtures & results", "href": "fixtures.html"},
+        {"label": "Player statistics", "href": "honours.html"}
+      ]
+    },
+    {
+      "id": "grady-century-bluntisham",
+      "title": "Grady century powers Sutton to huge victory",
+      "date": "2026-08-08",
+      "category": "match",
+      "category_label": "Match Report",
+      "team": "1st XI",
+      "summary": "Michael Grady hit an unbeaten 127 as Sutton posted 288/3 before dismissing Bluntisham for 87.",
+      "lead": "Michael Grady hit 127* as Sutton made 288/3. James Nuttall scored 80 and Richard Goodjohn 50*. Bluntisham were dismissed for 87 as Sutton won by 201 runs.",
+      "body": [
+        "It was a dominant Sutton performance, with three major batting contributions setting up a 201-run victory."
+      ],
+      "links": [
+        {"label": "Fixtures & results", "href": "fixtures.html"},
+        {"label": "Player statistics", "href": "honours.html"}
+      ]
+    }
+  ]
+}
