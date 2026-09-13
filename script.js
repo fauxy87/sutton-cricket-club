@@ -332,3 +332,14 @@ async function loadPlayerStats() {
   }
 }
 loadPlayerStats();
+
+/* Sutton CC social links */
+(() => {
+  const footerContainer = document.querySelector('footer .container');
+  if (!footerContainer || footerContainer.querySelector('.site-social-links')) return;
+  const social = document.createElement('nav');
+  social.className = 'site-social-links';
+  social.setAttribute('aria-label', 'Sutton Cricket Club social media');
+  social.innerHTML = '<a href="https://www.facebook.com/suttoncricketclub" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/suttoncricketclub1887/" target="_blank" rel="noopener">Instagram</a><a href="https://x.com/SuttonCCcambs" target="_blank" rel="noopener">X</a>';
+  footerContainer.appendChild(social);
+})();

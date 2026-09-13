@@ -59,3 +59,14 @@ html{scroll-behavior:smooth;scroll-padding-top:96px}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+
+/* Club social links */
+.site-social-links{display:flex;gap:8px;flex-wrap:wrap;margin-left:18px}
+.site-social-links a,.contact-socials a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 12px;border-radius:999px;font-weight:800;font-size:.84rem}
+.site-social-links a{border:1px solid rgba(255,255,255,.18);color:#fff;background:rgba(255,255,255,.06)}
+.site-social-links a:hover,.site-social-links a:focus-visible{background:var(--yellow);color:var(--dark);border-color:var(--yellow)}
+.contact-socials{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.contact-socials a{border:1px solid var(--line);background:#f7f9f7;color:var(--green)}
+.contact-socials a:hover,.contact-socials a:focus-visible{background:var(--green);color:#fff;border-color:var(--green)}
+@media(max-width:850px){.site-social-links{margin:14px 0 0;gap:7px}.site-social-links a{min-height:38px;padding:7px 11px}}
