@@ -1,0 +1,79 @@
+name: Publish news article
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  publish:
+    if: github.actor == github.repository_owner && startsWith(github.event.issue.title, '[NEWS PUBLISH]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Publish article
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          body = os.environ.get('ISSUE_BODY', '')
+          match = re.search(r'<!-- SUTTON_NEWS_JSON_START -->\s*```json\s*(.*?)\s*```\s*<!-- SUTTON_NEWS_JSON_END -->', body, re.S)
+          if not match:
+              raise SystemExit('No Sutton news payload found in issue body')
+
+          article = json.loads(match.group(1))
+          required = ['id', 'title', 'date', 'category', 'category_label', 'summary', 'lead', 'body']
+          missing = [key for key in required if key not in article]
+          if missing:
+              raise SystemExit(f'Missing required fields: {missing}')
+
+          allowed_categories = {'club', 'match', 'community', 'juniors', 'women', 'event'}
+          if article['category'] not in allowed_categories:
+              raise SystemExit('Invalid news category')
+          if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', str(article['id'])):
+              raise SystemExit('Invalid article id')
+          if not isinstance(article['body'], list) or not all(isinstance(x, str) for x in article['body']):
+              raise SystemExit('Article body must be a list of paragraphs')
+          if 'links' in article and (not isinstance(article['links'], list) or not all(isinstance(x, dict) for x in article['links'])):
+              raise SystemExit('Article links are invalid')
+
+          path = Path('data/news.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          articles = data.get('articles', [])
+          if any(str(existing.get('id')) == str(article['id']) for existing in articles):
+              raise SystemExit(f"Article id already exists: {article['id']}")
+
+          data['updated_at'] = datetime.now(timezone.utc).date().isoformat()
+          data['articles'] = [article] + articles
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+
+      - name: Commit news article
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/news.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish news: ${{ github.event.issue.title }}"
+          git push
+
+      - name: Confirm and close request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --body "Published to data/news.json. The website will update after GitHub Pages redeploys."
+          gh issue close "$ISSUE_NUMBER" --reason completed
