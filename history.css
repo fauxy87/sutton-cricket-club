@@ -1,0 +1,31 @@
+/* Club history page */
+.history-hero{position:relative;overflow:hidden;padding:94px 0 82px;background:radial-gradient(circle at 82% 18%,rgba(242,207,36,.18),transparent 28%),linear-gradient(135deg,#062f1c,#0b5d31);color:#fff}
+.history-hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:44px;align-items:center}
+.history-hero h1{font-family:Montserrat,Arial,sans-serif;letter-spacing:-.04em;margin:10px 0 20px}
+.history-hero h1 span{color:var(--yellow)}
+.history-hero p:not(.eyebrow){max-width:760px;color:#e3eee6;font-size:1.16rem;line-height:1.65}
+.history-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.history-badge{display:grid;place-items:center;min-height:320px;border:1px solid rgba(255,255,255,.14);border-radius:24px;background:rgba(255,255,255,.07);box-shadow:0 18px 42px rgba(0,0,0,.16)}
+.history-badge img{display:block;max-width:230px;width:66%;height:auto;filter:drop-shadow(0 16px 24px rgba(0,0,0,.28))}
+.history-copy{max-width:880px;font-size:1.08rem;line-height:1.75}
+.history-copy p{margin:0 0 18px}
+.history-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.history-card{padding:27px;border:1px solid #dfe7e1;border-radius:17px;background:#fff;box-shadow:0 10px 28px rgba(7,62,34,.06)}
+.history-card span{display:block;color:var(--muted);font-size:.76rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.history-card strong{display:block;margin:15px 0 10px;color:var(--dark);font:800 1.9rem/1.05 Montserrat,Arial,sans-serif}
+.history-card p{margin:0;color:var(--muted)}
+.history-link-panel{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-top:24px;padding:27px;border-radius:17px;background:linear-gradient(135deg,#eef5f0,#fff);border:1px solid #d8e4db}
+.history-link-panel h3{margin:0 0 7px;color:var(--dark);font:800 1.35rem/1.2 Montserrat,Arial,sans-serif}
+.history-link-panel p{margin:0;max-width:710px;color:var(--muted)}
+.history-today>p{max-width:860px;font-size:1.06rem;color:var(--muted)}
+.history-links{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:25px}
+.history-links a{display:block;padding:21px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 7px 20px rgba(7,62,34,.05);transition:transform .18s ease,box-shadow .18s ease}
+.history-links a:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(7,62,34,.09)}
+.history-links strong{display:block;color:var(--green);font-family:Montserrat,Arial,sans-serif;margin-bottom:5px}
+.history-links span{color:var(--muted);font-size:.9rem}
+.history-contribute{background:linear-gradient(135deg,#073e22,#0b5d31);color:#fff;padding:70px 0}
+.history-contribute-inner{display:flex;align-items:center;justify-content:space-between;gap:32px}
+.history-contribute h2{font-family:Montserrat,Arial,sans-serif;margin:8px 0 12px}
+.history-contribute p:not(.eyebrow){max-width:780px;color:#dfebe3;margin:0}
+@media(max-width:900px){.history-hero-grid,.history-grid,.history-links{grid-template-columns:1fr}.history-badge{min-height:240px}.history-badge img{max-width:180px}.history-link-panel,.history-contribute-inner{align-items:flex-start;flex-direction:column}}
+@media(max-width:560px){.history-hero{padding:72px 0 64px}.history-actions{display:grid;grid-template-columns:1fr}.history-actions .btn{width:100%;text-align:center}.history-card,.history-link-panel{padding:21px}}
