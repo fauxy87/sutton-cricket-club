@@ -2,28 +2,33 @@ import crypto from 'node:crypto';
 
 const COOKIE_NAME = 'sutton_admin_session';
 
-function b64url(input) {
-  return Buffer.from(input).toString('base64url');
+function key() {
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) throw new Error('SESSION_SECRET is not configured');
+  return crypto.createHash('sha256').update(secret).digest();
 }
 
 export function signSession(payload) {
-  const secret = process.env.SESSION_SECRET;
-  if (!secret) throw new Error('SESSION_SECRET is not configured');
-  const body = b64url(JSON.stringify(payload));
-  const sig = crypto.createHmac('sha256', secret).update(body).digest('base64url');
-  return `${body}.${sig}`;
+  const iv = crypto.randomBytes(12);
+  const cipher = crypto.createCipheriv('aes-256-gcm', key(), iv);
+  const plaintext = Buffer.from(JSON.stringify(payload), 'utf8');
+  const encrypted = Buffer.concat([cipher.update(plaintext), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  return [iv.toString('base64url'), encrypted.toString('base64url'), tag.toString('base64url')].join('.');
 }
 
 export function verifySession(value) {
   try {
     if (!value) return null;
-    const secret = process.env.SESSION_SECRET;
-    if (!secret) return null;
-    const [body, sig] = value.split('.');
-    if (!body || !sig) return null;
-    const expected = crypto.createHmac('sha256', secret).update(body).digest('base64url');
-    if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return null;
-    const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
+    const [ivPart, dataPart, tagPart] = String(value).split('.');
+    if (!ivPart || !dataPart || !tagPart) return null;
+    const decipher = crypto.createDecipheriv('aes-256-gcm', key(), Buffer.from(ivPart, 'base64url'));
+    decipher.setAuthTag(Buffer.from(tagPart, 'base64url'));
+    const decrypted = Buffer.concat([
+      decipher.update(Buffer.from(dataPart, 'base64url')),
+      decipher.final()
+    ]);
+    const payload = JSON.parse(decrypted.toString('utf8'));
     if (!payload.exp || Date.now() > payload.exp) return null;
     return payload;
   } catch {
