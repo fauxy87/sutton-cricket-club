@@ -8,8 +8,16 @@ export default function handler(req, res) {
     res.status(500).send('GitHub login is not configured yet.');
     return;
   }
+
+  const canonical = new URL(appUrl);
+  const forwardedHost = String(req.headers['x-forwarded-host'] || req.headers.host || '').split(',')[0].trim();
+  if (forwardedHost && forwardedHost.toLowerCase() !== canonical.host.toLowerCase()) {
+    res.redirect(302, `${canonical.origin}/api/login`);
+    return;
+  }
+
   const state = crypto.randomBytes(24).toString('hex');
-  const callback = `${appUrl.replace(/\/$/, '')}/api/callback`;
+  const callback = `${canonical.origin}/api/callback`;
   const url = new URL('https://github.com/login/oauth/authorize');
   url.searchParams.set('client_id', clientId);
   url.searchParams.set('redirect_uri', callback);
