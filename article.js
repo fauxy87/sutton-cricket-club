@@ -1,4 +1,7 @@
 (() => {
+  const style=document.createElement('style');
+  style.textContent='.article-image{margin:0 0 28px}.article-image img{display:block;width:100%;max-height:560px;object-fit:cover;border-radius:16px}@media(max-width:600px){.article-image img{border-radius:12px}}';
+  document.head.appendChild(style);
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const id = new URLSearchParams(location.search).get('id');
   const title = document.getElementById('article-title');
