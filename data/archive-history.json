@@ -1,13 +1,9 @@
 {
-  "source": "Historical Sutton CC material recovered from the club's former Pitchero website",
+  "source": "Historical Sutton CC material recovered from the club's former website and club records",
   "photo_albums": [
     {"title":"Presentation Evening 2019","images":18,"date":"2019-10-17","url":"https://www.pitchero.com/clubs/suttoncc/photos/presentation-evening-2019-907659.html"},
     {"title":"Sutton CC images","images":9,"date":"2018-04-16","url":"https://www.pitchero.com/clubs/suttoncc/photos"}
   ],
-  "documents": [
-    {"title":"Signing up with Play Cricket","date":"2024-06-14","type":"PDF guide","note":"Historical Sutton CC guide to registering with Play-Cricket. Personal information requested by the old guide is not reproduced in this archive.","url":"https://www.pitchero.com/clubs/suttoncc/news/signing-up-with-play-cricket-2856480.html"}
-  ],
-  "documents_status":{"listed_on_pitchero":12,"verified_so_far":1,"note":"Recovery is ongoing. Sensitive contact, banking and payment information will not be copied."},
   "vice_presidents": {
     "status":"verified-from-former-pitchero-page",
     "role_summary":"Vice Presidents support the continuation and future success of Sutton Cricket Club through goodwill, attendance, advice, practical help and support within the local and cricketing communities. Appointment makes a Vice President an Honorary Member. New Vice Presidents are considered by the General Committee and confirmed at the next AGM, with appointments automatically renewed unless the Vice President requests otherwise.",
