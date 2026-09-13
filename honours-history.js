@@ -2,6 +2,7 @@
   const tableBody = document.getElementById('historical-honours-body');
   const search = document.getElementById('honours-search');
   const year = document.getElementById('honours-year');
+  const type = document.getElementById('honours-type');
   const count = document.getElementById('honours-count');
   const summary = document.getElementById('honours-summary');
   const leaderboard = document.getElementById('honours-leaderboard');
@@ -9,6 +10,13 @@
 
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const seasonFromDate = value => `20${String(value || '').slice(-2)}`;
+  const performanceType = value => {
+    const text = String(value || '');
+    if (/Field Dismissals/i.test(text)) return 'fielding';
+    if (/^\d+ for \d+$/i.test(text)) return 'bowling';
+    if (/^\d+\*?$/.test(text)) return 'batting';
+    return 'other';
+  };
 
   let records = [];
 
@@ -31,7 +39,6 @@
 
   const renderSummary = () => {
     if (!summary || !records.length) return;
-
     const entryCounts = new Map();
     const centuryCounts = new Map();
     let highestScore = null;
@@ -39,27 +46,22 @@
 
     records.forEach(record => {
       entryCounts.set(record.name, (entryCounts.get(record.name) || 0) + 1);
-
       const batting = String(record.performance || '').match(/^(\d+)(\*)?$/);
       if (batting) {
         const runs = Number(batting[1]);
         if (!highestScore || runs > highestScore.runs) highestScore = {...record, runs};
         if (runs >= 100) centuryCounts.set(record.name, (centuryCounts.get(record.name) || 0) + 1);
       }
-
       const bowling = String(record.performance || '').match(/^(\d+) for (\d+)$/i);
       if (bowling) {
         const wickets = Number(bowling[1]);
         const runs = Number(bowling[2]);
-        if (!bestBowling || wickets > bestBowling.wickets || (wickets === bestBowling.wickets && runs < bestBowling.runs)) {
-          bestBowling = {...record, wickets, runs};
-        }
+        if (!bestBowling || wickets > bestBowling.wickets || (wickets === bestBowling.wickets && runs < bestBowling.runs)) bestBowling = {...record, wickets, runs};
       }
     });
 
     const topEntry = [...entryCounts.entries()].sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0];
     const topCentury = [...centuryCounts.entries()].sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0];
-
     summary.innerHTML = `
       <article class="archive-summary-card"><span>Most honours entries</span><strong>${escapeHtml(topEntry?.[1] ?? '—')}</strong><p>${escapeHtml(topEntry?.[0] || 'No data')}</p></article>
       <article class="archive-summary-card"><span>Highest score</span><strong>${escapeHtml(highestScore?.performance || '—')}</strong><p>${escapeHtml(highestScore ? `${highestScore.name} v ${highestScore.opposition}` : 'No data')}</p></article>
@@ -70,10 +72,12 @@
   const render = () => {
     const q = String(search?.value || '').trim().toLowerCase();
     const selectedYear = year?.value || 'all';
+    const selectedType = type?.value || 'all';
     const filtered = records.filter(record => {
       const season = seasonFromDate(record.date);
+      const category = performanceType(record.performance);
       const haystack = `${record.name} ${record.performance} ${record.opposition} ${record.date}`.toLowerCase();
-      return (selectedYear === 'all' || season === selectedYear) && (!q || haystack.includes(q));
+      return (selectedYear === 'all' || season === selectedYear) && (selectedType === 'all' || category === selectedType) && (!q || haystack.includes(q));
     });
 
     if (count) count.textContent = `${filtered.length} record${filtered.length === 1 ? '' : 's'} shown`;
@@ -84,7 +88,7 @@
         <td data-label="Performance"><span class="honours-performance">${escapeHtml(record.performance)}</span></td>
         <td data-label="Opposition">${escapeHtml(record.opposition)}</td>
         <td data-label="Date">${escapeHtml(record.date)}</td>
-      </tr>`).join('') : '<tr><td colspan="5" class="honours-empty">No honours-board records match that search.</td></tr>';
+      </tr>`).join('') : '<tr><td colspan="5" class="honours-empty">No honours-board records match those filters.</td></tr>';
   };
 
   fetch(`data/honours-history.json?v=${Date.now()}`, {cache:'no-store'})
@@ -112,4 +116,5 @@
 
   search?.addEventListener('input', render);
   year?.addEventListener('change', render);
+  type?.addEventListener('change', render);
 })();
