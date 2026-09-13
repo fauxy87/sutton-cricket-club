@@ -6,13 +6,14 @@
     return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   };
   const articleHref = item => `article.html?id=${encodeURIComponent(item.id)}`;
+  const imageHtml = (item,cls) => item.image ? `<a class="${cls}" href="${articleHref(item)}"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.image_alt || item.title || 'Sutton Cricket Club news')}"></a>` : '';
 
   function newsCard(item) {
-    return `<article class="news-list-card" data-news-card="${escapeHtml(item.category || 'club')}"><div class="news-list-body"><div class="news-card-meta"><span class="tag">${escapeHtml(item.category_label || 'Club News')}</span><time datetime="${escapeHtml(item.date || '')}">${escapeHtml(formatDate(item.date))}</time></div><h2><a href="${articleHref(item)}">${escapeHtml(item.title)}</a></h2><p>${escapeHtml(item.summary || '')}</p><a class="text-link" href="${articleHref(item)}">Read story →</a></div></article>`;
+    return `<article class="news-list-card" data-news-card="${escapeHtml(item.category || 'club')}">${imageHtml(item,'news-list-image')}<div class="news-list-body"><div class="news-card-meta"><span class="tag">${escapeHtml(item.category_label || 'Club News')}</span><time datetime="${escapeHtml(item.date || '')}">${escapeHtml(formatDate(item.date))}</time></div><h2><a href="${articleHref(item)}">${escapeHtml(item.title)}</a></h2><p>${escapeHtml(item.summary || '')}</p><a class="text-link" href="${articleHref(item)}">Read story →</a></div></article>`;
   }
 
   function homeCard(item,index) {
-    return `<article class="news-card${index===0?' feature':''}"><div class="news-body"><div class="news-card-meta"><span class="tag">${escapeHtml(item.team || item.category_label || 'Club')}</span><time datetime="${escapeHtml(item.date || '')}">${escapeHtml(formatDate(item.date))}</time></div><h3><a href="${articleHref(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.summary || '')}</p></div></article>`;
+    return `<article class="news-card${index===0?' feature':''}">${imageHtml(item,'news-home-image')}<div class="news-body"><div class="news-card-meta"><span class="tag">${escapeHtml(item.team || item.category_label || 'Club')}</span><time datetime="${escapeHtml(item.date || '')}">${escapeHtml(formatDate(item.date))}</time></div><h3><a href="${articleHref(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.summary || '')}</p></div></article>`;
   }
 
   function activateFilters() {
