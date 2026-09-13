@@ -11,5 +11,10 @@
     {"title":"Signing up with Play Cricket","date":"2024-06-14","type":"PDF guide","note":"Historical Sutton CC guide to registering with Play-Cricket. Personal information requested by the old guide is not reproduced in this archive.","url":"https://www.pitchero.com/clubs/suttoncc/news/signing-up-with-play-cricket-2856480.html"}
   ],
   "documents_status":{"listed_on_pitchero":12,"verified_so_far":1,"note":"Recovery is ongoing. Sensitive contact, banking and payment information will not be copied."},
-  "vice_presidents":{"status":"source-found-names-not-yet-recovered","note":"The former Sutton CC Pitchero site contains a Vice Presidents section, but the names have not yet been recovered reliably enough to publish."}
+  "vice_presidents": {
+    "status":"verified-from-former-pitchero-page",
+    "role_summary":"Vice Presidents support the continuation and future success of Sutton Cricket Club through goodwill, attendance, advice, practical help and support within the local and cricketing communities. Appointment makes a Vice President an Honorary Member. New Vice Presidents are considered by the General Committee and confirmed at the next AGM, with appointments automatically renewed unless the Vice President requests otherwise.",
+    "names":["Eddie Frear","Andy Rutterford","Bob Harker","Lester Newell","Nigel Anstead","Richard Powell","Stan Darby","Tony Harnwell","Graham Mayle","Rod Oliver","Chris Robinson","Sam Faux","John Hundley","Robbie Braybrooke","Jon Megginson","Martin Paul","Alan Rutterford","Michael Few","Mike Grady Snr","Mike Grady Jnr","Dan Grady","Craig Faux","James Nuttall","David Frear"],
+    "privacy_note":"Contact details from historical membership records are not published."
+  }
 }
