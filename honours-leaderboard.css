@@ -9,5 +9,7 @@
 .honours-leader-row:nth-child(2) .honours-rank,.honours-leader-row:nth-child(3) .honours-rank{background:#d8c681;color:var(--dark)}
 .honours-leader-row strong{color:var(--dark);font-family:Montserrat,Arial,sans-serif}
 .honours-leader-row>span:last-child{color:var(--green);font-weight:800;white-space:nowrap}
-@media(max-width:800px){.honours-leaderboard-panel{grid-template-columns:1fr;gap:18px}}
+.honours-searchbar{grid-template-columns:minmax(0,1fr) 170px 170px}
+@media(max-width:800px){.honours-leaderboard-panel{grid-template-columns:1fr;gap:18px}.honours-searchbar{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.honours-searchbar{grid-template-columns:1fr}}
 @media(max-width:520px){.honours-leaderboard-panel{padding:20px}.honours-leader-row{grid-template-columns:36px minmax(0,1fr) auto;gap:9px;padding:8px}.honours-rank{width:30px;height:30px}.honours-leader-row strong,.honours-leader-row>span:last-child{font-size:.88rem}}
