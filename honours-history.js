@@ -4,12 +4,30 @@
   const year = document.getElementById('honours-year');
   const count = document.getElementById('honours-count');
   const summary = document.getElementById('honours-summary');
+  const leaderboard = document.getElementById('honours-leaderboard');
   if (!tableBody) return;
 
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const seasonFromDate = value => `20${String(value || '').slice(-2)}`;
 
   let records = [];
+
+  const playerCounts = () => {
+    const counts = new Map();
+    records.forEach(record => counts.set(record.name, (counts.get(record.name) || 0) + 1));
+    return [...counts.entries()].sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  };
+
+  const renderLeaderboard = () => {
+    if (!leaderboard || !records.length) return;
+    const leaders = playerCounts().slice(0,10);
+    leaderboard.innerHTML = leaders.map(([name, entries], index) => `
+      <div class="honours-leader-row">
+        <span class="honours-rank">${index + 1}</span>
+        <strong>${escapeHtml(name)}</strong>
+        <span>${entries} entr${entries === 1 ? 'y' : 'ies'}</span>
+      </div>`).join('');
+  };
 
   const renderSummary = () => {
     if (!summary || !records.length) return;
@@ -82,12 +100,14 @@
         return new Date(2000 + by,bm-1,bd) - new Date(2000 + ay,am-1,ad);
       });
       renderSummary();
+      renderLeaderboard();
       render();
     })
     .catch(() => {
       tableBody.innerHTML = '<tr><td colspan="5" class="honours-empty">Historical honours records are temporarily unavailable.</td></tr>';
       if (count) count.textContent = 'Archive unavailable';
       if (summary) summary.innerHTML = '<p class="honours-empty">Archive summary temporarily unavailable.</p>';
+      if (leaderboard) leaderboard.innerHTML = '<p class="honours-empty">Leaderboard temporarily unavailable.</p>';
     });
 
   search?.addEventListener('input', render);
