@@ -1,4 +1,7 @@
 (() => {
+  const style=document.createElement('style');
+  style.textContent='.news-list-image{display:block;width:100%;height:210px;overflow:hidden;background:#eef4ef}.news-list-image img{display:block;width:100%;height:100%;object-fit:cover}.news-home-image{display:block;width:100%;height:180px;overflow:hidden;background:#eef4ef}.news-home-image img{display:block;width:100%;height:100%;object-fit:cover}#news .news-card.feature:has(.news-home-image){grid-template-columns:145px 1fr}.news-card.feature .news-home-image{height:100%;min-height:260px}@media(max-width:900px){.news-card.feature .news-home-image{height:220px;min-height:0}}@media(max-width:620px){.news-list-image{height:200px}.news-home-image,.news-card.feature .news-home-image{height:190px;min-height:0}}';
+  document.head.appendChild(style);
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const formatDate = value => {
     if (!value) return '';
@@ -13,7 +16,8 @@
   }
 
   function homeCard(item,index) {
-    return `<article class="news-card${index===0?' feature':''}">${imageHtml(item,'news-home-image')}<div class="news-body"><div class="news-card-meta"><span class="tag">${escapeHtml(item.team || item.category_label || 'Club')}</span><time datetime="${escapeHtml(item.date || '')}">${escapeHtml(formatDate(item.date))}</time></div><h3><a href="${articleHref(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.summary || '')}</p></div></article>`;
+    const feature=index===0&&item.image?' feature':'';
+    return `<article class="news-card${feature}">${imageHtml(item,'news-home-image')}<div class="news-body"><div class="news-card-meta"><span class="tag">${escapeHtml(item.team || item.category_label || 'Club')}</span><time datetime="${escapeHtml(item.date || '')}">${escapeHtml(formatDate(item.date))}</time></div><h3><a href="${articleHref(item)}">${escapeHtml(item.title)}</a></h3><p>${escapeHtml(item.summary || '')}</p></div></article>`;
   }
 
   function activateFilters() {
