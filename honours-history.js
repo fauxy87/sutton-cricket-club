@@ -3,9 +3,11 @@
   const search = document.getElementById('honours-search');
   const year = document.getElementById('honours-year');
   const type = document.getElementById('honours-type');
+  const clear = document.getElementById('honours-clear');
   const count = document.getElementById('honours-count');
   const summary = document.getElementById('honours-summary');
   const leaderboard = document.getElementById('honours-leaderboard');
+  const breakdown = document.getElementById('honours-breakdown');
   if (!tableBody) return;
 
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -28,13 +30,23 @@
 
   const renderLeaderboard = () => {
     if (!leaderboard || !records.length) return;
-    const leaders = playerCounts().slice(0,10);
-    leaderboard.innerHTML = leaders.map(([name, entries], index) => `
-      <div class="honours-leader-row">
-        <span class="honours-rank">${index + 1}</span>
-        <strong>${escapeHtml(name)}</strong>
-        <span>${entries} entr${entries === 1 ? 'y' : 'ies'}</span>
-      </div>`).join('');
+    leaderboard.innerHTML = playerCounts().slice(0,10).map(([name, entries], index) => `
+      <div class="honours-leader-row"><span class="honours-rank">${index + 1}</span><strong>${escapeHtml(name)}</strong><span>${entries} entr${entries === 1 ? 'y' : 'ies'}</span></div>`).join('');
+  };
+
+  const renderBreakdown = () => {
+    if (!breakdown || !records.length) return;
+    const totals = {batting:0,bowling:0,fielding:0};
+    records.forEach(record => { const category = performanceType(record.performance); if (category in totals) totals[category] += 1; });
+    breakdown.innerHTML = `
+      <button type="button" data-type="batting"><strong>${totals.batting}</strong><span>Batting</span></button>
+      <button type="button" data-type="bowling"><strong>${totals.bowling}</strong><span>Bowling</span></button>
+      <button type="button" data-type="fielding"><strong>${totals.fielding}</strong><span>Fielding</span></button>`;
+    breakdown.querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
+      if (type) type.value = button.dataset.type || 'all';
+      render();
+      document.getElementById('historical-records')?.scrollIntoView({behavior:'smooth',block:'start'});
+    }));
   };
 
   const renderSummary = () => {
@@ -43,7 +55,6 @@
     const centuryCounts = new Map();
     let highestScore = null;
     let bestBowling = null;
-
     records.forEach(record => {
       entryCounts.set(record.name, (entryCounts.get(record.name) || 0) + 1);
       const batting = String(record.performance || '').match(/^(\d+)(\*)?$/);
@@ -59,7 +70,6 @@
         if (!bestBowling || wickets > bestBowling.wickets || (wickets === bestBowling.wickets && runs < bestBowling.runs)) bestBowling = {...record, wickets, runs};
       }
     });
-
     const topEntry = [...entryCounts.entries()].sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0];
     const topCentury = [...centuryCounts.entries()].sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0];
     summary.innerHTML = `
@@ -79,33 +89,18 @@
       const haystack = `${record.name} ${record.performance} ${record.opposition} ${record.date}`.toLowerCase();
       return (selectedYear === 'all' || season === selectedYear) && (selectedType === 'all' || category === selectedType) && (!q || haystack.includes(q));
     });
-
     if (count) count.textContent = `${filtered.length} record${filtered.length === 1 ? '' : 's'} shown`;
+    if (clear) clear.hidden = !q && selectedYear === 'all' && selectedType === 'all';
     tableBody.innerHTML = filtered.length ? filtered.map(record => `
-      <tr>
-        <td data-label="Year">${escapeHtml(seasonFromDate(record.date))}</td>
-        <td data-label="Player"><strong>${escapeHtml(record.name)}</strong></td>
-        <td data-label="Performance"><span class="honours-performance">${escapeHtml(record.performance)}</span></td>
-        <td data-label="Opposition">${escapeHtml(record.opposition)}</td>
-        <td data-label="Date">${escapeHtml(record.date)}</td>
-      </tr>`).join('') : '<tr><td colspan="5" class="honours-empty">No honours-board records match those filters.</td></tr>';
+      <tr><td data-label="Year">${escapeHtml(seasonFromDate(record.date))}</td><td data-label="Player"><strong>${escapeHtml(record.name)}</strong></td><td data-label="Performance"><span class="honours-performance">${escapeHtml(record.performance)}</span></td><td data-label="Opposition">${escapeHtml(record.opposition)}</td><td data-label="Date">${escapeHtml(record.date)}</td></tr>`).join('') : '<tr><td colspan="5" class="honours-empty">No honours-board records match those filters.</td></tr>';
   };
 
   fetch(`data/honours-history.json?v=${Date.now()}`, {cache:'no-store'})
-    .then(response => {
-      if (!response.ok) throw new Error('Historical honours data unavailable');
-      return response.json();
-    })
+    .then(response => { if (!response.ok) throw new Error('Historical honours data unavailable'); return response.json(); })
     .then(data => {
       records = Array.isArray(data.records) ? data.records.slice() : [];
-      records.sort((a,b) => {
-        const [ad,am,ay] = a.date.split('/').map(Number);
-        const [bd,bm,by] = b.date.split('/').map(Number);
-        return new Date(2000 + by,bm-1,bd) - new Date(2000 + ay,am-1,ad);
-      });
-      renderSummary();
-      renderLeaderboard();
-      render();
+      records.sort((a,b) => { const [ad,am,ay] = a.date.split('/').map(Number); const [bd,bm,by] = b.date.split('/').map(Number); return new Date(2000 + by,bm-1,bd) - new Date(2000 + ay,am-1,ad); });
+      renderSummary(); renderLeaderboard(); renderBreakdown(); render();
     })
     .catch(() => {
       tableBody.innerHTML = '<tr><td colspan="5" class="honours-empty">Historical honours records are temporarily unavailable.</td></tr>';
@@ -117,4 +112,5 @@
   search?.addEventListener('input', render);
   year?.addEventListener('change', render);
   type?.addEventListener('change', render);
+  clear?.addEventListener('click', () => { if (search) search.value=''; if (year) year.value='all'; if (type) type.value='all'; render(); search?.focus(); });
 })();
