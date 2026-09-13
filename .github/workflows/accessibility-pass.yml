@@ -1,0 +1,125 @@
+name: Accessibility finishing pass
+
+on:
+  push:
+    paths:
+      - '.github/workflows/accessibility-pass.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply semantic and keyboard accessibility improvements
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+
+          for page in sorted(root.glob('*.html')):
+              text = page.read_text(encoding='utf-8')
+
+              if '<body' in text and 'class="skip-link"' not in text:
+                  text = re.sub(r'(<body[^>]*>)', r'\1<a class="skip-link" href="#main-content">Skip to main content</a>', text, count=1, flags=re.I)
+
+              if '<main' in text and 'id="main-content"' not in text:
+                  text = re.sub(r'<main(\s*>)', '<main id="main-content"\\1', text, count=1, flags=re.I)
+                  text = re.sub(r'<main(\s+)(?![^>]*\bid=)([^>]*)>', r'<main id="main-content" \2>', text, count=1, flags=re.I)
+
+              text = re.sub(r'<a class="active"([^>]*?)>', r'<a class="active" aria-current="page"\1>', text)
+
+              page.write_text(text, encoding='utf-8')
+
+          script = Path('script.js')
+          js = script.read_text(encoding='utf-8')
+          start = "const button = document.querySelector('.nav-toggle');\nconst nav = document.querySelector('.main-nav');\n\nif (button && nav) {"
+          end_marker = "\n}\n\nconst year = document.getElementById('year');"
+          if start in js and end_marker in js:
+              before, rest = js.split(start, 1)
+              block, after = rest.split(end_marker, 1)
+              replacement = """const button = document.querySelector('.nav-toggle');
+const nav = document.querySelector('.main-nav');
+
+if (button && nav) {
+  const setMenuState = (open, returnFocus = false) => {
+    nav.classList.toggle('open', open);
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (returnFocus) button.focus();
+  };
+
+  button.addEventListener('click', () => {
+    setMenuState(!nav.classList.contains('open'));
+  });
+
+  document.querySelectorAll('.main-nav a').forEach(link => {
+    link.addEventListener('click', () => setMenuState(false));
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && nav.classList.contains('open')) {
+      setMenuState(false, true);
+    }
+  });
+}
+
+const year = document.getElementById('year');"""
+              js = before + replacement + after
+          elif "setMenuState" not in js:
+              raise SystemExit('Could not locate mobile navigation block in script.js')
+          script.write_text(js, encoding='utf-8')
+
+          styles = Path('styles.css')
+          css = styles.read_text(encoding='utf-8')
+          marker = '/* Skip navigation */'
+          if marker not in css:
+              css += '''\n\n/* Skip navigation */\n.skip-link{position:fixed;left:12px;top:12px;z-index:9999;transform:translateY(-180%);padding:11px 15px;border-radius:8px;background:var(--yellow);color:var(--dark);font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:transform .15s ease}\n.skip-link:focus{transform:translateY(0);outline:3px solid var(--dark);outline-offset:2px}\n#main-content{scroll-margin-top:96px}\n'''
+          styles.write_text(css, encoding='utf-8')
+
+      - name: Validate accessibility markers
+        shell: python
+        run: |
+          from pathlib import Path
+          import sys
+
+          errors = []
+          for page in sorted(Path('.').glob('*.html')):
+              text = page.read_text(encoding='utf-8')
+              if '<main' in text:
+                  if 'class="skip-link"' not in text:
+                      errors.append(f'{page}: missing skip link')
+                  if 'id="main-content"' not in text:
+                      errors.append(f'{page}: missing main-content id')
+              if 'class="active"' in text and 'aria-current="page"' not in text:
+                  errors.append(f'{page}: active nav missing aria-current')
+
+          js = Path('script.js').read_text(encoding='utf-8')
+          for needle in ["event.key === 'Escape'", "'Close menu'", 'returnFocus']:
+              if needle not in js:
+                  errors.append(f'script.js missing {needle}')
+
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('Accessibility markers validated successfully.')
+
+      - name: Commit accessibility improvements
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add *.html script.js styles.css
+          if git diff --cached --quiet; then
+            echo "No changes required"
+            exit 0
+          fi
+          git commit -m "Improve site keyboard accessibility"
+          git pull --rebase origin main
+          git push origin HEAD:main
