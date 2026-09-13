@@ -25,9 +25,10 @@
       category.textContent = item.category_label || 'Club News';
       summary.textContent = item.summary || '';
       date.textContent = formatDate(item.date || '');
+      const image = item.image ? `<figure class="article-image"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.image_alt || item.title || 'Sutton Cricket Club news')}"></figure>` : '';
       const body = Array.isArray(item.body) ? item.body.map(p => `<p>${escapeHtml(p)}</p>`).join('') : '';
       const links = Array.isArray(item.links) && item.links.length ? `<div class="article-actions">${item.links.map((link,index) => `<a class="btn ${index===0?'btn-primary':'btn-outline'}" href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`).join('')}</div>` : '';
-      content.innerHTML = `<span class="tag">${escapeHtml(item.team || item.category_label || 'Club News')}</span><p class="article-lead">${escapeHtml(item.lead || item.summary || '')}</p><div class="article-copy">${body}</div>${links}`;
+      content.innerHTML = `${image}<span class="tag">${escapeHtml(item.team || item.category_label || 'Club News')}</span><p class="article-lead">${escapeHtml(item.lead || item.summary || '')}</p><div class="article-copy">${body}</div>${links}`;
     })
     .catch(err => {
       title.textContent = 'Story unavailable';
