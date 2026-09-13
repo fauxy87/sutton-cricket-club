@@ -2,6 +2,31 @@
   "updated_at": "2026-09-13",
   "articles": [
     {
+      "id": "sutton-presentation",
+      "title": "Sutton Presentation",
+      "date": "2026-09-13",
+      "category": "club",
+      "category_label": "Club News",
+      "summary": "great day",
+      "lead": "aerh;goireh",
+      "body": [
+        "Awards",
+        "dhdth"
+      ],
+      "links": [
+        {
+          "label": "More club news",
+          "href": "news.html"
+        },
+        {
+          "label": "Contact the club",
+          "href": "join.html"
+        }
+      ],
+      "image_alt": "Sutton Presentation",
+      "image": "assets/news/sutton-presentation.jpg"
+    },
+    {
       "id": "colin-coulson-memorial-275",
       "title": "£275 raised in memory of Colin Coulson",
       "date": "2026-08-23",
@@ -14,8 +39,14 @@
         "A total of £275 was raised for the British Heart Foundation in Colin’s memory."
       ],
       "links": [
-        {"label": "More club news", "href": "news.html"},
-        {"label": "Contact the club", "href": "join.html"}
+        {
+          "label": "More club news",
+          "href": "news.html"
+        },
+        {
+          "label": "Contact the club",
+          "href": "join.html"
+        }
       ]
     },
     {
@@ -31,8 +62,14 @@
         "Sutton completed the chase for the loss of three wickets to secure a seven-wicket victory."
       ],
       "links": [
-        {"label": "Fixtures & results", "href": "fixtures.html"},
-        {"label": "Player statistics", "href": "honours.html"}
+        {
+          "label": "Fixtures & results",
+          "href": "fixtures.html"
+        },
+        {
+          "label": "Player statistics",
+          "href": "honours.html"
+        }
       ]
     },
     {
@@ -48,8 +85,14 @@
         "It was a dominant Sutton performance, with three major batting contributions setting up a 201-run victory."
       ],
       "links": [
-        {"label": "Fixtures & results", "href": "fixtures.html"},
-        {"label": "Player statistics", "href": "honours.html"}
+        {
+          "label": "Fixtures & results",
+          "href": "fixtures.html"
+        },
+        {
+          "label": "Player statistics",
+          "href": "honours.html"
+        }
       ]
     }
   ]
