@@ -30,6 +30,34 @@ body[data-team-page] .section-heading{margin-bottom:24px}
 body[data-team-page] .section-heading h2{margin-bottom:0}
 body[data-team-page] .section-alt{background:#f6f8f6}
 body[data-team-page] footer{margin-top:0}
+
+/* 1st XI page */
+body[data-team-page="1st"] .page-hero{padding:96px 0 84px;background:radial-gradient(circle at 82% 16%,rgba(242,207,36,.2),transparent 25%),linear-gradient(135deg,#052a19 0%,#073e22 50%,#0b5d31 100%)}
+body[data-team-page="1st"] .page-hero::before{content:"1ST XI";position:absolute;right:2%;bottom:-30px;font:800 clamp(6rem,17vw,13rem)/1 Montserrat,Arial,sans-serif;letter-spacing:-.07em;color:rgba(255,255,255,.026);pointer-events:none}
+body[data-team-page="1st"] .page-hero .eyebrow{display:inline-flex;padding:7px 11px;border:1px solid rgba(242,207,36,.3);border-radius:999px;background:rgba(242,207,36,.1)}
+body[data-team-page="1st"] .page-hero h1{font-size:clamp(3.8rem,8vw,6.7rem);text-shadow:0 3px 18px rgba(0,0,0,.2)}
+body[data-team-page="1st"] #team-play-cricket-status::before{content:"●";color:var(--yellow);font-size:.72rem}
+body[data-team-page="1st"] .season-snapshot-section{padding:72px 0;background:linear-gradient(180deg,#f5f9f6 0%,#fff 100%)}
+body[data-team-page="1st"] .season-snapshot-section .section-heading h2,
+body[data-team-page="1st"] .section .section-heading h2{font-family:Montserrat,Arial,sans-serif;letter-spacing:-.03em}
+body[data-team-page="1st"] .season-stat{min-height:155px;padding:27px;border-radius:19px;box-shadow:0 10px 28px rgba(7,62,34,.065);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+body[data-team-page="1st"] .season-stat::after{content:"";position:absolute;right:-40px;top:-40px;width:105px;height:105px;border-radius:50%;background:rgba(11,93,49,.04)}
+body[data-team-page="1st"] .season-stat:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(7,62,34,.1);border-color:#bfd3c5}
+body[data-team-page="1st"] .season-stat strong{position:relative;z-index:1;font-size:2.7rem}
+body[data-team-page="1st"] .season-stat span,body[data-team-page="1st"] .season-stat small,body[data-team-page="1st"] .season-stat b{position:relative;z-index:1}
+body[data-team-page="1st"] #team-player-leaders{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+body[data-team-page="1st"] #team-player-leaders .season-stat{min-height:205px;padding:29px;background:linear-gradient(150deg,#fff,#f8fbf9)}
+body[data-team-page="1st"] #team-player-leaders .season-stat::before{left:0;right:0;top:0;bottom:auto;width:auto;height:5px;background:var(--yellow)}
+body[data-team-page="1st"] #team-player-leaders .season-stat strong{font-size:3.15rem;margin-top:8px}
+body[data-team-page="1st"] #league-table .league-table-card{border-radius:20px;box-shadow:0 14px 34px rgba(7,62,34,.08)}
+body[data-team-page="1st"] .section:has(#league-table){background:linear-gradient(180deg,#f3f7f4,#f8faf8)}
+body[data-team-page="1st"] .results-grid{gap:18px}
+body[data-team-page="1st"] .result-card{min-height:205px;padding:27px;border-radius:19px;box-shadow:0 10px 28px rgba(7,62,34,.065)}
+body[data-team-page="1st"] #team-next-fixtures .result-card::before{background:linear-gradient(90deg,var(--green),#16834a)}
+body[data-team-page="1st"] #team-recent-results .result-card::before{background:var(--yellow)}
+body[data-team-page="1st"] .result-card h3{font-size:1.22rem;margin-top:2px}
+body[data-team-page="1st"] .match-link{margin-top:20px;padding:8px 11px;border-radius:9px;background:#eef6f1}
+body[data-team-page="1st"] .match-link:hover{background:var(--green);color:#fff}
 @media(max-width:1050px){.team-switcher-actions{display:none}}
-@media(max-width:900px){body[data-team-page] .results-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.team-switcher-inner{gap:10px}.team-switcher-all{font-size:.86rem}}
-@media(max-width:620px){body[data-team-page] .page-hero{padding:60px 0 54px}body[data-team-page] .season-snapshot-section{padding:50px 0}body[data-team-page] .season-snapshot{grid-template-columns:1fr 1fr}body[data-team-page] .season-stat{min-height:128px;padding:20px}body[data-team-page] .season-stat strong{font-size:2.05rem}body[data-team-page] .results-grid{grid-template-columns:1fr}body[data-team-page] .result-card{min-height:auto}.team-switcher-inner{min-height:56px}.team-switcher-all{display:none}.team-switcher-links a{padding:8px 10px;font-size:.8rem}}
+@media(max-width:900px){body[data-team-page] .results-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.team-switcher-inner{gap:10px}.team-switcher-all{font-size:.86rem}body[data-team-page="1st"] #team-player-leaders{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){body[data-team-page] .page-hero{padding:60px 0 54px}body[data-team-page] .season-snapshot-section{padding:50px 0}body[data-team-page] .season-snapshot{grid-template-columns:1fr 1fr}body[data-team-page] .season-stat{min-height:128px;padding:20px}body[data-team-page] .season-stat strong{font-size:2.05rem}body[data-team-page] .results-grid{grid-template-columns:1fr}body[data-team-page] .result-card{min-height:auto}.team-switcher-inner{min-height:56px}.team-switcher-all{display:none}.team-switcher-links a{padding:8px 10px;font-size:.8rem}body[data-team-page="1st"] .page-hero{padding:68px 0 60px}body[data-team-page="1st"] .season-snapshot{grid-template-columns:1fr 1fr}body[data-team-page="1st"] #team-player-leaders{grid-template-columns:1fr}body[data-team-page="1st"] #team-player-leaders .season-stat{min-height:170px}body[data-team-page="1st"] .result-card{padding:23px;border-radius:16px}}
