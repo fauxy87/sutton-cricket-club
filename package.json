@@ -1,0 +1,8 @@
+{
+  "name": "sutton-cricket-club",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  }
+}
