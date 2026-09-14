@@ -29,16 +29,25 @@
 #fixtures .fixture-card.highlight .scorecard-link{color:var(--yellow)}
 #home-play-cricket-status{margin:18px 0 0;color:var(--muted);font-size:.86rem}
 
-#teams .team-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
-#teams .team-card{position:relative;overflow:hidden;min-height:240px;padding:28px 25px;border-radius:18px;border:1px solid #dfe7e1;background:#fff;box-shadow:0 10px 26px rgba(7,62,34,.06);display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
-#teams .team-card::after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;right:-55px;top:-55px;background:rgba(11,93,49,.055)}
-#teams .team-card>span{display:grid;place-items:center;width:45px;height:45px;border-radius:12px;background:var(--green);color:var(--yellow);font:800 .9rem/1 Montserrat,Arial,sans-serif;margin-bottom:28px}
-#teams .team-card h3{font:800 1.4rem/1.15 Montserrat,Arial,sans-serif;color:var(--dark);margin:0 0 10px}
-#teams .team-card p{color:var(--muted);margin:0 0 24px}
-#teams .team-card b{margin-top:auto;color:var(--green);font-size:.9rem}
-#teams .team-card:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(7,62,34,.11);border-color:#bad0c1}
-#teams .team-card:hover>span{background:var(--dark)}
+#teams{background:linear-gradient(180deg,#f7faf8 0%,#eef5f0 100%)}
+#teams .team-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}
+#teams .team-card{position:relative;overflow:hidden;min-height:265px;padding:30px 26px 26px;border-radius:20px;border:1px solid #dce6df;background:linear-gradient(160deg,#fff 0%,#f9fbf9 100%);box-shadow:0 12px 30px rgba(7,62,34,.07);display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+#teams .team-card::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--green)}
+#teams .team-card::after{content:"";position:absolute;width:135px;height:135px;border-radius:50%;right:-62px;top:-62px;background:rgba(11,93,49,.06)}
+#teams .team-card>span{position:relative;z-index:1;display:grid;place-items:center;width:50px;height:50px;border-radius:14px;background:var(--green);color:var(--yellow);font:800 .9rem/1 Montserrat,Arial,sans-serif;margin-bottom:30px;box-shadow:0 7px 16px rgba(7,62,34,.14)}
+#teams .team-card h3{position:relative;z-index:1;font:800 1.45rem/1.15 Montserrat,Arial,sans-serif;color:var(--dark);margin:0 0 11px;letter-spacing:-.02em}
+#teams .team-card p{position:relative;z-index:1;color:var(--muted);margin:0 0 26px;line-height:1.5}
+#teams .team-card b{position:relative;z-index:1;margin-top:auto;color:var(--green);font-size:.9rem;display:inline-flex;align-items:center;gap:6px}
+#teams .team-card:hover{transform:translateY(-5px);box-shadow:0 19px 38px rgba(7,62,34,.12);border-color:#b8cfbf}
+#teams .team-card:hover>span{background:var(--dark);transform:scale(1.03)}
+#teams .team-card:nth-child(4){background:linear-gradient(155deg,#fff 0%,#f3faf6 100%);border-color:#cfe0d4}
+#teams .team-card:nth-child(4)::before{background:linear-gradient(90deg,var(--green),#42a66b)}
+#teams .team-card:nth-child(4)>span{background:#0b5d31;color:#fff}
+#teams .team-card:nth-child(5){background:linear-gradient(155deg,#fffdf2 0%,#fff 100%);border-color:#eadf9f}
+#teams .team-card:nth-child(5)::before{background:var(--yellow)}
+#teams .team-card:nth-child(5)>span{background:var(--yellow);color:var(--dark)}
+#teams .team-card:nth-child(5) b{color:#7d6a00}
 
 @media(max-width:1100px){#teams .team-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:850px){#fixtures .fixture-grid{grid-template-columns:1fr}#teams .team-grid{grid-template-columns:repeat(2,1fr)}#fixtures .fixture-card{min-height:230px}}
-@media(max-width:560px){#teams .team-grid{grid-template-columns:1fr}#teams .team-card{min-height:205px}#fixtures .fixture-card{min-height:220px;padding:22px;border-radius:16px}#fixtures .fixture-top{margin-bottom:20px}#fixtures .fixture-card h3{font-size:1.3rem}#fixtures .fixture-card.highlight h3{font-size:1.55rem}#fixtures .versus{font-size:.96rem}}
+@media(max-width:560px){#teams .team-grid{grid-template-columns:1fr}#teams .team-card{min-height:220px;padding:24px;border-radius:16px}#teams .team-card>span{margin-bottom:24px}#fixtures .fixture-card{min-height:220px;padding:22px;border-radius:16px}#fixtures .fixture-top{margin-bottom:20px}#fixtures .fixture-card h3{font-size:1.3rem}#fixtures .fixture-card.highlight h3{font-size:1.55rem}#fixtures .versus{font-size:.96rem}}
