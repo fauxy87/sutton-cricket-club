@@ -1,0 +1,51 @@
+name: Refresh site favicon
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-favicon.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-favicon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use square Sutton CC favicon across public pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          workflow = Path('.github/workflows/refresh-favicon.yml')
+          for path in Path('.').glob('*.html'):
+              text = path.read_text(encoding='utf-8')
+              updated = re.sub(
+                  r'<link rel="icon" type="image/png" href="assets/sutton-cc-badge\.png\?v=[^"]+">',
+                  '<link rel="icon" type="image/svg+xml" href="assets/site-icon.svg">',
+                  text,
+              )
+              if updated != text:
+                  path.write_text(updated, encoding='utf-8')
+          PY
+
+      - name: Commit favicon updates
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'No favicon references needed updating.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add '*.html'
+          git commit -m 'Use square Sutton CC favicon across site'
+          git push
