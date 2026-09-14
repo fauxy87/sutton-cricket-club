@@ -58,6 +58,38 @@ body[data-team-page="1st"] #team-recent-results .result-card::before{background:
 body[data-team-page="1st"] .result-card h3{font-size:1.22rem;margin-top:2px}
 body[data-team-page="1st"] .match-link{margin-top:20px;padding:8px 11px;border-radius:9px;background:#eef6f1}
 body[data-team-page="1st"] .match-link:hover{background:var(--green);color:#fff}
+
+/* Development XI */
+body[data-team-page="development"] .page-hero{padding:90px 0 78px;background:radial-gradient(circle at 84% 18%,rgba(242,207,36,.18),transparent 26%),linear-gradient(135deg,#07351f 0%,#0b5d31 55%,#147a45 100%)}
+body[data-team-page="development"] .page-hero::before{content:"DEVELOPMENT";position:absolute;right:2%;bottom:-25px;font:800 clamp(4.6rem,11vw,9.5rem)/1 Montserrat,Arial,sans-serif;letter-spacing:-.06em;color:rgba(255,255,255,.026);pointer-events:none}
+body[data-team-page="development"] .page-hero .eyebrow{display:inline-flex;padding:7px 11px;border:1px solid rgba(242,207,36,.28);border-radius:999px;background:rgba(242,207,36,.09)}
+body[data-team-page="development"] .season-snapshot-section{background:linear-gradient(180deg,#f4f9f5,#fff)}
+body[data-team-page="development"] .season-stat{border-radius:18px;box-shadow:0 10px 28px rgba(7,62,34,.06)}
+body[data-team-page="development"] #team-next-fixtures .result-card::before{background:linear-gradient(90deg,#0b5d31,#33a164)}
+body[data-team-page="development"] #team-recent-results .result-card::before{background:var(--yellow)}
+
+/* Women's cricket */
+body[data-team-page="women"] .page-hero{padding:94px 0 82px;background:radial-gradient(circle at 82% 18%,rgba(255,255,255,.1),transparent 24%),radial-gradient(circle at 72% 75%,rgba(242,207,36,.16),transparent 23%),linear-gradient(135deg,#06321d 0%,#0b5d31 48%,#198753 100%)}
+body[data-team-page="women"] .page-hero::before{content:"WOMEN & GIRLS";position:absolute;right:2%;bottom:-28px;font:800 clamp(4.8rem,12vw,10rem)/1 Montserrat,Arial,sans-serif;letter-spacing:-.06em;color:rgba(255,255,255,.028);pointer-events:none}
+body[data-team-page="women"] .page-hero .eyebrow{display:inline-flex;padding:7px 11px;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(255,255,255,.08)}
+body[data-team-page="women"] .season-snapshot-section{background:linear-gradient(180deg,#f2f9f4,#fff)}
+body[data-team-page="women"] .season-stat{border-radius:19px;border-color:#cfe0d4;background:linear-gradient(150deg,#fff,#f7fbf8)}
+body[data-team-page="women"] .season-stat::before{background:linear-gradient(180deg,#0b5d31,#43a86f)}
+body[data-team-page="women"] #team-next-fixtures .result-card{background:linear-gradient(150deg,#fff,#f8fbf9);border-color:#d2e1d6}
+body[data-team-page="women"] #team-next-fixtures .result-card::before{background:linear-gradient(90deg,#0b5d31,#45ad72)}
+body[data-team-page="women"] #team-recent-results .result-card::before{background:var(--yellow)}
+
+/* U14s */
+body[data-team-page="u14"] .page-hero{padding:94px 0 82px;background:radial-gradient(circle at 82% 18%,rgba(242,207,36,.25),transparent 26%),linear-gradient(135deg,#052a19 0%,#073e22 55%,#0b5d31 100%)}
+body[data-team-page="u14"] .page-hero::before{content:"U14s";position:absolute;right:4%;bottom:-38px;font:800 clamp(7rem,20vw,16rem)/1 Montserrat,Arial,sans-serif;letter-spacing:-.08em;color:rgba(242,207,36,.045);pointer-events:none}
+body[data-team-page="u14"] .page-hero .eyebrow{display:inline-flex;padding:7px 11px;border:1px solid rgba(242,207,36,.32);border-radius:999px;background:rgba(242,207,36,.11);color:var(--yellow)}
+body[data-team-page="u14"] .season-snapshot-section{background:linear-gradient(180deg,#fffdf3,#fff)}
+body[data-team-page="u14"] .season-stat{border-color:#eadfa5;border-radius:19px;background:linear-gradient(150deg,#fff,#fffef8)}
+body[data-team-page="u14"] .season-stat::before{background:var(--yellow)}
+body[data-team-page="u14"] #team-next-fixtures .result-card{border-color:#eadfa5;background:linear-gradient(150deg,#fff,#fffef9)}
+body[data-team-page="u14"] #team-next-fixtures .result-card::before{background:var(--yellow)}
+body[data-team-page="u14"] #team-recent-results .result-card::before{background:linear-gradient(90deg,var(--green),#16834a)}
+
 @media(max-width:1050px){.team-switcher-actions{display:none}}
 @media(max-width:900px){body[data-team-page] .results-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.team-switcher-inner{gap:10px}.team-switcher-all{font-size:.86rem}body[data-team-page="1st"] #team-player-leaders{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:620px){body[data-team-page] .page-hero{padding:60px 0 54px}body[data-team-page] .season-snapshot-section{padding:50px 0}body[data-team-page] .season-snapshot{grid-template-columns:1fr 1fr}body[data-team-page] .season-stat{min-height:128px;padding:20px}body[data-team-page] .season-stat strong{font-size:2.05rem}body[data-team-page] .results-grid{grid-template-columns:1fr}body[data-team-page] .result-card{min-height:auto}.team-switcher-inner{min-height:56px}.team-switcher-all{display:none}.team-switcher-links a{padding:8px 10px;font-size:.8rem}body[data-team-page="1st"] .page-hero{padding:68px 0 60px}body[data-team-page="1st"] .season-snapshot{grid-template-columns:1fr 1fr}body[data-team-page="1st"] #team-player-leaders{grid-template-columns:1fr}body[data-team-page="1st"] #team-player-leaders .season-stat{min-height:170px}body[data-team-page="1st"] .result-card{padding:23px;border-radius:16px}}
+@media(max-width:620px){body[data-team-page] .page-hero{padding:60px 0 54px}body[data-team-page] .season-snapshot-section{padding:50px 0}body[data-team-page] .season-snapshot{grid-template-columns:1fr 1fr}body[data-team-page] .season-stat{min-height:128px;padding:20px}body[data-team-page] .season-stat strong{font-size:2.05rem}body[data-team-page] .results-grid{grid-template-columns:1fr}body[data-team-page] .result-card{min-height:auto}.team-switcher-inner{min-height:56px}.team-switcher-all{display:none}.team-switcher-links a{padding:8px 10px;font-size:.8rem}body[data-team-page="1st"] .page-hero{padding:68px 0 60px}body[data-team-page="1st"] .season-snapshot{grid-template-columns:1fr 1fr}body[data-team-page="1st"] #team-player-leaders{grid-template-columns:1fr}body[data-team-page="1st"] #team-player-leaders .season-stat{min-height:170px}body[data-team-page="1st"] .result-card{padding:23px;border-radius:16px}body[data-team-page="development"] .page-hero,body[data-team-page="women"] .page-hero,body[data-team-page="u14"] .page-hero{padding:66px 0 58px}}
