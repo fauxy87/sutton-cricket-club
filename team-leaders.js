@@ -56,10 +56,11 @@
       const res = await fetch(`data/play-cricket-scorecards.json?v=${Date.now()}`, { cache: 'no-store' });
       if (!res.ok) throw new Error('Scorecards unavailable');
       const cache = await res.json();
+      const scorecards = cache?.matches && typeof cache.matches === 'object' ? cache.matches : cache;
       const batting = new Map();
       const bowling = new Map();
 
-      Object.values(cache || {}).forEach(item => {
+      Object.values(scorecards || {}).forEach(item => {
         const detail = item?.detail || item;
         if (!matchInvolvesTeam(detail)) return;
 
