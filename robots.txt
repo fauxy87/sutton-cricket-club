@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fauxy87.github.io/sutton-cricket-club/sitemap.xml
+Sitemap: https://www.suttoncambscc.co.uk/sitemap.xml
