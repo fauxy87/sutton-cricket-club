@@ -2,16 +2,16 @@
   "name": "Sutton Cricket Club",
   "short_name": "Sutton CC",
   "description": "Senior, women’s and junior cricket in Sutton, Cambridgeshire. Founded 1877.",
-  "start_url": "/sutton-cricket-club/",
-  "scope": "/sutton-cricket-club/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f7f6ef",
   "theme_color": "#0b5d31",
   "icons": [
     {
-      "src": "assets/sutton-cc-badge.png",
-      "sizes": "220x237",
-      "type": "image/png",
+      "src": "assets/site-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any"
     }
   ]
