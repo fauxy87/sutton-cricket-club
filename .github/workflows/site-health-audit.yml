@@ -1,0 +1,124 @@
+name: Site health audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/site-health-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Audit static site
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          from urllib.parse import urlsplit
+
+          root = Path('.')
+          pages = sorted(root.glob('*.html'))
+          existing = {p.as_posix() for p in root.rglob('*') if p.is_file()}
+          issues = []
+          warnings = []
+
+          public_exclusions = {'404.html', 'admin.html', 'article.html'}
+
+          def local_target(value):
+              value = value.strip()
+              if not value or value.startswith(('#','mailto:','tel:','javascript:','data:')):
+                  return None
+              if value.startswith(('http://','https://','//')):
+                  return None
+              value = value.split('#',1)[0].split('?',1)[0]
+              if not value:
+                  return None
+              if value.startswith('/'):
+                  value = value[1:]
+              return value
+
+          for page in pages:
+              text = page.read_text(encoding='utf-8')
+              low = text.lower()
+              if '<html' in low and 'lang=' not in low:
+                  issues.append(f'{page}: missing html lang')
+              if '<meta name="viewport"' not in low:
+                  issues.append(f'{page}: missing viewport meta')
+              if '<title>' not in low:
+                  issues.append(f'{page}: missing title')
+              if page.name not in public_exclusions:
+                  if '<meta name="description"' not in low:
+                      issues.append(f'{page}: missing meta description')
+                  if 'rel="canonical"' not in low:
+                      issues.append(f'{page}: missing canonical')
+                  if 'assets/site-icon.svg' not in text:
+                      warnings.append(f'{page}: favicon is not site-icon.svg')
+              for attr, value in re.findall(r'\b(href|src)=["\']([^"\']+)["\']', text, re.I):
+                  target = local_target(value)
+                  if target and target not in existing:
+                      if target.endswith('/') and target[:-1] in existing:
+                          continue
+                      issues.append(f'{page}: broken local {attr} -> {value}')
+              for tag in re.findall(r'<img\b[^>]*>', text, re.I):
+                  if not re.search(r'\balt=["\'][^"\']*["\']', tag, re.I):
+                      warnings.append(f'{page}: image without alt -> {tag[:120]}')
+              if 'target="_blank"' in text:
+                  for a in re.findall(r'<a\b[^>]*target="_blank"[^>]*>', text, re.I):
+                      if 'rel="noopener' not in a and "rel='noopener" not in a:
+                          warnings.append(f'{page}: target=_blank without noopener -> {a[:120]}')
+
+          manifest = Path('site.webmanifest')
+          if not manifest.exists():
+              issues.append('site.webmanifest missing')
+          else:
+              m = manifest.read_text(encoding='utf-8')
+              if '"start_url": "/"' not in m:
+                  issues.append('site.webmanifest: start_url is not /')
+              if '"scope": "/"' not in m:
+                  issues.append('site.webmanifest: scope is not /')
+
+          robots = Path('robots.txt')
+          if not robots.exists():
+              issues.append('robots.txt missing')
+          else:
+              r = robots.read_text(encoding='utf-8')
+              if 'https://www.suttoncambscc.co.uk/sitemap.xml' not in r:
+                  issues.append('robots.txt: sitemap URL is not new domain')
+
+          sitemap = Path('sitemap.xml')
+          if not sitemap.exists():
+              issues.append('sitemap.xml missing')
+          else:
+              s = sitemap.read_text(encoding='utf-8')
+              urls = re.findall(r'<loc>(.*?)</loc>', s)
+              for u in urls:
+                  if not u.startswith('https://www.suttoncambscc.co.uk/'):
+                      issues.append(f'sitemap.xml: non-canonical domain -> {u}')
+                  path = urlsplit(u).path.lstrip('/') or 'index.html'
+                  if path not in existing:
+                      issues.append(f'sitemap.xml: URL has no matching file -> {u}')
+              expected = {p.name for p in pages if p.name not in public_exclusions}
+              mapped = {(urlsplit(u).path.lstrip('/') or 'index.html') for u in urls}
+              for missing in sorted(expected - mapped):
+                  warnings.append(f'sitemap.xml: public-looking page not listed -> {missing}')
+
+          for needle in ['fauxy87.github.io/sutton-cricket-club', 'sutton-cricket-club.vercel.app']:
+              for p in list(root.glob('*.html')) + [Path('robots.txt'), Path('sitemap.xml'), Path('site.webmanifest')]:
+                  if p.exists() and needle in p.read_text(encoding='utf-8'):
+                      warnings.append(f'{p}: still references old host {needle}')
+
+          print(f'PAGES_CHECKED={len(pages)}')
+          print(f'ISSUES={len(issues)}')
+          for x in issues:
+              print('ISSUE:', x)
+          print(f'WARNINGS={len(warnings)}')
+          for x in warnings:
+              print('WARNING:', x)
+          if issues:
+              raise SystemExit(1)
