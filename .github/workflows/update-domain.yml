@@ -24,6 +24,9 @@ jobs:
           old='https://fauxy87.github.io/sutton-cricket-club'
           new='https://www.suttoncambscc.co.uk'
           while IFS= read -r -d '' file; do
+            if [ "$file" = '.github/workflows/update-domain.yml' ]; then
+              continue
+            fi
             sed -i "s#${old}#${new}#g" "$file"
           done < <(git grep -Ilz "$old" || true)
 
