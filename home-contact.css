@@ -1,9 +1,19 @@
 /* Homepage contact / get involved */
-#contact{position:relative;overflow:hidden;background:radial-gradient(circle at 86% 20%,rgba(242,207,36,.14),transparent 24%),linear-gradient(135deg,#073e22,#0b5d31);padding:72px 0}
-#contact::after{content:"";position:absolute;right:-100px;bottom:-160px;width:360px;height:360px;border-radius:50%;border:1px solid rgba(255,255,255,.08);box-shadow:0 0 0 55px rgba(255,255,255,.02),0 0 0 110px rgba(255,255,255,.015)}
+#contact{position:relative;overflow:hidden;background:radial-gradient(circle at 86% 20%,rgba(242,207,36,.18),transparent 25%),linear-gradient(135deg,#052a19 0%,#073e22 45%,#0b5d31 100%);padding:86px 0}
+#contact::before{content:"SUTTON CC";position:absolute;left:-16px;bottom:-24px;font:800 clamp(5rem,11vw,9rem)/1 Montserrat,Arial,sans-serif;letter-spacing:-.06em;color:rgba(255,255,255,.025);pointer-events:none}
+#contact::after{content:"";position:absolute;right:-100px;bottom:-160px;width:380px;height:380px;border-radius:50%;border:1px solid rgba(255,255,255,.09);box-shadow:0 0 0 58px rgba(255,255,255,.022),0 0 0 116px rgba(255,255,255,.016)}
 #contact .container{position:relative;z-index:1}
-#contact h2{font-family:Montserrat,Arial,sans-serif;margin:8px 0 12px;max-width:720px}
-#contact p:not(.eyebrow){color:#dce9e1;max-width:700px;margin:0}
-.contact-actions{display:flex;gap:12px;flex-wrap:wrap}
-.contact-actions .btn{min-width:150px;text-align:center}
-@media(max-width:760px){#contact{padding:58px 0}.contact-actions{width:100%}.contact-actions .btn{flex:1 1 180px}}
+#contact .cta-inner{display:grid;grid-template-columns:minmax(0,1.35fr) auto;gap:56px;align-items:center}
+#contact .eyebrow{display:inline-flex;align-items:center;padding:7px 11px;border-radius:999px;background:rgba(242,207,36,.12);border:1px solid rgba(242,207,36,.28);color:var(--yellow)}
+#contact h2{font-family:Montserrat,Arial,sans-serif;font-size:clamp(2.15rem,4vw,3.6rem);line-height:1.05;letter-spacing:-.04em;margin:14px 0 18px;max-width:780px;color:#fff}
+#contact p:not(.eyebrow){color:#dce9e1;max-width:720px;margin:0;font-size:1.05rem;line-height:1.65}
+.contact-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.contact-actions .btn{min-width:168px;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.16);transition:transform .18s ease,box-shadow .18s ease}
+.contact-actions .btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(0,0,0,.2)}
+#contact .btn-primary{background:var(--yellow);color:var(--dark);border-color:var(--yellow)}
+#contact .btn-primary:hover{background:#f6d94d;border-color:#f6d94d}
+#contact .btn-outline{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.06);color:#fff}
+#contact .btn-outline:hover{background:#fff;color:var(--green);border-color:#fff}
+@media(max-width:900px){#contact .cta-inner{grid-template-columns:1fr;gap:32px}.contact-actions{justify-content:flex-start}}
+@media(max-width:760px){#contact{padding:64px 0}#contact h2{font-size:2.5rem}.contact-actions{width:100%}.contact-actions .btn{flex:1 1 180px}}
+@media(max-width:520px){#contact h2{font-size:2.25rem}.contact-actions{display:grid;grid-template-columns:1fr}.contact-actions .btn{width:100%}}
