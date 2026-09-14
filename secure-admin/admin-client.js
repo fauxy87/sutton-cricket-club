@@ -64,7 +64,7 @@ function renderSelectedPhotos() {
 function renderPreview() {
   const a = currentArticleFromForm();
   const existing = currentExisting();
-  const old = a.remove_image ? [] : existingGallery(existing).map(item=>({preview:`https://fauxy87.github.io/sutton-cricket-club/${item.src}`,alt:item.alt}));
+  const old = a.remove_image ? [] : existingGallery(existing).map(item=>({preview:`https://www.suttoncambscc.co.uk/${item.src}`,alt:item.alt}));
   const descriptions = imageDescriptions();
   const fresh = preparedImages.map((item,index)=>({preview:item.preview,alt:descriptions[index]||a.title||`Story picture ${index+1}`}));
   const gallery = [...old,...fresh];
@@ -92,7 +92,7 @@ function renderList() {
     return;
   }
   const sorted = articles.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
-  listBox.innerHTML = sorted.map(a => `<article class="secure-news-row"><div class="secure-news-row-main">${a.image?`<img src="https://fauxy87.github.io/sutton-cricket-club/${esc(a.image)}" alt="">`:''}<div><span class="secure-tag">${esc(a.category_label || 'News')}</span><h3>${esc(a.title)}</h3><p>${esc(formatDate(a.date))}${a.team?` · ${esc(a.team)}`:''}${existingGallery(a).length>1?` · ${existingGallery(a).length} photos`:''}</p></div></div><div class="secure-row-actions"><button type="button" data-edit="${esc(a.id)}">Edit</button><button type="button" class="danger" data-delete="${esc(a.id)}">Delete</button></div></article>`).join('');
+  listBox.innerHTML = sorted.map(a => `<article class="secure-news-row"><div class="secure-news-row-main">${a.image?`<img src="https://www.suttoncambscc.co.uk/${esc(a.image)}" alt="">`:''}<div><span class="secure-tag">${esc(a.category_label || 'News')}</span><h3>${esc(a.title)}</h3><p>${esc(formatDate(a.date))}${a.team?` · ${esc(a.team)}`:''}${existingGallery(a).length>1?` · ${existingGallery(a).length} photos`:''}</p></div></div><div class="secure-row-actions"><button type="button" data-edit="${esc(a.id)}">Edit</button><button type="button" class="danger" data-delete="${esc(a.id)}">Delete</button></div></article>`).join('');
   listBox.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click',()=>editStory(btn.dataset.edit)));
   listBox.querySelectorAll('[data-delete]').forEach(btn => btn.addEventListener('click',()=>deleteStory(btn.dataset.delete)));
 }

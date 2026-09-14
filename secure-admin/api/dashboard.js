@@ -1,6 +1,6 @@
 import { readCookie, verifySession } from '../lib/session.js';
 
-const SITE='https://fauxy87.github.io/sutton-cricket-club/';
+const SITE='https://www.suttoncambscc.co.uk/';
 
 export default function handler(req,res){
   const session=verifySession(readCookie(req));
