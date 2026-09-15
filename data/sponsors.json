@@ -1,13 +1,85 @@
 {
   "updated_at": "2026-09-15",
   "sponsors": [
-    {"id":"cheffins","name":"Cheffins","type":"Banner sponsor","website":"https://www.cheffins.co.uk/","logo":"https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1555412641_large.jpg&h=138&w=320&t=frame&bg=ffffff","logo_alt":"Cheffins logo","description":"Independent estate agents, auctioneers and surveyors with expertise across property, land, fine art and farm machinery. Cheffins has strong local roots, including its Sutton saleground near Ely.","order":1},
-    {"id":"ac-timber","name":"AC Timber","type":"Banner sponsor","website":"https://www.actimber.co.uk/","logo":"https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1686750846_large.jpg&h=138&w=320&t=frame&bg=ffffff","logo_alt":"AC Timber logo","description":"Witchford-based specialist timber supplier providing premium hardwoods, softwoods and oak products to joiners, builders, furniture makers and self-builders across the region.","order":2},
-    {"id":"polyglaze","name":"PolyGlaze","type":"Banner sponsor","website":"https://www.facebook.com/glazingspecialist/","logo":"https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1558091725_large.jpg&h=138&w=320&t=frame&bg=ffffff","logo_alt":"PolyGlaze logo","description":"A Sutton-based glazing specialist serving the local area. PolyGlaze has supported projects in the village and is a valued long-standing supporter of Sutton Cricket Club.","order":3},
-    {"id":"ftr-suspension","name":"FTR Suspension","type":"Banner sponsor","website":"https://ftrsuspension.co.uk/","logo":"https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1680620137_large.jpg&h=138&w=320&t=frame&bg=ffffff","logo_alt":"FTR Suspension logo","description":"Based in Sutton, FTR is a specialist motorcycle suspension centre offering servicing, set-up and performance upgrades for road, track, motocross, enduro and more.","order":4},
-    {"id":"latta-hire","name":"Latta Hire","type":"Banner sponsor","website":"https://www.lattaloohire.com/","logo":"https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1686750915_large.jpg&h=138&w=320&t=frame&bg=ffffff","logo_alt":"Latta Hire logo","description":"Cambridgeshire hire company supplying mobile toilets, welfare units and site facilities for events, building sites and major projects across East Anglia and beyond.","order":5},
-    {"id":"the-chequers","name":"The Chequers","type":"Club supporter","website":"","logo":"assets/chequers-logo.svg","logo_alt":"The Chequers Sutton logo","description":"Sutton's welcoming village pub and a valued supporter of local sport and community life, providing a friendly place for villagers, players and supporters to meet.","order":6},
-    {"id":"envy-hair","name":"Envy Hair / Hair By Ella","type":"Main sponsor","website":"https://www.facebook.com/ENVYSoham","logo":"assets/envy-hair-logo.svg","logo_alt":"Hair By Ella logo","description":"A family-run hair salon in Soham offering cutting, colouring, styling, barbering and hair extensions. Envy Hair / Hair By Ella proudly supports Sutton CC as our main club sponsor.","order":7},
-    {"id":"david-frear","name":"David Frear Plumbing & Heating","type":"Colts sponsor","website":"https://www.frearheating.com/","logo":"https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1523603155_large.jpg&h=138&w=320&t=frame&bg=ffffff","logo_alt":"David Frear Plumbing and Heating logo","description":"Sutton-based plumbing, heating and air-conditioning specialists serving Cambridgeshire, with expertise including air-source heat pumps and air-conditioning installations. Proud sponsor of our Colts section.","order":8}
+    {
+      "id": "cheffins",
+      "name": "Cheffins",
+      "type": "Banner sponsor",
+      "website": "https://www.cheffins.co.uk/",
+      "logo": "https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1555412641_large.jpg&h=138&w=320&t=frame&bg=ffffff",
+      "logo_alt": "Cheffins logo",
+      "description": "Independent estate agents, auctioneers and surveyors with expertise across property, land, fine art and farm machinery. Cheffins has strong local roots, including its Sutton saleground near Ely.",
+      "order": 1
+    },
+    {
+      "id": "ac-timber",
+      "name": "AC Timber",
+      "type": "Banner sponsor",
+      "website": "https://www.actimber.co.uk/",
+      "logo": "https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1686750846_large.jpg&h=138&w=320&t=frame&bg=ffffff",
+      "logo_alt": "AC Timber logo",
+      "description": "Witchford-based specialist timber supplier providing premium hardwoods, softwoods and oak products to joiners, builders, furniture makers and self-builders across the region.",
+      "order": 2
+    },
+    {
+      "id": "polyglaze",
+      "name": "PolyGlaze",
+      "type": "Banner sponsor",
+      "website": "https://www.facebook.com/glazingspecialist/",
+      "logo": "https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1558091725_large.jpg&h=138&w=320&t=frame&bg=ffffff",
+      "logo_alt": "PolyGlaze logo",
+      "description": "A Sutton-based glazing specialist serving the local area. PolyGlaze has supported projects in the village and is a valued long-standing supporter of Sutton Cricket Club.",
+      "order": 3
+    },
+    {
+      "id": "ftr-suspension",
+      "name": "FTR Suspension",
+      "type": "Banner sponsor",
+      "website": "https://ftrsuspension.co.uk/",
+      "logo": "https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1680620137_large.jpg&h=138&w=320&t=frame&bg=ffffff",
+      "logo_alt": "FTR Suspension logo",
+      "description": "Based in Sutton, FTR is a specialist motorcycle suspension centre offering servicing, set-up and performance upgrades for road, track, motocross, enduro and more.",
+      "order": 4
+    },
+    {
+      "id": "latta-hire",
+      "name": "Latta Hire",
+      "type": "Banner sponsor",
+      "website": "https://www.lattaloohire.com/",
+      "logo": "https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1686750915_large.jpg&h=138&w=320&t=frame&bg=ffffff",
+      "logo_alt": "Latta Hire logo",
+      "description": "Cambridgeshire hire company supplying mobile toilets, welfare units and site facilities for events, building sites and major projects across East Anglia and beyond.",
+      "order": 5
+    },
+    {
+      "id": "the-chequers",
+      "name": "The Chequers",
+      "type": "Club supporter",
+      "website": "",
+      "logo": "assets/sponsors/the-chequers.png",
+      "logo_alt": "The Chequers Sutton logo",
+      "description": "Sutton's welcoming village pub and a valued supporter of local sport and community life, providing a friendly place for villagers, players and supporters to meet.",
+      "order": 6
+    },
+    {
+      "id": "envy-hair",
+      "name": "Envy Hair / Hair By Ella",
+      "type": "Main sponsor",
+      "website": "https://www.facebook.com/ENVYSoham",
+      "logo": "assets/envy-hair-logo.svg",
+      "logo_alt": "Hair By Ella logo",
+      "description": "A family-run hair salon in Soham offering cutting, colouring, styling, barbering and hair extensions. Envy Hair / Hair By Ella proudly supports Sutton CC as our main club sponsor.",
+      "order": 7
+    },
+    {
+      "id": "david-frear",
+      "name": "David Frear Plumbing & Heating",
+      "type": "Colts sponsor",
+      "website": "https://www.frearheating.com/",
+      "logo": "https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1523603155_large.jpg&h=138&w=320&t=frame&bg=ffffff",
+      "logo_alt": "David Frear Plumbing and Heating logo",
+      "description": "Sutton-based plumbing, heating and air-conditioning specialists serving Cambridgeshire, with expertise including air-source heat pumps and air-conditioning installations. Proud sponsor of our Colts section.",
+      "order": 8
+    }
   ]
 }
