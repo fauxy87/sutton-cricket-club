@@ -1,29 +1,8 @@
 (() => {
-  const box = document.getElementById('sponsor-showcase');
-  if (!box) return;
-  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  const safeHref = value => {
-    const href = String(value || '').trim();
-    return /^https?:\/\//i.test(href) ? href : '';
-  };
-  fetch(`data/sponsors.json?v=${Date.now()}`, {cache:'no-store'})
-    .then(res => { if (!res.ok) throw new Error(); return res.json(); })
-    .then(data => {
-      const sponsors = Array.isArray(data.sponsors) ? data.sponsors.slice() : [];
-      sponsors.sort((a,b)=>(Number(a.order)||999)-(Number(b.order)||999));
-      if (!sponsors.length) {
-        box.innerHTML = '<p>No sponsors are currently listed.</p>';
-        return;
-      }
-      box.innerHTML = sponsors.map(s => {
-        const logo = s.logo ? `<div class="sponsor-mark sponsor-logo"><img src="${esc(s.logo)}" alt="${esc(s.logo_alt || `${s.name} logo`)}"></div>` : '<div class="sponsor-mark sponsor-logo sponsor-logo-placeholder">Sponsor</div>';
-        const body = `${logo}<h3>${esc(s.name)}</h3><p>${esc(s.type || 'Club supporter')}${safeHref(s.website) ? ' · Visit website →' : ''}</p>`;
-        return safeHref(s.website)
-          ? `<article class="sponsor-showcase-card"><a class="sponsor-logo-link" href="${esc(s.website)}" target="_blank" rel="noopener">${body}</a></article>`
-          : `<article class="sponsor-showcase-card">${body}</article>`;
-      }).join('');
-    })
-    .catch(() => {
-      box.innerHTML = '<p>Sponsor information is temporarily unavailable.</p>';
-    });
+  const box=document.getElementById('sponsor-showcase');if(!box)return;
+  const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const href=v=>/^https?:\/\//i.test(String(v||'').trim())?String(v).trim():'';
+  const tier=s=>{const t=String(s.type||'').toLowerCase();if(t.includes('main'))return'main';if(t.includes('colts'))return'colts';return'supporter';};
+  const card=s=>{const url=href(s.website),t=tier(s),label=t==='main'?'Main Club Sponsor':t==='colts'?'Colts Sponsor':(s.type||'Club Supporter');const logo=s.logo?`<div class="sponsor-mark sponsor-logo"><img src="${esc(s.logo)}" alt="${esc(s.logo_alt||`${s.name} logo`)}"></div>`:'<div class="sponsor-mark sponsor-logo sponsor-logo-placeholder">SUTTON CC</div>';const body=`<span class="sponsor-tier sponsor-tier-${t}">${esc(label)}</span>${logo}<div class="sponsor-card-copy"><h3>${esc(s.name)}</h3><p>${url?'Visit sponsor →':'Proud supporter of Sutton Cricket Club'}</p></div>`;return `<article class="sponsor-showcase-card sponsor-${t}">${url?`<a class="sponsor-logo-link" href="${esc(url)}" target="_blank" rel="noopener">${body}</a>`:body}</article>`;};
+  fetch(`data/sponsors.json?v=${Date.now()}`,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(data=>{const all=Array.isArray(data.sponsors)?data.sponsors.slice():[];all.sort((a,b)=>{const rank={main:0,colts:1,supporter:2};return rank[tier(a)]-rank[tier(b)]||(Number(a.order)||999)-(Number(b.order)||999);});if(!all.length){box.innerHTML='<p>No sponsors are currently listed.</p>';return;}const featured=all.filter(s=>tier(s)!=='supporter'),supporters=all.filter(s=>tier(s)==='supporter');box.innerHTML=`${featured.length?`<div class="sponsor-featured-row">${featured.map(card).join('')}</div>`:''}${supporters.length?`<div class="sponsor-supporter-heading"><span>CLUB SUPPORTERS</span><i></i></div><div class="sponsor-supporter-grid">${supporters.map(card).join('')}</div>`:''}`;}).catch(()=>{box.innerHTML='<p>Sponsor information is temporarily unavailable.</p>';});
 })();
