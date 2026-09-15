@@ -24,3 +24,14 @@ async function loadHomeLeaders(){
   }catch(e){box.innerHTML='<article class="record-feature"><span>Player statistics</span><strong>—</strong><h3>Coming soon</h3><p>Waiting for the next Play-Cricket statistics sync.</p></article>';const status=document.getElementById('home-leaders-status');if(status)status.textContent='Player statistics will appear after the next sync.';}
 }
 loadHomeLeaders();
+
+// Homepage latest highlight: inserted automatically so the existing homepage stays easy to maintain.
+(() => {
+  const newsSection=document.getElementById('news');
+  if(!newsSection)return;
+  const css=document.createElement('link');css.rel='stylesheet';css.href='home-highlights.css';document.head.appendChild(css);
+  const section=document.createElement('section');section.className='section home-highlights-section';section.id='latest-highlight';
+  section.innerHTML='<div class="container"><div class="section-heading"><div><p class="eyebrow">Sutton on YouTube</p><h2>Latest match highlights</h2></div><a class="text-link" href="gallery.html">All highlights →</a></div><div id="home-latest-highlight" class="home-highlight-card"><div class="home-highlight-empty">Loading latest highlight…</div></div></div>';
+  newsSection.parentNode.insertBefore(section,newsSection);
+  const script=document.createElement('script');script.src='home-highlights.js';document.body.appendChild(script);
+})();
