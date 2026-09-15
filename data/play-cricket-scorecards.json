@@ -48068,8 +48068,380 @@
           }
         ]
       }
+    },
+    "7673755": {
+      "_last_updated": "15/09/2026",
+      "detail": {
+        "match_details": [
+          {
+            "id": 7673755,
+            "status": "New",
+            "published": "Yes",
+            "last_updated": "15/09/2026",
+            "league_name": "Cambridgeshire Women`s and Girls` Cricket League",
+            "league_id": "27796",
+            "competition_name": "Maiden Cricket U11 Girls Softball Festival League (North)",
+            "competition_id": "140014",
+            "competition_type": "League",
+            "match_type": "Limited Overs",
+            "game_type": "Pairs",
+            "countdown_cricket": "no",
+            "match_id": "7673755",
+            "match_date": "03/05/2026",
+            "match_time": "",
+            "ground_name": "Chippenham Park",
+            "ground_id": "9202",
+            "home_team_name": "Girls Under 11",
+            "home_team_id": "308734",
+            "home_club_name": "March Town CC",
+            "home_club_id": "4206",
+            "away_team_name": "Sutton & Haddenham U11 Girls Softball",
+            "away_team_id": "413277",
+            "away_club_name": "Sutton CC, Cambs",
+            "away_club_id": "6168",
+            "umpire_1_name": "",
+            "umpire_1_id": "",
+            "umpire_2_name": "",
+            "umpire_2_id": "",
+            "umpire_3_name": "",
+            "umpire_3_id": "",
+            "referee_name": "",
+            "referee_id": "",
+            "scorer_1_name": "",
+            "scorer_1_id": "",
+            "scorer_2_name": "",
+            "scorer_2_id": "",
+            "toss_won_by_team_id": "",
+            "toss": "",
+            "batted_first": "",
+            "no_of_overs": "8",
+            "balls_per_innings": "",
+            "no_of_innings": "1",
+            "no_of_days": "1",
+            "no_of_players": "",
+            "no_of_reserves": "",
+            "result": "C",
+            "result_description": "Cancelled",
+            "result_applied_to": "",
+            "match_notes": "",
+            "points": [
+              {
+                "team_id": 308734,
+                "game_points": "0",
+                "penalty_points": "",
+                "bonus_points_together": "0.0",
+                "bonus_points_batting": "0.0",
+                "bonus_points_bowling": "0.0",
+                "bonus_points_2nd_innings_together": ""
+              },
+              {
+                "team_id": 413277,
+                "game_points": "0",
+                "penalty_points": "",
+                "bonus_points_together": "0.0",
+                "bonus_points_batting": "0.0",
+                "bonus_points_bowling": "0.0",
+                "bonus_points_2nd_innings_together": ""
+              }
+            ],
+            "match_result_types": [
+              [
+                "March Town CC - Girls Under 11 - Won",
+                "1105562#308734"
+              ],
+              [
+                "Sutton CC, Cambs - Sutton & Haddenham U11 Girls Softball - Won",
+                "1105562#413277"
+              ],
+              [
+                "Tied",
+                1105568
+              ],
+              [
+                "Cancelled",
+                1105564
+              ],
+              [
+                "Abandoned",
+                1105565
+              ],
+              [
+                "March Town CC - Girls Under 11 - Conceded",
+                "1105566#413277"
+              ],
+              [
+                "Sutton CC, Cambs - Sutton & Haddenham U11 Girls Softball - Conceded",
+                "1105567#308734"
+              ],
+              [
+                "Match In Progress",
+                14
+              ]
+            ],
+            "starting_runs": "0",
+            "dismissal_penalty": "5",
+            "players": [
+              {
+                "home_team": []
+              },
+              {
+                "away_team": []
+              }
+            ],
+            "innings": []
+          }
+        ]
+      }
+    },
+    "7673756": {
+      "_last_updated": "15/09/2026",
+      "detail": {
+        "match_details": [
+          {
+            "id": 7673756,
+            "status": "New",
+            "published": "Yes",
+            "last_updated": "15/09/2026",
+            "league_name": "Cambridgeshire Women`s and Girls` Cricket League",
+            "league_id": "27796",
+            "competition_name": "Maiden Cricket U11 Girls Softball Festival League (North)",
+            "competition_id": "140014",
+            "competition_type": "League",
+            "match_type": "Limited Overs",
+            "game_type": "Pairs",
+            "countdown_cricket": "no",
+            "match_id": "7673756",
+            "match_date": "03/05/2026",
+            "match_time": "",
+            "ground_name": "Chippenham Park",
+            "ground_id": "9202",
+            "home_team_name": "Sutton & Haddenham U11 Girls Softball",
+            "home_team_id": "413277",
+            "home_club_name": "Sutton CC, Cambs",
+            "home_club_id": "6168",
+            "away_team_name": "Girls Under 11",
+            "away_team_id": "308732",
+            "away_club_name": "City of Ely CC",
+            "away_club_id": "2570",
+            "umpire_1_name": "",
+            "umpire_1_id": "",
+            "umpire_2_name": "",
+            "umpire_2_id": "",
+            "umpire_3_name": "",
+            "umpire_3_id": "",
+            "referee_name": "",
+            "referee_id": "",
+            "scorer_1_name": "",
+            "scorer_1_id": "",
+            "scorer_2_name": "",
+            "scorer_2_id": "",
+            "toss_won_by_team_id": "",
+            "toss": "",
+            "batted_first": "",
+            "no_of_overs": "8",
+            "balls_per_innings": "",
+            "no_of_innings": "1",
+            "no_of_days": "1",
+            "no_of_players": "",
+            "no_of_reserves": "",
+            "result": "C",
+            "result_description": "Cancelled",
+            "result_applied_to": "",
+            "match_notes": "",
+            "points": [
+              {
+                "team_id": 413277,
+                "game_points": "0",
+                "penalty_points": "",
+                "bonus_points_together": "0.0",
+                "bonus_points_batting": "0.0",
+                "bonus_points_bowling": "0.0",
+                "bonus_points_2nd_innings_together": ""
+              },
+              {
+                "team_id": 308732,
+                "game_points": "0",
+                "penalty_points": "",
+                "bonus_points_together": "0.0",
+                "bonus_points_batting": "0.0",
+                "bonus_points_bowling": "0.0",
+                "bonus_points_2nd_innings_together": ""
+              }
+            ],
+            "match_result_types": [
+              [
+                "Sutton CC, Cambs - Sutton & Haddenham U11 Girls Softball - Won",
+                "1105562#413277"
+              ],
+              [
+                "City of Ely CC - Girls Under 11 - Won",
+                "1105562#308732"
+              ],
+              [
+                "Tied",
+                1105568
+              ],
+              [
+                "Cancelled",
+                1105564
+              ],
+              [
+                "Abandoned",
+                1105565
+              ],
+              [
+                "Sutton CC, Cambs - Sutton & Haddenham U11 Girls Softball - Conceded",
+                "1105566#308732"
+              ],
+              [
+                "City of Ely CC - Girls Under 11 - Conceded",
+                "1105567#413277"
+              ],
+              [
+                "Match In Progress",
+                14
+              ]
+            ],
+            "starting_runs": "0",
+            "dismissal_penalty": "5",
+            "players": [
+              {
+                "home_team": []
+              },
+              {
+                "away_team": []
+              }
+            ],
+            "innings": []
+          }
+        ]
+      }
+    },
+    "7673753": {
+      "_last_updated": "15/09/2026",
+      "detail": {
+        "match_details": [
+          {
+            "id": 7673753,
+            "status": "New",
+            "published": "Yes",
+            "last_updated": "15/09/2026",
+            "league_name": "Cambridgeshire Women`s and Girls` Cricket League",
+            "league_id": "27796",
+            "competition_name": "Maiden Cricket U11 Girls Softball Festival League (North)",
+            "competition_id": "140014",
+            "competition_type": "League",
+            "match_type": "Limited Overs",
+            "game_type": "Pairs",
+            "countdown_cricket": "no",
+            "match_id": "7673753",
+            "match_date": "03/05/2026",
+            "match_time": "",
+            "ground_name": "Chippenham Park",
+            "ground_id": "9202",
+            "home_team_name": "Girls Under 11",
+            "home_team_id": "280126",
+            "home_club_name": "Chippenham CC, Cambs",
+            "home_club_id": "1837",
+            "away_team_name": "Sutton & Haddenham U11 Girls Softball",
+            "away_team_id": "413277",
+            "away_club_name": "Sutton CC, Cambs",
+            "away_club_id": "6168",
+            "umpire_1_name": "",
+            "umpire_1_id": "",
+            "umpire_2_name": "",
+            "umpire_2_id": "",
+            "umpire_3_name": "",
+            "umpire_3_id": "",
+            "referee_name": "",
+            "referee_id": "",
+            "scorer_1_name": "",
+            "scorer_1_id": "",
+            "scorer_2_name": "",
+            "scorer_2_id": "",
+            "toss_won_by_team_id": "",
+            "toss": "",
+            "batted_first": "",
+            "no_of_overs": "8",
+            "balls_per_innings": "",
+            "no_of_innings": "1",
+            "no_of_days": "1",
+            "no_of_players": "",
+            "no_of_reserves": "",
+            "result": "C",
+            "result_description": "Cancelled",
+            "result_applied_to": "",
+            "match_notes": "",
+            "points": [
+              {
+                "team_id": 280126,
+                "game_points": "0",
+                "penalty_points": "",
+                "bonus_points_together": "0.0",
+                "bonus_points_batting": "0.0",
+                "bonus_points_bowling": "0.0",
+                "bonus_points_2nd_innings_together": ""
+              },
+              {
+                "team_id": 413277,
+                "game_points": "0",
+                "penalty_points": "",
+                "bonus_points_together": "0.0",
+                "bonus_points_batting": "0.0",
+                "bonus_points_bowling": "0.0",
+                "bonus_points_2nd_innings_together": ""
+              }
+            ],
+            "match_result_types": [
+              [
+                "Chippenham CC, Cambs - Girls Under 11 - Won",
+                "1105562#280126"
+              ],
+              [
+                "Sutton CC, Cambs - Sutton & Haddenham U11 Girls Softball - Won",
+                "1105562#413277"
+              ],
+              [
+                "Tied",
+                1105568
+              ],
+              [
+                "Cancelled",
+                1105564
+              ],
+              [
+                "Abandoned",
+                1105565
+              ],
+              [
+                "Chippenham CC, Cambs - Girls Under 11 - Conceded",
+                "1105566#413277"
+              ],
+              [
+                "Sutton CC, Cambs - Sutton & Haddenham U11 Girls Softball - Conceded",
+                "1105567#280126"
+              ],
+              [
+                "Match In Progress",
+                14
+              ]
+            ],
+            "starting_runs": "0",
+            "dismissal_penalty": "5",
+            "players": [
+              {
+                "home_team": []
+              },
+              {
+                "away_team": []
+              }
+            ],
+            "innings": []
+          }
+        ]
+      }
     }
   },
-  "generated_at": "2026-09-15T05:00:09.900816+00:00",
+  "generated_at": "2026-09-15T11:51:12.920840+00:00",
   "season": 2026
 }
