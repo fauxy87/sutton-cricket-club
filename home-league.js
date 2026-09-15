@@ -7,6 +7,39 @@
   const teamLabels = { '1st': '1st XI', '2nd': '2nd XI' };
   const teamPages = { '1st': 'team-1st-xi.html', '2nd': 'team-2nd-xi.html' };
 
+  function loadSeasonConfig() {
+    if (window.SUTTON_CC?.currentSeason) return Promise.resolve();
+
+    return new Promise(resolve => {
+      const existing = document.querySelector('script[data-sutton-season-config]');
+      if (existing) {
+        existing.addEventListener('load', resolve, { once: true });
+        existing.addEventListener('error', resolve, { once: true });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'season-config.js';
+      script.dataset.suttonSeasonConfig = 'true';
+      script.onload = resolve;
+      script.onerror = resolve;
+      document.head.appendChild(script);
+    });
+  }
+
+  function updateSeasonLabels(fallbackSeason) {
+    const season = window.SUTTON_CC?.currentSeason || fallbackSeason;
+    if (!season) return;
+
+    document.querySelectorAll('.section-heading').forEach(heading => {
+      const title = heading.querySelector('h2')?.textContent.trim();
+      const eyebrow = heading.querySelector('.eyebrow');
+      if (!eyebrow) return;
+      if (title === 'League positions') eyebrow.textContent = `${season} standings`;
+      if (title === 'Player leaders') eyebrow.textContent = `${season} statistics`;
+    });
+  }
+
   function findColumn(headings, wanted) {
     const entries = Object.entries(headings || {});
     const match = entries.find(([, label]) => String(label || '').trim().toLowerCase() === wanted.toLowerCase());
@@ -34,11 +67,16 @@
 
   async function load() {
     try {
-      const res = await fetch(`data/league-tables.json?v=${Date.now()}`, { cache: 'no-store' });
+      const [res] = await Promise.all([
+        fetch(`data/league-tables.json?v=${Date.now()}`, { cache: 'no-store' }),
+        loadSeasonConfig()
+      ]);
       if (!res.ok) throw new Error('League data unavailable');
       const data = await res.json();
+      updateSeasonLabels(data.season);
       host.innerHTML = ['1st', '2nd'].map(key => renderCard(key, data.tables?.[key])).join('');
     } catch (err) {
+      updateSeasonLabels();
       host.innerHTML = '<div class="season-stat"><strong>League positions syncing</strong><span>Latest standings will appear here automatically.</span></div>';
     }
   }
