@@ -1,5 +1,20 @@
 {
-  "generated_at": null,
-  "source": "Sutton Scoreboard OS",
-  "highlights": []
+  "generated_at": "2026-09-15T12:41:15.297Z",
+  "source": "Sutton CC Admin",
+  "highlights": [
+    {
+      "id": "highlight-1789476075297",
+      "title": "Colin Coulson Memorial Match Highlights",
+      "date": "2026-08-23",
+      "team": "Paul XI",
+      "opponent": "Coulson XI",
+      "result": "",
+      "kind": "YouTube",
+      "youtube_url": "https://youtu.be/ZksbxtKaajA",
+      "youtube_id": "ZksbxtKaajA",
+      "poster": "https://i.ytimg.com/vi/ZksbxtKaajA/hqdefault.jpg",
+      "created_at": "2026-09-15T12:41:15.297Z",
+      "updated_at": "2026-09-15T12:41:15.297Z"
+    }
+  ]
 }
