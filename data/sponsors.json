@@ -79,6 +79,10 @@
       "logo": "https://img-res.pitchero.com/?url=images.pitchero.com%2Fclub_sponsors%2F68577%2F1523603155_large.jpg&h=138&w=320&t=frame&bg=ffffff",
       "logo_alt": "David Frear Plumbing and Heating logo",
       "description": "Sutton-based plumbing, heating and air-conditioning specialists serving Cambridgeshire, with expertise including air-source heat pumps and air-conditioning installations. Proud sponsor of our Colts section.",
+      "testimonial": "It has been an absolute pleasure sponsoring the Colts for the past 10 seasons and seeing the players develop, with many eventually progressing into senior cricket.",
+      "testimonial_name": "Dave Frear",
+      "testimonial_role": "David Frear Plumbing & Heating",
+      "show_testimonial": true,
       "order": 8
     }
   ]
