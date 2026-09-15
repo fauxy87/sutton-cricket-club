@@ -1,59 +1,16 @@
 (() => {
-  const feed = document.getElementById('scoreboard-highlights');
-  const status = document.getElementById('highlights-feed-status');
-  if (!feed) return;
-
-  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  const fmtDate = value => {
-    if (!value) return '';
-    const d = new Date(value);
-    if (Number.isNaN(d.getTime())) return value;
-    return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
-  };
-
-  function videoCard(item) {
-    const title = item.title || 'Match highlights';
-    const team = item.team || 'Sutton CC';
-    const meta = [fmtDate(item.date), item.opponent, item.result].filter(Boolean).join(' · ');
-    const tags = Array.isArray(item.moments) ? item.moments.slice(0, 6) : [];
-    const poster = item.poster ? ` poster="${esc(item.poster)}"` : '';
-    const type = item.type || 'video/mp4';
-    const source = item.video_url || item.url || '';
-    const matchUrl = item.match_id ? `match.html?id=${encodeURIComponent(item.match_id)}` : '';
-    const youtube = item.youtube_id ? `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(item.youtube_id)}" title="${esc(title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>` : '';
-
-    return `<article class="video-feature scoreboard-video-card">
-      <div class="video-player-wrap">
-        ${youtube || (source ? `<video controls preload="metadata" playsinline${poster}><source src="${esc(source)}" type="${esc(type)}">Your browser does not support video playback.</video>` : `<div class="video-placeholder"><span class="play-button">▶</span><div><strong>${esc(title)}</strong><small>Video file awaiting upload</small></div></div>`)}
-      </div>
-      <div class="video-copy">
-        <div class="highlight-card-top"><span class="tag">${esc(team)}</span>${item.kind ? `<span class="highlight-kind">${esc(item.kind)}</span>` : ''}</div>
-        <h3>${esc(title)}</h3>
-        ${meta ? `<p>${esc(meta)}</p>` : ''}
-        ${tags.length ? `<div class="moment-tags">${tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
-        ${item.youtube_url ? `<p class="highlight-match-link"><a class="text-link" href="${esc(item.youtube_url)}" target="_blank" rel="noopener">Watch on YouTube →</a></p>` : ''}
-        ${matchUrl ? `<p class="highlight-match-link"><a class="text-link" href="${matchUrl}">View scorecard →</a></p>` : ''}
-      </div>
-    </article>`;
-  }
-
-  async function load() {
-    try {
-      const res = await fetch(`data/highlights.json?v=${Date.now()}`, { cache:'no-store' });
-      if (!res.ok) throw new Error('Highlights feed unavailable');
-      const data = await res.json();
-      const items = Array.isArray(data.highlights) ? data.highlights : [];
-      if (!items.length) {
-        feed.innerHTML = `<article class="highlights-empty-state"><div class="highlights-empty-icon">▶</div><div><p class="eyebrow dark">Connected and ready</p><h3>Scoreboard highlights will appear here automatically</h3><p>The website now reads a live highlight feed. Once a completed match video is published, it will be added here automatically.</p></div></article>`;
-        if (status) status.innerHTML = '<span class="status-dot"></span> Highlights feed ready'; return;
-      }
-      const ordered = items.slice().sort((a,b) => new Date(b.date || b.created_at || 0) - new Date(a.date || a.created_at || 0));
-      feed.innerHTML = ordered.map(videoCard).join('');
-      if (status) { const updated = data.generated_at ? ` · updated ${fmtDate(data.generated_at)}` : ''; status.innerHTML = `<span class="status-dot"></span> ${ordered.length} highlight${ordered.length === 1 ? '' : 's'} available${updated}`; }
-    } catch (err) {
-      feed.innerHTML = `<article class="highlights-empty-state"><div class="highlights-empty-icon">!</div><div><h3>Highlights feed is temporarily unavailable</h3><p>Please try again shortly.</p></div></article>`;
-      if (status) status.textContent = 'Highlights feed unavailable';
-    }
-  }
+  const feed=document.getElementById('scoreboard-highlights');
+  const featured=document.getElementById('featured-highlight');
+  const status=document.getElementById('highlights-feed-status');
+  if(!feed)return;
+  let allItems=[];
+  const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const fmtDate=v=>{if(!v)return'';const d=new Date(v);return Number.isNaN(d.getTime())?v:d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});};
+  function category(item){const s=`${item.team||''} ${item.title||''} ${item.opponent||''}`.toLowerCase();if(s.includes('1st'))return'1st';if(s.includes('2nd'))return'2nd';if(s.includes('development')||s.includes('sunday'))return'development';if(s.includes('junior')||s.includes('u14')||s.includes('u13')||s.includes('u12')||s.includes('colts'))return'junior';if(s.includes('women')||s.includes('girls'))return'women';return'event';}
+  function player(item){const title=item.title||'Match highlights',team=item.team||'Sutton CC',meta=[fmtDate(item.date),item.opponent,item.result].filter(Boolean).join(' · '),source=item.video_url||item.url||'',poster=item.poster?` poster="${esc(item.poster)}"`:'',type=item.type||'video/mp4';const media=item.youtube_id?`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(item.youtube_id)}" title="${esc(title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`:source?`<video controls preload="metadata" playsinline${poster}><source src="${esc(source)}" type="${esc(type)}"></video>`:`<div class="video-placeholder"><span class="play-button">▶</span><strong>${esc(title)}</strong></div>`;return{title,team,meta,media};}
+  function card(item,isFeatured=false){const p=player(item);return `<article class="video-feature scoreboard-video-card${isFeatured?' featured-video-card':''}" data-category="${category(item)}"><div class="video-player-wrap">${p.media}</div><div class="video-copy"><div class="highlight-card-top"><span class="tag">${esc(p.team)}</span>${item.kind?`<span class="highlight-kind">${esc(item.kind)}</span>`:''}</div><h3>${esc(p.title)}</h3>${p.meta?`<p>${esc(p.meta)}</p>`:''}<div class="video-links">${item.youtube_url?`<a class="youtube-watch-link" href="${esc(item.youtube_url)}" target="_blank" rel="noopener"><span>▶</span> Watch on YouTube</a>`:''}${item.match_id?`<a class="text-link" href="match.html?id=${encodeURIComponent(item.match_id)}">View scorecard →</a>`:''}</div></div></article>`;}
+  function render(filter='all'){const shown=filter==='all'?allItems:allItems.filter(x=>category(x)===filter);feed.innerHTML=shown.length?shown.map(x=>card(x)).join(''):`<article class="highlights-empty-state"><div class="highlights-empty-icon">▶</div><div><h3>No videos in this category yet</h3><p>New highlights will appear here as they are published.</p></div></article>`;}
+  document.getElementById('highlight-filters')?.addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;document.querySelectorAll('.highlight-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');render(b.dataset.filter);});
+  async function load(){try{const res=await fetch(`data/highlights.json?v=${Date.now()}`,{cache:'no-store'});if(!res.ok)throw new Error();const data=await res.json();allItems=(Array.isArray(data.highlights)?data.highlights:[]).slice().sort((a,b)=>new Date(b.date||b.created_at||0)-new Date(a.date||a.created_at||0));if(!allItems.length){feed.innerHTML='<article class="highlights-empty-state"><div class="highlights-empty-icon">▶</div><div><h3>No highlights published yet</h3></div></article>';if(featured)featured.innerHTML=feed.innerHTML;if(status)status.innerHTML='<span class="status-dot"></span> Highlights feed ready';return;}if(featured)featured.innerHTML=card(allItems[0],true);render();if(status)status.innerHTML=`<span class="status-dot"></span> ${allItems.length} video${allItems.length===1?'':'s'} available`;}catch{feed.innerHTML='<article class="highlights-empty-state"><div class="highlights-empty-icon">!</div><div><h3>Highlights temporarily unavailable</h3></div></article>';if(featured)featured.innerHTML=feed.innerHTML;if(status)status.textContent='Highlights feed unavailable';}}
   load();
 })();
