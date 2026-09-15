@@ -20,16 +20,18 @@
     const type = item.type || 'video/mp4';
     const source = item.video_url || item.url || '';
     const matchUrl = item.match_id ? `match.html?id=${encodeURIComponent(item.match_id)}` : '';
+    const youtube = item.youtube_id ? `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(item.youtube_id)}" title="${esc(title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>` : '';
 
     return `<article class="video-feature scoreboard-video-card">
       <div class="video-player-wrap">
-        ${source ? `<video controls preload="metadata" playsinline${poster}><source src="${esc(source)}" type="${esc(type)}">Your browser does not support video playback.</video>` : `<div class="video-placeholder"><span class="play-button">▶</span><div><strong>${esc(title)}</strong><small>Video file awaiting upload</small></div></div>`}
+        ${youtube || (source ? `<video controls preload="metadata" playsinline${poster}><source src="${esc(source)}" type="${esc(type)}">Your browser does not support video playback.</video>` : `<div class="video-placeholder"><span class="play-button">▶</span><div><strong>${esc(title)}</strong><small>Video file awaiting upload</small></div></div>`)}
       </div>
       <div class="video-copy">
         <div class="highlight-card-top"><span class="tag">${esc(team)}</span>${item.kind ? `<span class="highlight-kind">${esc(item.kind)}</span>` : ''}</div>
         <h3>${esc(title)}</h3>
         ${meta ? `<p>${esc(meta)}</p>` : ''}
         ${tags.length ? `<div class="moment-tags">${tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : ''}
+        ${item.youtube_url ? `<p class="highlight-match-link"><a class="text-link" href="${esc(item.youtube_url)}" target="_blank" rel="noopener">Watch on YouTube →</a></p>` : ''}
         ${matchUrl ? `<p class="highlight-match-link"><a class="text-link" href="${matchUrl}">View scorecard →</a></p>` : ''}
       </div>
     </article>`;
@@ -41,27 +43,17 @@
       if (!res.ok) throw new Error('Highlights feed unavailable');
       const data = await res.json();
       const items = Array.isArray(data.highlights) ? data.highlights : [];
-
       if (!items.length) {
-        feed.innerHTML = `<article class="highlights-empty-state">
-          <div class="highlights-empty-icon">▶</div>
-          <div><p class="eyebrow dark">Connected and ready</p><h3>Scoreboard highlights will appear here automatically</h3><p>The website now reads a live highlight feed. Once a completed match video is published by Sutton Scoreboard OS, it will be added here without rebuilding this page.</p></div>
-        </article>`;
-        if (status) status.innerHTML = '<span class="status-dot"></span> Highlights feed ready';
-        return;
+        feed.innerHTML = `<article class="highlights-empty-state"><div class="highlights-empty-icon">▶</div><div><p class="eyebrow dark">Connected and ready</p><h3>Scoreboard highlights will appear here automatically</h3><p>The website now reads a live highlight feed. Once a completed match video is published, it will be added here automatically.</p></div></article>`;
+        if (status) status.innerHTML = '<span class="status-dot"></span> Highlights feed ready'; return;
       }
-
       const ordered = items.slice().sort((a,b) => new Date(b.date || b.created_at || 0) - new Date(a.date || a.created_at || 0));
       feed.innerHTML = ordered.map(videoCard).join('');
-      if (status) {
-        const updated = data.generated_at ? ` · updated ${fmtDate(data.generated_at)}` : '';
-        status.innerHTML = `<span class="status-dot"></span> ${ordered.length} highlight${ordered.length === 1 ? '' : 's'} available${updated}`;
-      }
+      if (status) { const updated = data.generated_at ? ` · updated ${fmtDate(data.generated_at)}` : ''; status.innerHTML = `<span class="status-dot"></span> ${ordered.length} highlight${ordered.length === 1 ? '' : 's'} available${updated}`; }
     } catch (err) {
       feed.innerHTML = `<article class="highlights-empty-state"><div class="highlights-empty-icon">!</div><div><h3>Highlights feed is temporarily unavailable</h3><p>Please try again shortly.</p></div></article>`;
       if (status) status.textContent = 'Highlights feed unavailable';
     }
   }
-
   load();
 })();
