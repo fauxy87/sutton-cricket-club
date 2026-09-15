@@ -29,9 +29,10 @@
       if (!res.ok) throw new Error('Milestone data unavailable');
       const data = await res.json();
       const items = Array.isArray(data.milestones) ? data.milestones : [];
+      const season = data.season || window.SUTTON_CC?.currentSeason || new Date().getFullYear();
 
       if (!items.length) {
-        board.innerHTML = '<div class="board-row"><span>No 50s, 100s or 4+ wicket hauls found yet</span><strong>2026</strong></div>';
+        board.innerHTML = `<div class="board-row"><span>No 50s, 100s or 4+ wicket hauls found yet</span><strong>${esc(season)}</strong></div>`;
         return;
       }
 
