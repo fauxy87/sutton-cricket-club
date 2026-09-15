@@ -35,3 +35,14 @@ loadHomeLeaders();
   newsSection.parentNode.insertBefore(section,newsSection);
   const script=document.createElement('script');script.src='home-highlights.js';document.body.appendChild(script);
 })();
+
+// Community feature: showcases the annual 6-a-Side day using genuine club photography.
+(() => {
+  const sponsorsSection=document.getElementById('sponsors');
+  if(!sponsorsSection||document.getElementById('home-community'))return;
+  const section=document.createElement('section');
+  section.id='home-community';
+  section.className='home-community-section';
+  section.innerHTML=`<div class="container home-community-wrap"><div class="home-community-photo"><img src="assets/IMG_6789.jpg" alt="Sutton Cricket Club 6-a-Side community day with cricket, spectators and St Andrew's Church"><div class="home-community-stats"><span><strong>12</strong> Teams</span><span><strong>~150</strong> People</span><span><strong>1</strong> Community</span></div></div><div class="home-community-copy"><p class="eyebrow">More Than Just Cricket</p><h2>Bringing Sutton together</h2><p>Our annual 6-a-Side brings together local businesses, players, juniors, families and friends for one of the biggest days in the Sutton CC calendar.</p><p>It is cricket at the heart of the village — a full community day that gives local businesses a great opportunity to be part of something special.</p><div class="home-community-actions"><a class="btn btn-primary" href="sponsors.html#six-a-side">Discover our 6-a-Side</a><a class="text-link" href="sponsor-enquiry.html">Sponsor the event →</a></div></div></div>`;
+  sponsorsSection.parentNode.insertBefore(section,sponsorsSection);
+})();
