@@ -1,0 +1,133 @@
+name: Sync fielding dismissals
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-fielding-stats.yml'
+  schedule:
+    - cron: '25 */6 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  fielding:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v5
+
+      - name: Calculate catches and stumpings
+        run: |
+          python - <<'PY'
+          import json, re
+          from collections import defaultdict
+          from pathlib import Path
+
+          scorecards_path = Path('data/play-cricket-scorecards.json')
+          stats_path = Path('data/player-stats.json')
+          if not scorecards_path.exists() or not stats_path.exists():
+              raise SystemExit('Required Play-Cricket data files are missing')
+
+          cache = json.loads(scorecards_path.read_text(encoding='utf-8'))
+          stats = json.loads(stats_path.read_text(encoding='utf-8'))
+          season = str(stats.get('season') or '')
+          site_id = '6168'
+
+          fielders = defaultdict(lambda: {'name':'', 'catches':0, 'stumpings':0})
+
+          def text(v):
+              return str(v or '').strip()
+
+          def first(row, keys):
+              for key in keys:
+                  value = row.get(key)
+                  if value not in (None, ''):
+                      return text(value)
+              return ''
+
+          def add_dismissal(row, kind):
+              # Play-Cricket scorecards have used a few field names over time,
+              # so accept the known fielder / wicketkeeper variants.
+              if kind == 'stumping':
+                  pid = first(row, ['fielder_id','wicket_keeper_id','wicketkeeper_id','dismissal_fielder_id'])
+                  name = first(row, ['fielder_name','wicket_keeper_name','wicketkeeper_name','dismissal_fielder_name'])
+              else:
+                  pid = first(row, ['fielder_id','dismissal_fielder_id','catcher_id'])
+                  name = first(row, ['fielder_name','dismissal_fielder_name','catcher_name'])
+
+              how = first(row, ['how_out','dismissal','dismissal_text'])
+              # Caught-and-bowled can legitimately have no separate fielder field.
+              if kind == 'catch' and not (pid or name) and ('caught & bowled' in how.lower() or 'c & b' in how.lower() or 'c&b' in how.lower()):
+                  pid = first(row, ['bowler_id'])
+                  name = first(row, ['bowler_name'])
+
+              if not (pid or name):
+                  return
+              key = pid or name.lower()
+              f = fielders[key]
+              f['name'] = name or f['name'] or pid
+              if kind == 'stumping':
+                  f['stumpings'] += 1
+              else:
+                  f['catches'] += 1
+
+          matches = cache.get('matches', {}) if isinstance(cache, dict) else {}
+          for entry in matches.values():
+              if not isinstance(entry, dict):
+                  continue
+              details = entry.get('detail', {}).get('match_details', []) or []
+              if not details:
+                  continue
+              d = details[0]
+              if season and text(d.get('season') or season) != season:
+                  continue
+              home_is_sutton = text(d.get('home_club_id')) == site_id
+              away_is_sutton = text(d.get('away_club_id')) == site_id
+              if not (home_is_sutton or away_is_sutton):
+                  continue
+              sutton_team_id = text(d.get('home_team_id') if home_is_sutton else d.get('away_team_id'))
+
+              for inn in d.get('innings', []) or []:
+                  # We want Sutton fielding, so inspect opposition batting innings only.
+                  if text(inn.get('team_batting_id')) == sutton_team_id:
+                      continue
+                  for batter in inn.get('bat', []) or []:
+                      how = first(batter, ['how_out','dismissal','dismissal_text']).lower()
+                      if not how:
+                          continue
+                      if 'stump' in how:
+                          add_dismissal(batter, 'stumping')
+                      elif 'caught' in how or re.search(r'(^|\s)c\s', how) or 'c&b' in how or 'c & b' in how:
+                          add_dismissal(batter, 'catch')
+
+          rows = []
+          for pid, f in fielders.items():
+              dismissals = f['catches'] + f['stumpings']
+              if dismissals:
+                  rows.append({
+                      'player_id': pid,
+                      'name': f['name'],
+                      'catches': f['catches'],
+                      'stumpings': f['stumpings'],
+                      'dismissals': dismissals
+                  })
+          rows.sort(key=lambda x: (x['dismissals'], x['catches'], x['stumpings']), reverse=True)
+          stats['fielding'] = rows
+          stats_path.write_text(json.dumps(stats, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          print(f'Added fielding statistics for {len(rows)} players')
+          PY
+
+      - name: Commit fielding statistics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/player-stats.json
+          if git diff --cached --quiet; then
+            echo "No fielding statistic changes"
+            exit 0
+          fi
+          git commit -m "Update Play-Cricket fielding stats"
+          git push
