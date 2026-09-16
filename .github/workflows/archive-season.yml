@@ -1,0 +1,109 @@
+name: Archive completed cricket season
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 23 31 12 *'
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v5
+
+      - name: Archive current season
+        run: |
+          python - <<'PY'
+          import json
+          import shutil
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          data_dir = Path("data")
+          archive_root = data_dir / "archive"
+
+          files = [
+              "play-cricket.json",
+              "play-cricket-scorecards.json",
+              "player-stats.json",
+              "league-tables.json",
+              "milestones.json",
+          ]
+
+          seasons = []
+
+          for filename in files:
+              source = data_dir / filename
+
+              if not source.exists():
+                  continue
+
+              try:
+                  data = json.loads(source.read_text(encoding="utf-8"))
+                  season = int(data.get("season"))
+              except Exception:
+                  continue
+
+              seasons.append(season)
+
+          if not seasons:
+              raise SystemExit("No season data found to archive")
+
+          season = max(seasons)
+          target_dir = archive_root / str(season)
+          target_dir.mkdir(parents=True, exist_ok=True)
+
+          copied = 0
+
+          for filename in files:
+              source = data_dir / filename
+              target = target_dir / filename
+
+              if not source.exists():
+                  continue
+
+              try:
+                  data = json.loads(source.read_text(encoding="utf-8"))
+              except Exception:
+                  continue
+
+              if str(data.get("season") or "") != str(season):
+                  continue
+
+              shutil.copy2(source, target)
+              copied += 1
+              print(f"Archived {filename} -> {target}")
+
+          manifest = {
+              "season": season,
+              "archived_at": datetime.now(timezone.utc).isoformat(),
+              "files": copied,
+          }
+
+          (target_dir / "archive.json").write_text(
+              json.dumps(manifest, indent=2) + "\n",
+              encoding="utf-8",
+          )
+
+          print(f"Archived season {season}: {copied} files")
+          PY
+
+      - name: Save archive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/archive/
+
+          if git diff --cached --quiet; then
+            echo "Season already archived"
+            exit 0
+          fi
+
+          git commit -m "Archive completed cricket season"
+          git push
