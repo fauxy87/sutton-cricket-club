@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T11:44:30.041590+00:00",
+  "generated_at": "2026-09-16T17:05:20.760419+00:00",
   "season": 2026,
   "scorecards_processed": 84,
   "batting": [
@@ -140,10 +140,10 @@
       "innings": 12,
       "not_outs": 2,
       "average": 13.0,
-      "balls": 161,
-      "strike_rate": 80.75,
+      "balls": 177,
+      "strike_rate": 73.45,
       "fours": 19,
-      "sixes": 16,
+      "sixes": 0,
       "high_score": "37"
     },
     {
@@ -1955,6 +1955,5 @@
       "economy": 5.67,
       "best": "-"
     }
-  ],
-  "fielding": []
+  ]
 }

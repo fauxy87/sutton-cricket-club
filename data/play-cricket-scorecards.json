@@ -42636,14 +42636,14 @@
       }
     },
     "7473950": {
-      "_last_updated": "21/08/2026",
+      "_last_updated": "16/09/2026",
       "detail": {
         "match_details": [
           {
             "id": 7473950,
             "status": "New",
             "published": "Yes",
-            "last_updated": "21/08/2026",
+            "last_updated": "16/09/2026",
             "league_name": "Cambridgeshire & Huntingdonshire Premier League",
             "league_id": "269",
             "competition_name": "CCA Junior League 2 North",
@@ -43308,8 +43308,8 @@
                     "bowler_id": "",
                     "runs": "16",
                     "fours": "3",
-                    "sixes": "16",
-                    "balls": ""
+                    "sixes": "0",
+                    "balls": "16"
                   },
                   {
                     "position": "6",
@@ -48442,6 +48442,6 @@
       }
     }
   },
-  "generated_at": "2026-09-16T11:44:29.993133+00:00",
+  "generated_at": "2026-09-16T17:05:20.712935+00:00",
   "season": 2026
 }
