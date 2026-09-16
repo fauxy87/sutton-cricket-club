@@ -65,6 +65,18 @@
     return `<a class="season-stat" href="${teamPages[key]}"><span>${teamLabels[key]}</span><strong>${esc(row.position || '—')}</strong><span>${esc(table.name || '')}</span>${meta ? `<small>${esc(meta)}</small>` : ''}<b>View full table →</b></a>`;
   }
 
+  function hasPublishedTable(data) {
+    return ['1st', '2nd'].some(key => {
+      const table = data.tables?.[key];
+      return table && !table.error && Array.isArray(table.values) && table.values.length > 0;
+    });
+  }
+
+  function renderPreSeason(season) {
+    const safeSeason = esc(season || 'New season');
+    host.innerHTML = `<div class="season-stat"><strong>${safeSeason} season</strong><span>League tables will appear here automatically when Play-Cricket publishes them.</span></div>`;
+  }
+
   async function load() {
     try {
       const [res] = await Promise.all([
@@ -73,11 +85,19 @@
       ]);
       if (!res.ok) throw new Error('League data unavailable');
       const data = await res.json();
-      updateSeasonLabels(data.season);
+      const currentSeason = window.SUTTON_CC?.currentSeason || data.season;
+      updateSeasonLabels(currentSeason);
+
+      if (String(data.season || '') !== String(currentSeason || '') || !hasPublishedTable(data)) {
+        renderPreSeason(currentSeason);
+        return;
+      }
+
       host.innerHTML = ['1st', '2nd'].map(key => renderCard(key, data.tables?.[key])).join('');
     } catch (err) {
       updateSeasonLabels();
-      host.innerHTML = '<div class="season-stat"><strong>League positions syncing</strong><span>Latest standings will appear here automatically.</span></div>';
+      const season = window.SUTTON_CC?.currentSeason;
+      host.innerHTML = `<div class="season-stat"><strong>${esc(season ? `${season} season` : 'League positions')}</strong><span>Latest standings will appear here automatically when they are available.</span></div>`;
     }
   }
 
