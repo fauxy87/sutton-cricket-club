@@ -27,6 +27,7 @@
       const data = await res.json();
       const batting = Array.isArray(data.batting) ? data.batting : [];
       const bowling = Array.isArray(data.bowling) ? data.bowling : [];
+      const fielding = Array.isArray(data.fielding) ? data.fielding : [];
       if (!batting.length && !bowling.length) throw new Error('No player statistics');
 
       const runScorer = batting.slice().sort((a,b) => number(b.runs)-number(a.runs))[0];
@@ -38,15 +39,21 @@
       })[0];
       const mostSixes = batting.slice().sort((a,b) => number(b.sixes)-number(a.sixes) || number(b.runs)-number(a.runs))[0];
       const mostFours = batting.slice().sort((a,b) => number(b.fours)-number(a.fours) || number(b.runs)-number(a.runs))[0];
+      const mostDismissals = fielding.slice().sort((a,b) => number(b.dismissals)-number(a.dismissals) || number(b.catches)-number(a.catches))[0];
 
-      leaders.innerHTML = [
+      const cards = [
         card('Leading run scorer', runScorer?.runs ?? '—', runScorer, 'runs'),
         card('Leading wicket taker', wicketTaker?.wickets ?? '—', wicketTaker, 'wickets'),
         card('Highest individual score', highestScore?.high_score ?? '—', highestScore),
         card('Best bowling figures', bestBowling?.best ?? '—', bestBowling),
         card('Most sixes', mostSixes?.sixes ?? '—', mostSixes, 'sixes'),
         card('Most fours', mostFours?.fours ?? '—', mostFours, 'fours')
-      ].join('');
+      ];
+      if (mostDismissals) {
+        const detail = `${number(mostDismissals.catches)} catches · ${number(mostDismissals.stumpings)} stumpings`;
+        cards.push(card('Most dismissals', mostDismissals.dismissals ?? '—', mostDismissals, detail));
+      }
+      leaders.innerHTML = cards.join('');
     } catch (err) {
       console.info('Expanded honours statistics unavailable:', err.message);
     }
