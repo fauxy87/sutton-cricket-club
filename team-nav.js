@@ -28,4 +28,11 @@
   </div>`;
 
   hero.insertAdjacentElement('afterend', nav);
+
+  if (!document.querySelector('script[data-sutton-preseason-fixtures]')) {
+    const script = document.createElement('script');
+    script.src = 'preseason-fixtures.js';
+    script.dataset.suttonPreseasonFixtures = 'true';
+    document.body.appendChild(script);
+  }
 })();
