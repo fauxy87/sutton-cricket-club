@@ -40,6 +40,12 @@
       const mostSixes = batting.slice().sort((a,b) => number(b.sixes)-number(a.sixes) || number(b.runs)-number(a.runs))[0];
       const mostFours = batting.slice().sort((a,b) => number(b.fours)-number(a.fours) || number(b.runs)-number(a.runs))[0];
       const mostDismissals = fielding.slice().sort((a,b) => number(b.dismissals)-number(a.dismissals) || number(b.catches)-number(a.catches))[0];
+      const battingAverage = batting
+        .filter(p => number(p.innings)-number(p.not_outs) >= 5 && Number.isFinite(Number(p.average)))
+        .sort((a,b) => number(b.average)-number(a.average) || number(b.runs)-number(a.runs))[0];
+      const bowlingAverage = bowling
+        .filter(p => number(p.wickets) >= 10 && Number.isFinite(Number(p.average)))
+        .sort((a,b) => number(a.average)-number(b.average) || number(b.wickets)-number(a.wickets))[0];
 
       const cards = [
         card('Leading run scorer', runScorer?.runs ?? '—', runScorer, 'runs'),
@@ -47,11 +53,21 @@
         card('Highest individual score', highestScore?.high_score ?? '—', highestScore),
         card('Best bowling figures', bestBowling?.best ?? '—', bestBowling),
         card('Most sixes', mostSixes?.sixes ?? '—', mostSixes, 'sixes'),
-        card('Most fours', mostFours?.fours ?? '—', mostFours, 'fours')
+        card('Most fours', mostFours?.fours ?? '—', mostFours, 'fours'),
+        card('Best batting average', battingAverage?.average ?? '—', battingAverage, 'Minimum 5 dismissals'),
+        card('Best bowling average', bowlingAverage?.average ?? '—', bowlingAverage, 'Minimum 10 wickets')
       ];
       if (mostDismissals) {
         const detail = `${number(mostDismissals.catches)} catches · ${number(mostDismissals.stumpings)} stumpings`;
         cards.push(card('Most dismissals', mostDismissals.dismissals ?? '—', mostDismissals, detail));
+      } else {
+        cards.push(`
+          <article class="record-feature">
+            <span>Most dismissals</span>
+            <strong>—</strong>
+            <h3>Fielding data unavailable</h3>
+            <p>Waiting for the next fielding statistics sync.</p>
+          </article>`);
       }
       leaders.innerHTML = cards.join('');
     } catch (err) {
