@@ -10,7 +10,7 @@
   const partnerLabel=[...document.querySelectorAll('.sponsor-heading .eyebrow')].find(el=>/\bpartners\b/i.test(el.textContent));
   if(partnerLabel) partnerLabel.textContent=`${new Date().getFullYear()} partners`;
 
-  // Turn every package into a direct enquiry route, with the chosen package pre-selected.
+  // Keep one enquiry button per package and pre-select the exact current package.
   const packageMap={
     'Match Ball':'Match Ball — from £20',
     'Player Sponsor':'Player Sponsor — £50',
@@ -24,7 +24,8 @@
   document.querySelectorAll('.package-card').forEach(packageCard=>{
     const title=packageCard.querySelector('h3')?.textContent.trim();
     const selected=packageMap[title];
-    if(!selected||packageCard.querySelector('.package-enquire'))return;
+    if(!selected)return;
+    packageCard.querySelectorAll('a[href^="sponsor-enquiry.html?package="], .package-enquire').forEach(link=>link.remove());
     const link=document.createElement('a');
     link.className='btn btn-primary package-enquire';
     link.href=`sponsor-enquiry.html?package=${encodeURIComponent(selected)}`;
