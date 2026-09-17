@@ -49,8 +49,6 @@ jobs:
               return ''
 
           def add_dismissal(row, kind):
-              # Play-Cricket scorecards have used a few field names over time,
-              # so accept the known fielder / wicketkeeper variants.
               if kind == 'stumping':
                   pid = first(row, ['fielder_id','wicket_keeper_id','wicketkeeper_id','dismissal_fielder_id'])
                   name = first(row, ['fielder_name','wicket_keeper_name','wicketkeeper_name','dismissal_fielder_name'])
@@ -59,8 +57,7 @@ jobs:
                   name = first(row, ['fielder_name','dismissal_fielder_name','catcher_name'])
 
               how = first(row, ['how_out','dismissal','dismissal_text'])
-              # Caught-and-bowled can legitimately have no separate fielder field.
-              if kind == 'catch' and not (pid or name) and ('caught & bowled' in how.lower() or 'c & b' in how.lower() or 'c&b' in how.lower()):
+              if kind == 'catch' and not (pid or name) and any(x in how.lower() for x in ['caught & bowled','caught and bowled','c & b','c&b']):
                   pid = first(row, ['bowler_id'])
                   name = first(row, ['bowler_name'])
 
@@ -91,16 +88,27 @@ jobs:
               sutton_team_id = text(d.get('home_team_id') if home_is_sutton else d.get('away_team_id'))
 
               for inn in d.get('innings', []) or []:
-                  # We want Sutton fielding, so inspect opposition batting innings only.
                   if text(inn.get('team_batting_id')) == sutton_team_id:
                       continue
                   for batter in inn.get('bat', []) or []:
                       how = first(batter, ['how_out','dismissal','dismissal_text']).lower()
                       if not how:
                           continue
-                      if 'stump' in how:
+
+                      # Match Detail exposes fielder_name/fielder_id separately. Some
+                      # scorecards use short dismissal codes (ct/st) rather than words,
+                      # so prefer the fielder fields and only use how_out to classify.
+                      has_fielder = bool(first(batter, ['fielder_id','fielder_name','dismissal_fielder_id','dismissal_fielder_name','catcher_id','catcher_name']))
+                      is_run_out = 'run out' in how or how in ('ro','runout')
+                      is_stumping = 'stump' in how or how in ('st','stumped')
+                      is_caught_bowled = any(x in how for x in ['caught & bowled','caught and bowled','c & b','c&b']) or how in ('cb','c b')
+                      is_catch = ('caught' in how or how in ('ct','c','catch') or re.search(r'(^|\s)c\s', how) or is_caught_bowled)
+
+                      if is_run_out:
+                          continue
+                      if is_stumping:
                           add_dismissal(batter, 'stumping')
-                      elif 'caught' in how or re.search(r'(^|\s)c\s', how) or 'c&b' in how or 'c & b' in how:
+                      elif is_catch or has_fielder:
                           add_dismissal(batter, 'catch')
 
           rows = []
