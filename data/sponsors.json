@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-15",
+  "updated_at": "2026-09-18",
   "sponsors": [
     {
       "id": "cheffins",
@@ -84,6 +84,16 @@
       "testimonial_role": "David Frear Plumbing & Heating",
       "show_testimonial": true,
       "order": 8
+    },
+    {
+      "id": "commercial-security-system",
+      "name": "Commercial & Security System",
+      "type": "Banner sponsor",
+      "website": "",
+      "logo": "",
+      "logo_alt": "Commercial & Security System",
+      "description": "Security services including CCTV / VSS, alarms, bollards and barriers, access control, and roller shutters and doors. Tel: 07595 836301.",
+      "order": 9
     }
   ]
 }
