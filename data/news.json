@@ -32,24 +32,26 @@
     },
     {
       "id": "colin-coulson-memorial-275",
-      "title": "£275 raised in memory of Colin Coulson",
+      "title": "Colin Coulson Memorial Game raises £275",
       "date": "2026-08-23",
       "category": "community",
       "category_label": "Community",
-      "summary": "A memorial cricket match raised £275 for the British Heart Foundation in memory of Colin Coulson.",
-      "lead": "Players, friends and supporters came together for a memorial cricket match, raising £275 for the British Heart Foundation in memory of Colin Coulson.",
+      "summary": "Paul’s XI beat the Coulson XI by five wickets in a special memorial game that raised £275 for the British Heart Foundation in memory of Colin Coulson.",
+      "lead": "A huge thank you to everyone who came along and supported the memorial game between the Coulson XI and Paul’s XI. The Coulson XI scored 181/6 before Paul’s XI reached 187/5 to win by five wickets.",
       "body": [
-        "The club would like to thank everyone who played, supported and contributed to the memorial match.",
-        "A total of £275 was raised for the British Heart Foundation in Colin’s memory."
+        "Batting highlights for the Coulson XI included Lourens Herselman 32*, Phil Coulson 30* and Kaiden Grady 27. For Paul’s XI, Paul Robinson, David Frear and Ricky Paul each made 33*.",
+        "The best bowling figures were Jeff Paul 2/17 for Paul’s XI, while Lourens Herselman took 2/27 and Leon Perrin 2/38 for the Coulson XI.",
+        "The day was all about coming together to remember Colin and celebrate his life. Thanks to everyone’s incredible generosity, £275 was raised for the British Heart Foundation.",
+        "Thank you to all the players, helpers and supporters who made it such a special day in Colin’s memory."
       ],
       "links": [
         {
-          "label": "More club news",
-          "href": "news.html"
+          "label": "Watch the match highlights",
+          "href": "gallery.html"
         },
         {
-          "label": "Contact the club",
-          "href": "join.html"
+          "label": "More club news",
+          "href": "news.html"
         }
       ]
     },
