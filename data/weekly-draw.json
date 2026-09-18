@@ -1,6 +1,22 @@
 {
   "season": 2026,
-  "updated_at": "2026-09-15",
+  "updated_at": "2026-09-18",
   "tickets": [],
-  "results": []
+  "results": [
+    {"label":"Week 1","first_number":113,"first_name":"Josh Grady","first_prize":15,"second_number":163,"second_name":"Hugo Craven","second_prize":5},
+    {"label":"Week 2","first_number":122,"first_name":"Micheal Ward","first_prize":15,"second_number":7,"second_name":"Ged Easey","second_prize":5},
+    {"label":"Week 3","first_number":112,"first_name":"Clive Hughes","first_prize":15,"second_number":85,"second_name":"Isla Peachy","second_prize":5},
+    {"label":"Week 4","first_number":187,"first_name":"Donna Faux","first_prize":15,"second_number":25,"second_name":"Gibb","second_prize":5},
+    {"label":"Week 5","first_number":173,"first_name":"Harry Price","first_prize":15,"second_number":25,"second_name":"Gibb","second_prize":5},
+    {"label":"Week 6","first_number":32,"first_name":"Heidi G","first_prize":15,"second_number":189,"second_name":"Hallie","second_prize":5},
+    {"label":"Week 7","first_number":61,"first_name":"Gracie","first_prize":15,"second_number":98,"second_name":"Steve Pollard","second_prize":5},
+    {"label":"Week 8","first_number":199,"first_name":"Sarah Osbourne","first_prize":15,"second_number":23,"second_name":"Carole Fayers","second_prize":5},
+    {"label":"Week 9","first_number":167,"first_name":"Peter Grainger","first_prize":15,"second_number":127,"second_name":"Clive Hughes","second_prize":5},
+    {"label":"Week 10","first_number":133,"first_name":"Matt Newman","first_prize":15,"second_number":156,"second_name":"Clare Baker","second_prize":5},
+    {"label":"Week 11","first_number":5,"first_name":"Debbie Kweder","first_prize":15,"second_number":89,"second_name":"Emma Few","second_prize":5},
+    {"label":"Week 12","first_number":27,"first_name":"Gibb","first_prize":15,"second_number":120,"second_name":"Mimi Grady","second_prize":5},
+    {"label":"Week 13","first_number":74,"first_name":"Angie Ware","first_prize":15,"second_number":103,"second_name":"Charlotte Hough","second_prize":5},
+    {"label":"Week 14","first_number":109,"first_name":"Leon Perrin","first_prize":15,"second_number":163,"second_name":"Hugo Craven","second_prize":5},
+    {"label":"Presentation Evening","first_number":96,"first_name":"Josh Ashman","first_prize":25,"second_number":170,"second_name":"Glenn Harrison","second_prize":100}
+  ]
 }
