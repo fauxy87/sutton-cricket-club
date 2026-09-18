@@ -1,12 +1,14 @@
 /* Sutton Cricket Club current-season configuration.
  *
- * The active season rolls over automatically on 1 January each year.
+ * The active cricket season rolls over automatically on 1 March each year.
  * Historical news, awards, honours and archive data keep their original
  * years and must not use this value.
  */
 (() => {
   const now = new Date();
-  const CURRENT_SEASON = now.getFullYear();
+  // Keep the previous cricket season active through January and February,
+  // while fixtures and programme details for the new season are being prepared.
+  const CURRENT_SEASON = now.getMonth() >= 2 ? now.getFullYear() : now.getFullYear() - 1;
 
   window.SUTTON_CC = Object.freeze({
     ...(window.SUTTON_CC || {}),
