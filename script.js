@@ -177,6 +177,35 @@ function formatHomeFixture(m) {
   box.innerHTML = `<div class="fixture-top"><span class="tag">Next match</span><span>${escapeHtml(m.match_date || '')}</span></div><h3>${escapeHtml(team)}</h3><p class="versus">${escapeHtml(home)} <strong>v</strong> ${escapeHtml(away)}</p><p class="fixture-meta">${escapeHtml([m.ground_name, m.match_time].filter(Boolean).join(' · ') || m.competition_name || 'Details on Play-Cricket')}</p>`;
 }
 
+function homeWeekendBounds(today, items = []) {
+  const day = today.getDay();
+  const start = new Date(today);
+  start.setHours(0,0,0,0);
+  if (day === 0) start.setDate(start.getDate() - 1);
+  else if (day !== 6) start.setDate(start.getDate() + (6 - day));
+  const end = new Date(start); end.setDate(start.getDate() + 1); end.setHours(23,59,59,999);
+  const hasMatches = items.some(x => { const d=parseUKDate(x.match_date); return d>=start && d<=end; });
+  if (!hasMatches) {
+    const previous = new Date(start); previous.setDate(start.getDate() - 7);
+    const previousEnd = new Date(previous); previousEnd.setDate(previous.getDate() + 1); previousEnd.setHours(23,59,59,999);
+    if (items.some(x => { const d=parseUKDate(x.match_date); return d>=previous && d<=previousEnd; })) return {start:previous,end:previousEnd};
+  }
+  return {start,end};
+}
+
+function weekendMatchCard(item, isResult) {
+  const home = sideLabel(item.home_club_name, item.home_team_name);
+  const away = sideLabel(item.away_club_name, item.away_team_name);
+  const team = suttonTeamName(item) || 'Sutton CC';
+  const date = parseUKDate(item.match_date);
+  const day = Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-GB',{weekday:'short'});
+  if (isResult) {
+    const hs=scoreText(item,'home'), as=scoreText(item,'away');
+    return `<article class="fixture-card result"><div class="fixture-top"><span class="tag">${escapeHtml(day)} result</span><span>${escapeHtml(item.match_date||'')}</span></div><h3>${escapeHtml(resultDescription(item)||team)}</h3><p class="versus">${escapeHtml(home)}${hs?' '+escapeHtml(hs):''} <strong>—</strong> ${escapeHtml(away)}${as?' '+escapeHtml(as):''}</p><p class="fixture-meta">Synced from Play-Cricket</p></article>`;
+  }
+  return `<article class="fixture-card"><div class="fixture-top"><span class="tag">${escapeHtml(day)} fixture</span><span>${escapeHtml(item.match_time||'Play-Cricket')}</span></div><h3>${escapeHtml(team)}</h3><p class="versus">${escapeHtml(home)} <strong>v</strong> ${escapeHtml(away)}</p><p class="fixture-meta">${escapeHtml(item.ground_name||item.competition_name||'Details on Play-Cricket')}</p></article>`;
+}
+
 function formatHomeResult(r) {
   const box = document.getElementById('home-latest-result');
   if (!box || !r) return;
@@ -213,12 +242,13 @@ async function loadPlayCricket() {
   const resultBox = document.getElementById('live-results');
   const homeNext = document.getElementById('home-next-match');
   const homeResult = document.getElementById('home-latest-result');
+  const homeWeekend = document.getElementById('home-weekend-matches');
   const teamPageKey = document.body.dataset.teamPage;
   const teamFixtures = document.getElementById('team-next-fixtures');
   const teamResults = document.getElementById('team-recent-results');
   const homeSnapshot = document.getElementById('home-season-snapshot');
   const teamSnapshot = document.getElementById('team-season-snapshot');
-  if (!fixtureBox && !resultBox && !homeNext && !homeResult && !teamPageKey && !homeSnapshot) return;
+  if (!fixtureBox && !resultBox && !homeNext && !homeResult && !homeWeekend && !teamPageKey && !homeSnapshot) return;
 
   try {
     const res = await fetch(`data/play-cricket.json?v=${Date.now()}`, { cache: 'no-store' });
@@ -233,6 +263,18 @@ async function loadPlayCricket() {
     const allResults = (data.results || [])
       .filter(r => String(r.status || '').toLowerCase() !== 'deleted')
       .sort((a,b) => parseUKDate(b.match_date) - parseUKDate(a.match_date));
+
+    if (homeWeekend) {
+      const allWeekendItems=[...(data.matches||[]),...allResults];
+      const bounds=homeWeekendBounds(today,allWeekendItems);
+      const inWeekend=x=>{const d=parseUKDate(x.match_date);return d>=bounds.start&&d<=bounds.end;};
+      const weekendResults=allResults.filter(inWeekend);
+      const resultIds=new Set(weekendResults.map(x=>String(x.match_id||x.id||'')));
+      const weekendFixtures=(data.matches||[]).filter(m=>String(m.status||'').toLowerCase()!=='deleted'&&inWeekend(m)&&!resultIds.has(String(m.match_id||m.id||'')));
+      const cards=[...weekendFixtures.map(x=>({x,result:false})),...weekendResults.map(x=>({x,result:true}))].sort((a,b)=>parseUKDate(a.x.match_date)-parseUKDate(b.x.match_date)||Number(a.result)-Number(b.result));
+      const label=bounds.start.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+'–'+bounds.end.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+      homeWeekend.innerHTML=cards.length?cards.map(o=>weekendMatchCard(o.x,o.result)).join(''):`<article class="fixture-card"><div class="fixture-top"><span class="tag">Weekend cricket</span><span>${escapeHtml(label)}</span></div><h3>No weekend matches published</h3><p class="versus">Check the full fixture list for other Sutton CC matches.</p></article>`;
+    }
 
     if (fixtureBox) fixtureBox.innerHTML = allUpcoming.length ? allUpcoming.slice(0, 18).map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures found</h3><p>There are no future fixtures currently published in Play-Cricket.</p></article>';
     if (resultBox) resultBox.innerHTML = allResults.length ? allResults.slice(0, 18).map(resultCard).join('') : '<article class="result-card"><h3>No results found</h3><p>No completed results are currently published in Play-Cricket.</p></article>';
