@@ -7,7 +7,8 @@ on:
     paths:
       - '.github/workflows/sync-play-cricket.yml'
   schedule:
-    - cron: '17 */6 * * *'
+    - cron: '17 */6 * * 1-5'   # Every 6 hours Monday-Friday
+    - cron: '17 * * * 0,6'     # Hourly Saturday-Sunday
 
 permissions:
   contents: write
