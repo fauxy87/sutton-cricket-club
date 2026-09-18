@@ -86,13 +86,13 @@
       "order": 8
     },
     {
-      "id": "commercial-security-system",
-      "name": "Commercial & Security System",
+      "id": "sabar-installations",
+      "name": "Sabar Installations Ltd",
       "type": "Banner sponsor",
-      "website": "",
+      "website": "https://www.sabaruk.com",
       "logo": "",
-      "logo_alt": "Commercial & Security System",
-      "description": "Security services including CCTV / VSS, alarms, bollards and barriers, access control, and roller shutters and doors. Tel: 07595 836301.",
+      "logo_alt": "Sabar Installations Ltd",
+      "description": "Commercial and domestic security system installations, including CCTV / VSS, alarms, automated gates, security fencing, access control, bollards and barriers, roller shutters and doors, LED lighting upgrades, office and warehouse refits, and warehouse racking installations. Tel: 07595 836301 · info@sabaruk.com.",
       "order": 9
     }
   ]
