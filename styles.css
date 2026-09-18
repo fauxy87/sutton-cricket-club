@@ -88,3 +88,8 @@ footer .footer-grid>div:last-child p:first-child{display:inline-flex;padding:7px
 footer .footer-grid>div:last-child p:last-child{margin-top:14px;color:#c9d5cd}
 @media(max-width:850px){footer{padding:42px 0 30px}footer .footer-grid{grid-template-columns:1fr;gap:26px;min-height:auto}footer .footer-grid>div:last-child{justify-self:start;text-align:left;padding-left:78px}footer .footer-brand nav{margin-top:14px!important}}
 @media(max-width:520px){footer .footer-grid{width:min(100% - 22px,1160px)}footer .footer-grid::before{width:46px;height:51px}footer .footer-brand,footer .footer-grid>div:last-child{padding-left:62px}footer .footer-brand strong{font-size:1.05rem}footer .footer-brand nav{gap:7px 12px!important}footer .footer-brand nav a{font-size:.82rem}}
+
+/* Homepage fixtures/results: four equal cards on wide screens. */
+#fixtures .fixture-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1100px){#fixtures .fixture-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){#fixtures .fixture-grid{grid-template-columns:1fr}}
