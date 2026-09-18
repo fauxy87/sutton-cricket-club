@@ -6,11 +6,19 @@ if (button && nav) {
     const isOpen = nav.classList.toggle('open');
     button.setAttribute('aria-expanded', String(isOpen));
   });
-  document.querySelectorAll('.main-nav a').forEach(link => {
-    link.addEventListener('click', () => {
-      nav.classList.remove('open');
-      button.setAttribute('aria-expanded', 'false');
-    });
+  const closeNav = () => {
+    nav.classList.remove('open');
+    button.setAttribute('aria-expanded', 'false');
+  };
+  document.querySelectorAll('.main-nav a').forEach(link => link.addEventListener('click', closeNav));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && nav.classList.contains('open')) {
+      closeNav();
+      button.focus();
+    }
+  });
+  document.addEventListener('click', event => {
+    if (nav.classList.contains('open') && !nav.contains(event.target) && !button.contains(event.target)) closeNav();
   });
 }
 
