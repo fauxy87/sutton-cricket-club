@@ -408,3 +408,34 @@ loadPlayerStats();
   social.innerHTML = '<a href="https://www.facebook.com/suttoncricketclub" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/suttoncricketclub1887/" target="_blank" rel="noopener">Instagram</a><a href="https://x.com/SuttonCCcambs" target="_blank" rel="noopener">X</a>';
   footerContainer.appendChild(social);
 })();
+
+
+/* Homepage sponsors use the same source as the full Sponsors page. */
+async function loadHomeSponsors(){
+  const featured=document.getElementById('home-featured-sponsors');
+  const grid=document.getElementById('home-sponsor-grid');
+  if(!featured||!grid) return;
+  try{
+    const res=await fetch(`data/sponsors.json?v=${Date.now()}`,{cache:'no-store'});
+    if(!res.ok) throw new Error('Sponsor data unavailable');
+    const data=await res.json();
+    const sponsors=(Array.isArray(data.sponsors)?data.sponsors:[]).slice().sort((a,b)=>(a.order||999)-(b.order||999));
+    const validUrl=v=>/^https?:\/\//i.test(String(v||''));
+    const logo=s=>s.logo||'assets/sutton-cc-badge.png?v=20260916-redball';
+    const card=(s,featuredCard=false)=>{
+      const cls=featuredCard?'home-featured-sponsor '+(String(s.type||'').toLowerCase().includes('main')?'main':'colts'):'home-sponsor-card';
+      const role=featuredCard?`<span class="home-sponsor-role">${escapeHtml(s.type||'Sponsor')}</span>`:'';
+      const inner=`${role}<img loading="lazy" decoding="async" src="${escapeHtml(logo(s))}" alt="${escapeHtml(s.logo_alt||s.name||'Club sponsor')}">`;
+      return validUrl(s.website)?`<a class="${cls}" href="${escapeHtml(s.website)}" target="_blank" rel="noopener">${inner}</a>`:`<a class="${cls}" href="sponsors.html">${inner}</a>`;
+    };
+    const featuredSponsors=sponsors.filter(s=>/main|colts/i.test(String(s.type||'')));
+    const supporters=sponsors.filter(s=>!/main|colts/i.test(String(s.type||'')));
+    featured.innerHTML=featuredSponsors.map(s=>card(s,true)).join('');
+    grid.innerHTML=supporters.map(s=>card(s,false)).join('');
+  }catch(err){
+    featured.innerHTML='<p class="home-sponsors-loading">View our club sponsors and supporters.</p>';
+    grid.innerHTML='';
+    console.info('Homepage sponsors unavailable:',err.message);
+  }
+}
+loadHomeSponsors();
