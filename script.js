@@ -295,7 +295,7 @@ async function loadPlayCricket() {
     const status = document.getElementById('play-cricket-status');
     if (status) status.innerHTML = `<span class="status-dot"></span>Synced from Play-Cricket · ${escapeHtml(stamp)}`;
     const homeStatus = document.getElementById('home-play-cricket-status');
-    if (homeStatus) homeStatus.textContent = `Fixtures and results last synced from Play-Cricket: ${stamp}`;
+    if (homeStatus) { const d=data.generated_at ? new Date(data.generated_at) : null; const shortStamp=d && !Number.isNaN(d.getTime()) ? d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : stamp; homeStatus.textContent = `Updated ${shortStamp}`; }
 
     if (teamPageKey) {
       const upcoming = allUpcoming.filter(m => itemTeamKey(m) === teamPageKey);
