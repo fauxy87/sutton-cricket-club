@@ -1,6 +1,35 @@
 {
-  "updated_at": "2026-09-15",
+  "updated_at": "2026-09-18",
   "articles": [
+    {
+      "id": "2026-presentation-evening-awards",
+      "title": "Sutton CC celebrates its 2026 award winners",
+      "date": "2026-09-18",
+      "category": "club",
+      "category_label": "Club News",
+      "team": "2026 Awards",
+      "image": "assets/M.Grady.png",
+      "image_alt": "Michael Grady receiving a Sutton Cricket Club 2026 award",
+      "summary": "Sutton Cricket Club celebrates the 2026 award winners across the 1st XI, 2nd XI, Sunday side, club awards and U14s.",
+      "lead": "Sutton Cricket Club has celebrated its 2026 award winners, recognising performances and contributions across the senior, Sunday, club and junior sections.",
+      "body": [
+        "Michael Grady collected both the 1st XI Batter of the Year and Player of the Year awards, with Josh Grady named 1st XI Bowler of the Year.",
+        "For the 2nd XI, James Short was Batter of the Year, Michael Ward Bowler of the Year and Paul Robinson Player of the Year.",
+        "Kaiden Grady was named Sunday Player of the Year, Vini Vineeth Fielder of the Year, George Ware Clubman and Josh Pollard Young Player of the Year.",
+        "The U14 awards went to Leon Perrin as Batter of the Year, Jason Harnwell as Bowler of the Year and Oscar Pergl-Wilson as Player of the Year.",
+        "Congratulations to all of the 2026 winners, and thank you to everyone who contributed to Sutton Cricket Club throughout the season."
+      ],
+      "links": [
+        {
+          "label": "View all 2026 award winners",
+          "href": "awards.html#awards-2026"
+        },
+        {
+          "label": "Club awards archive",
+          "href": "awards.html"
+        }
+      ]
+    },
     {
       "id": "colin-coulson-memorial-275",
       "title": "£275 raised in memory of Colin Coulson",
