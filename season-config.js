@@ -10,12 +10,16 @@
 
   window.SUTTON_CC = Object.freeze({
     ...(window.SUTTON_CC || {}),
-    currentSeason: CURRENT_SEASON
+    currentSeason: CURRENT_SEASON,
+    nextSeason: CURRENT_SEASON + 1
   });
 
   const applySeasonLabels = () => {
     document.querySelectorAll('[data-current-season]').forEach((element) => {
       element.textContent = String(CURRENT_SEASON);
+    });
+    document.querySelectorAll('[data-next-season]').forEach((element) => {
+      element.textContent = String(CURRENT_SEASON + 1);
     });
   };
 
