@@ -5,6 +5,23 @@
       "year": 2026,
       "groups": [
         {
+          "name": "1st Team",
+          "awards": [
+            [
+              "Batter",
+              "Michael Grady"
+            ],
+            [
+              "Bowler",
+              "Josh Grady"
+            ],
+            [
+              "Player of the Year",
+              "Michael Grady"
+            ]
+          ]
+        },
+        {
           "name": "U14's",
           "awards": [
             [
