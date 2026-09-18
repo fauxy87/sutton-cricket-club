@@ -1,3 +1,18 @@
+const CLUB_SHOP_URL = 'https://www.mrcrickethockey.com/product-category/club-shop/sutton-cricket-club/';
+
+// Keep the external club shop available from the main navigation on every page.
+document.querySelectorAll('.main-nav').forEach(mainNav => {
+  if (mainNav.querySelector('[data-club-shop]')) return;
+  const shopLink = document.createElement('a');
+  shopLink.href = CLUB_SHOP_URL;
+  shopLink.target = '_blank';
+  shopLink.rel = 'noopener';
+  shopLink.dataset.clubShop = 'true';
+  shopLink.textContent = 'Shop';
+  const contactLink = [...mainNav.querySelectorAll('a')].find(link => link.textContent.trim() === 'Contact');
+  mainNav.insertBefore(shopLink, contactLink || null);
+});
+
 const button = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.main-nav');
 
