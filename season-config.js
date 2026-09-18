@@ -23,6 +23,14 @@
     document.querySelectorAll('[data-next-season]').forEach((element) => {
       element.textContent = String(CURRENT_SEASON + 1);
     });
+
+    // Show the pre-season homepage panel from October through February.
+    // It disappears automatically from 1 March when the new cricket season becomes current.
+    const preSeasonPanel = document.getElementById('home-preseason');
+    if (preSeasonPanel) {
+      const month = now.getMonth();
+      preSeasonPanel.hidden = !(month >= 9 || month <= 1);
+    }
   };
 
   if (document.readyState === 'loading') {
