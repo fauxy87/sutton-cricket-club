@@ -12,3 +12,6 @@
 @media(max-width:900px){.club-info-inner{align-items:flex-start;flex-direction:column}.club-info-links{width:100%}.contact-route-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.contact-form-layout{grid-template-columns:1fr;gap:30px}}
 @media(max-width:800px){.join-grid,.contact-panel-inner{grid-template-columns:1fr}.join-hero{padding:74px 0}.join-card{min-height:auto}}
 @media(max-width:560px){.club-info-links{display:grid;grid-template-columns:1fr 1fr}.club-info-links a{text-align:center}.club-info-primary{grid-column:1/-1}.join-hero h1{font-size:2.8rem}.contact-route-grid{grid-template-columns:1fr}.club-contact-form{padding:22px}.hero-contact-actions .btn{width:100%;justify-content:center}}
+
+/* Clear primary contact choices */
+.contact-route-featured{grid-template-columns:auto 1fr;grid-template-rows:auto auto auto;border-top:4px solid var(--green);padding-top:17px}.contact-route-featured:nth-child(2),.contact-route-featured:nth-child(4){border-top-color:var(--yellow)}.contact-route-featured>span{grid-row:1/4}.contact-route-featured b{margin-top:9px;color:var(--green);font-size:.78rem;font-weight:800}.contact-route-featured:hover b{text-decoration:underline}@media(max-width:560px){.contact-routes{padding:42px 0}.contact-route{padding:18px}.contact-route-featured b{font-size:.82rem}}
