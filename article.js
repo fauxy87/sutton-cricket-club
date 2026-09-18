@@ -28,6 +28,28 @@
       const item = (data.articles || []).find(article => article.id === id);
       if (!item) throw new Error('Story not found');
       document.title = `${item.title} | Sutton Cricket Club`;
+      const canonicalUrl = `${location.origin}${location.pathname}?id=${encodeURIComponent(item.id)}`;
+      let canonical = document.querySelector('link[rel="canonical"]');
+      if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+      canonical.href = canonicalUrl;
+      const setMeta = (selector, attr, name, value) => {
+        let el = document.querySelector(selector);
+        if (!el) { el = document.createElement('meta'); el.setAttribute(attr,name); document.head.appendChild(el); }
+        el.setAttribute('content', value || '');
+      };
+      setMeta('meta[name="description"]','name','description',item.summary || item.lead || 'Sutton Cricket Club news.');
+      setMeta('meta[property="og:title"]','property','og:title',item.title);
+      setMeta('meta[property="og:description"]','property','og:description',item.summary || item.lead || 'Sutton Cricket Club news.');
+      setMeta('meta[property="og:url"]','property','og:url',canonicalUrl);
+      setMeta('meta[property="og:type"]','property','og:type','article');
+      setMeta('meta[name="twitter:card"]','name','twitter:card',item.image ? 'summary_large_image' : 'summary');
+      setMeta('meta[name="twitter:title"]','name','twitter:title',item.title);
+      setMeta('meta[name="twitter:description"]','name','twitter:description',item.summary || item.lead || 'Sutton Cricket Club news.');
+      if (item.image) {
+        const imageUrl = new URL(item.image, location.href).href;
+        setMeta('meta[property="og:image"]','property','og:image',imageUrl);
+        setMeta('meta[name="twitter:image"]','name','twitter:image',imageUrl);
+      }
       title.textContent = item.title;
       category.textContent = item.category_label || 'Club News';
       summary.textContent = item.summary || '';
