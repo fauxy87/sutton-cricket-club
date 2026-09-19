@@ -1,4 +1,5 @@
 name: Sync Play-Cricket data
+# Manual refresh requested 19 Sep 2026
 
 on:
   workflow_dispatch:
