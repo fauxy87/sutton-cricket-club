@@ -37,6 +37,10 @@ jobs:
           site_id = '6168'
 
           fielders = defaultdict(lambda: {'name':'', 'catches':0, 'stumpings':0})
+          # Match Detail can expose a fielder ID but no name. Build a Sutton player
+          # lookup from batting/bowling rows so those dismissals are not left as
+          # anonymous/"Unsure" entries.
+          player_names = {}
 
           def text(v):
               return str(v or '').strip()
@@ -65,13 +69,36 @@ jobs:
                   return
               key = pid or name.lower()
               f = fielders[key]
-              f['name'] = name or f['name'] or pid
+              f['name'] = name or player_names.get(pid, '') or f['name'] or pid
               if kind == 'stumping':
                   f['stumpings'] += 1
               else:
                   f['catches'] += 1
 
           matches = cache.get('matches', {}) if isinstance(cache, dict) else {}
+
+          for entry in matches.values():
+              if not isinstance(entry, dict):
+                  continue
+              details = entry.get('detail', {}).get('match_details', []) or []
+              if not details:
+                  continue
+              d = details[0]
+              if season and text(d.get('season') or season) != season:
+                  continue
+              if not (text(d.get('home_club_id')) == site_id or text(d.get('away_club_id')) == site_id):
+                  continue
+              for inn in d.get('innings', []) or []:
+                  for batter in inn.get('bat', []) or []:
+                      pid = first(batter, ['batsman_id'])
+                      name = first(batter, ['batsman_name'])
+                      if pid and name:
+                          player_names[pid] = name
+                  for bowler in inn.get('bowl', []) or []:
+                      pid = first(bowler, ['bowler_id'])
+                      name = first(bowler, ['bowler_name'])
+                      if pid and name:
+                          player_names[pid] = name
           for entry in matches.values():
               if not isinstance(entry, dict):
                   continue
@@ -113,6 +140,9 @@ jobs:
 
           rows = []
           for pid, f in fielders.items():
+              # Resolve ID-only fielders after all scorecards have been scanned.
+              if (not f['name'] or f['name'] == pid or f['name'].lower() == 'unsure') and pid in player_names:
+                  f['name'] = player_names[pid]
               dismissals = f['catches'] + f['stumpings']
               if dismissals:
                   rows.append({
