@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/sync-fielding-stats.yml'
+      - 'data/play-cricket-scorecards.json'
   schedule:
     - cron: '25 */6 * * *'
 
