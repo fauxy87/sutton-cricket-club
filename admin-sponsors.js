@@ -67,7 +67,8 @@
   });
 
   function buildSponsor() {
-    return {id:editingId || slugify(name.value),name:name.value.trim(),type:type.value.trim(),website:website.value.trim(),logo:logo.value.trim(),logo_alt:logoAlt.value.trim() || `${name.value.trim()} logo`,order:Number(order.value)||1};
+    const existing=editingId?(data.sponsors||[]).find(s=>s.id===editingId):null;
+    return {id:editingId || slugify(name.value),name:name.value.trim(),type:type.value.trim(),website:website.value.trim(),logo:logo.value.trim(),logo_alt:logoAlt.value.trim() || `${name.value.trim()} logo`,...(existing?.description?{description:existing.description}:{}),...(existing?.testimonial?{testimonial:existing.testimonial}:{}),...(existing?.testimonial_name?{testimonial_name:existing.testimonial_name}:{}),...(existing?.testimonial_role?{testimonial_role:existing.testimonial_role}:{}),...(existing?.show_testimonial!==undefined?{show_testimonial:existing.show_testimonial}:{}),...(existing?.renewed_years?{renewed_years:existing.renewed_years}:{}),order:Number(order.value)||1};
   }
   function uniqueId(item) {
     if (editingId) return item.id;
@@ -83,11 +84,15 @@
     preview.innerHTML = `<article class="admin-sponsor-preview">${img}<div><span class="tag">${esc(item.type)}</span><h3>${esc(item.name)}</h3><p>Display order: ${esc(item.order)}</p>${item.website?`<p>${esc(item.website)}</p>`:''}</div></article>`;
     publish.hidden=false; status.textContent=message;
   }
+  function renewalYear(){return Number(window.SUTTON_CC?.nextSeason)||new Date().getFullYear()+1;}
+  function isRenewed(s,year=renewalYear()){return Array.isArray(s.renewed_years)&&s.renewed_years.map(Number).includes(Number(year));}
+  function setRenewed(id){const year=renewalYear(),s=(data.sponsors||[]).find(x=>x.id===id);if(!s)return;const years=new Set((s.renewed_years||[]).map(Number));if(years.has(year))years.delete(year);else years.add(year);s.renewed_years=[...years].sort((a,b)=>a-b);generated=payload(data.sponsors);publish.hidden=false;status.textContent=`${s.name} ${years.has(year)?'marked renewed':'renewal removed'} for ${year}. Copy sponsors JSON and commit it to publish.`;renderList();window.dispatchEvent(new CustomEvent('sutton:sponsors-renewal',{detail:{year,sponsors:data.sponsors}}));}
   function renderList() {
     const box=document.getElementById('sponsor-manager-list');
     const items=(data.sponsors||[]).slice().sort((a,b)=>(Number(a.order)||999)-(Number(b.order)||999));
-    count.textContent=`${items.length} sponsor${items.length===1?'':'s'} loaded.`;
-    box.innerHTML=items.length?items.map(s=>`<article class="admin-news-row"><div class="admin-sponsor-row-main">${s.logo?`<img class="admin-sponsor-row-logo" src="${esc(s.logo)}" alt="">`:''}<div><span class="tag">${esc(s.type||'Sponsor')}</span><h3>${esc(s.name)}</h3><p>Order ${esc(s.order||'—')}${s.website?' · Website linked':''}</p></div></div><div class="admin-news-row-actions"><button class="btn btn-outline dark-outline sponsor-edit" type="button" data-id="${esc(s.id)}">Edit</button><button class="btn admin-delete-news sponsor-delete" type="button" data-id="${esc(s.id)}">Delete</button></div></article>`).join(''):'<p>No sponsors found.</p>';
+    const year=renewalYear(),renewed=items.filter(s=>isRenewed(s,year)).length;count.textContent=`${items.length} sponsors loaded · ${renewed}/${items.length} renewed for ${year}.`;
+    box.innerHTML=items.length?items.map(s=>`<article class="admin-news-row"><div class="admin-sponsor-row-main">${s.logo?`<img class="admin-sponsor-row-logo" src="${esc(s.logo)}" alt="">`:''}<div><span class="tag">${esc(s.type||'Sponsor')}</span><h3>${esc(s.name)}</h3><p>Order ${esc(s.order||'—')}${s.website?' · Website linked':''}</p></div></div><div class="admin-news-row-actions"><button class="btn ${isRenewed(s)?'btn-primary':'btn-outline dark-outline'} sponsor-renew" type="button" data-id="${esc(s.id)}">${isRenewed(s)?`✓ Renewed ${renewalYear()}`:`Renewed for ${renewalYear()}`}</button><button class="btn btn-outline dark-outline sponsor-edit" type="button" data-id="${esc(s.id)}">Edit</button><button class="btn admin-delete-news sponsor-delete" type="button" data-id="${esc(s.id)}">Delete</button></div></article>`).join(''):'<p>No sponsors found.</p>';
+    box.querySelectorAll('.sponsor-renew').forEach(btn=>btn.addEventListener('click',()=>setRenewed(btn.dataset.id)));
     box.querySelectorAll('.sponsor-edit').forEach(btn=>btn.addEventListener('click',()=>editSponsor(btn.dataset.id)));
     box.querySelectorAll('.sponsor-delete').forEach(btn=>btn.addEventListener('click',()=>deleteSponsor(btn.dataset.id)));
   }
@@ -116,5 +121,5 @@
   document.getElementById('sponsor-copy').addEventListener('click',async()=>{if(!generated)return;try{await navigator.clipboard.writeText(JSON.stringify(generated,null,2)+'\n');status.textContent='Sponsors JSON copied. Paste it into data/sponsors.json on GitHub.';}catch{status.textContent='Clipboard access was blocked. Use Download instead.';}});
   document.getElementById('sponsor-download-json').addEventListener('click',()=>{if(!generated)return;const blob=new Blob([JSON.stringify(generated,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='sponsors.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);});
 
-  fetch(`data/sponsors.json?v=${Date.now()}`,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(json=>{data=json;order.value=Math.max(1,(data.sponsors||[]).length+1);renderList();}).catch(()=>{count.textContent='Could not load sponsors. Do not publish until the current data file is available.';document.getElementById('sponsor-manager-list').innerHTML='<p>Sponsor data unavailable.</p>';});
+  fetch(`data/sponsors.json?v=${Date.now()}`,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(json=>{data=json;order.value=Math.max(1,(data.sponsors||[]).length+1);renderList();window.dispatchEvent(new CustomEvent('sutton:sponsors-renewal',{detail:{year:renewalYear(),sponsors:data.sponsors}}));}).catch(()=>{count.textContent='Could not load sponsors. Do not publish until the current data file is available.';document.getElementById('sponsor-manager-list').innerHTML='<p>Sponsor data unavailable.</p>';});
 })();
