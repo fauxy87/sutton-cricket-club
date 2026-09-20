@@ -44,3 +44,7 @@
 .admin-team-editor{margin-top:22px;padding:20px;background:#fff;border:1px solid rgba(11,93,49,.14);border-radius:16px}.admin-team-editor h3{margin:.2rem 0 .35rem}.admin-team-editor-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.admin-team-editor-fields label{display:grid;gap:6px;font-weight:700}.admin-team-editor-fields input{width:100%;padding:11px 12px;border:1px solid #bdc8c1;border-radius:10px;font:inherit}.admin-team-editor-fields small{font-weight:400;color:#6b756f}@media(max-width:620px){.admin-team-editor-fields{grid-template-columns:1fr}}
 
 .admin-publish-guide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}.admin-publish-guide>div{background:#fff;border:1px solid rgba(11,93,49,.14);border-radius:14px;padding:16px}.admin-publish-guide strong{display:block;margin-bottom:6px;color:#0b5d31}.admin-publish-guide p{margin:0;color:#4d5b53}.admin-publish-guide+.admin-note{margin-top:14px}@media(max-width:760px){.admin-publish-guide{grid-template-columns:1fr}}
+
+/* Admin section navigation */
+#admin-publish-guide,#season-readiness-admin,#teams-readiness-admin,#junior-programmes-admin,#site-check-admin,#deployment-admin,#news-admin,#sponsors-admin,#weekly-draw-admin,#season-admin,#play-cricket-admin{scroll-margin-top:68px}
+@media(max-width:620px){.admin-quick-nav a{padding:8px 12px}.admin-dashboard-grid{grid-template-columns:1fr}.admin-dashboard-card.active{border-left:4px solid var(--green)}}
