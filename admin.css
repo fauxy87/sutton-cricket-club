@@ -40,3 +40,5 @@
 .admin-team-check input{width:20px;height:20px;accent-color:#0b5d31}.admin-team-check span{display:grid;gap:2px}.admin-team-check small{color:#6b756f}.admin-team-check.is-checked{border-color:#0b5d31;background:#f1f8f4}.admin-team-check.is-checked small{color:#0b5d31;font-weight:700}
 .admin-teams-links{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px}
 @media(max-width:620px){.admin-teams-readiness-list{grid-template-columns:1fr}}
+
+.admin-team-editor{margin-top:22px;padding:20px;background:#fff;border:1px solid rgba(11,93,49,.14);border-radius:16px}.admin-team-editor h3{margin:.2rem 0 .35rem}.admin-team-editor-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.admin-team-editor-fields label{display:grid;gap:6px;font-weight:700}.admin-team-editor-fields input{width:100%;padding:11px 12px;border:1px solid #bdc8c1;border-radius:10px;font:inherit}.admin-team-editor-fields small{font-weight:400;color:#6b756f}@media(max-width:620px){.admin-team-editor-fields{grid-template-columns:1fr}}
