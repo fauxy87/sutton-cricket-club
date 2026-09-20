@@ -75,7 +75,7 @@ awardsForm.addEventListener('submit',async event=>{
     if(res.status===401){location.href='/';return;}
     const data=await res.json();
     if(!res.ok)throw new Error(data.error||'Award update failed');
-    setAwardsStatus(data.message||'Award saved.','success');
+    setAwardsStatus((data.message||'Award saved.')+' The website will refresh shortly.','success');
     resetAwardsForm();
     await loadAwards();
   }catch(error){setAwardsStatus(error.message,'error');}
