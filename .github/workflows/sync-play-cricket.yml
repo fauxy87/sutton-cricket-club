@@ -220,11 +220,23 @@ jobs:
           print(f"Wrote {len(match_rows)} matches, {len(result_rows)} results; fetched {fetched} scorecards; processed {processed}")
           PY
 
+      - name: Update deployed version marker
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          sha = os.environ.get('GITHUB_SHA', '')[:7] or 'unknown'
+          marker = f"window.SUTTON_DEPLOYMENT=Object.freeze({{version:{json.dumps(sha)},label:\"Automatic website build\",updated:{json.dumps(datetime.now(timezone.utc).isoformat())}}});\\n"
+          Path('deployment-version.js').write_text(marker, encoding='utf-8')
+          PY
+
       - name: Commit refreshed data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/play-cricket.json data/play-cricket-scorecards.json data/player-stats.json
+          git add data/play-cricket.json data/play-cricket-scorecards.json data/player-stats.json deployment-version.js
           if git diff --cached --quiet; then
             echo "No Play-Cricket changes"
             exit 0
