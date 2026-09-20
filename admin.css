@@ -31,3 +31,12 @@
 .admin-readiness-action:hover,.admin-readiness-action:focus-visible{border-color:#0b5d31;box-shadow:0 6px 18px rgba(11,93,49,.1)}
 .admin-readiness-complete{padding:16px;border-radius:14px;background:#fff}.admin-readiness-complete p{margin:4px 0 0}
 @media(max-width:620px){.admin-readiness-action{grid-template-columns:30px 1fr}.admin-readiness-action b{grid-column:2}.admin-readiness-plan{margin-top:18px;padding-top:18px}}
+
+
+/* Teams & officials readiness */
+.admin-teams-readiness-section{padding:34px 0;background:#f4f7f5;border-top:1px solid rgba(11,93,49,.08)}
+.admin-teams-readiness-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.admin-team-check{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid rgba(11,93,49,.14);border-radius:14px;cursor:pointer}
+.admin-team-check input{width:20px;height:20px;accent-color:#0b5d31}.admin-team-check span{display:grid;gap:2px}.admin-team-check small{color:#6b756f}.admin-team-check.is-checked{border-color:#0b5d31;background:#f1f8f4}.admin-team-check.is-checked small{color:#0b5d31;font-weight:700}
+.admin-teams-links{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px}
+@media(max-width:620px){.admin-teams-readiness-list{grid-template-columns:1fr}}
