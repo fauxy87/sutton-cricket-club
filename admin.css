@@ -48,3 +48,5 @@
 /* Admin section navigation */
 #admin-publish-guide,#season-readiness-admin,#teams-readiness-admin,#junior-programmes-admin,#site-check-admin,#deployment-admin,#news-admin,#sponsors-admin,#weekly-draw-admin,#season-admin,#play-cricket-admin{scroll-margin-top:68px}
 @media(max-width:620px){.admin-quick-nav a{padding:8px 12px}.admin-dashboard-grid{grid-template-columns:1fr}.admin-dashboard-card.active{border-left:4px solid var(--green)}}
+
+.admin-team-editor-fields select{width:100%;padding:11px 12px;border:1px solid #bdc8c1;border-radius:10px;background:#fff;font:inherit}
