@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/sync-fielding-stats.yml'
       - 'data/play-cricket-scorecards.json'
+      - 'data/player-stats.json'
   schedule:
     - cron: '25 */6 * * *'
 
@@ -113,10 +114,17 @@ jobs:
               away_is_sutton = text(d.get('away_club_id')) == site_id
               if not (home_is_sutton or away_is_sutton):
                   continue
-              sutton_team_id = text(d.get('home_team_id') if home_is_sutton else d.get('away_team_id'))
+              sutton_team_ids = set()
+              if home_is_sutton: sutton_team_ids.add(text(d.get('home_team_id')))
+              if away_is_sutton: sutton_team_ids.add(text(d.get('away_team_id')))
+              sutton_team_ids.discard('')
 
               for inn in d.get('innings', []) or []:
-                  if text(inn.get('team_batting_id')) == sutton_team_id:
+                  batting_id = text(inn.get('team_batting_id'))
+                  # Fielding dismissals belong to Sutton whenever the batting side
+                  # is not the only Sutton side in the match. For Sutton v Sutton,
+                  # the other Sutton team is fielding, so include both innings.
+                  if batting_id in sutton_team_ids and len(sutton_team_ids) == 1:
                       continue
                   for batter in inn.get('bat', []) or []:
                       how = first(batter, ['how_out','dismissal','dismissal_text']).lower()
