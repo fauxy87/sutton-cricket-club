@@ -58,7 +58,7 @@
         card('Best bowling average', bowlingAverage?.average ?? '—', bowlingAverage, 'Minimum 10 wickets')
       ];
       if (mostDismissals) {
-        const detail = `${number(mostDismissals.catches)} catches · ${number(mostDismissals.stumpings)} stumpings`;
+        const detail = `${number(mostDismissals.catches)} catches · ${number(mostDismissals.stumpings)} stumpings · ${number(mostDismissals.run_outs)} run-outs`;
         cards.push(card('Most dismissals', mostDismissals.dismissals ?? '—', mostDismissals, detail));
       } else {
         cards.push(`
@@ -70,6 +70,12 @@
           </article>`);
       }
       leaders.innerHTML = cards.join('');
+
+      const fieldingTable = document.getElementById('fielding-leaders');
+      if (fieldingTable) {
+        const rows = fielding.slice().sort((a,b) => number(b.dismissals)-number(a.dismissals) || number(b.catches)-number(a.catches) || String(a.name||'').localeCompare(String(b.name||'')));
+        fieldingTable.innerHTML = rows.length ? rows.map(p => `<div class="stat-row fielding-stat-row"><span>${player(p)}</span><span>${number(p.catches)}</span><span>${number(p.stumpings)}</span><span>${number(p.run_outs)}</span><strong>${number(p.dismissals)}</strong></div>`).join('') : '<div class="stat-row"><span>Fielding statistics unavailable.</span></div>';
+      }
     } catch (err) {
       console.info('Expanded honours statistics unavailable:', err.message);
     }
