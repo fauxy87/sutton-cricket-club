@@ -11,4 +11,5 @@
  ];
  const reviews=checks.filter(c=>c[3]==='review').length;summary.textContent=reviews?reviews+' item'+(reviews===1?'':'s')+' to review':'Ready';
  grid.innerHTML=checks.map(c=>`<a href="${c[4]}" class="admin-readiness-card ${c[3]==='ok'?'is-ready':'needs-review'}"><span>${c[0]}</span><strong>${c[1]}</strong><p>${c[2]}</p><b class="admin-readiness-link">Open →</b></a>`).join('');
+ const action=document.getElementById('admin-readiness-actions');if(action){const todo=checks.filter(c=>c[3]==='review');action.innerHTML=todo.length?todo.map((c,i)=>`<a href="${c[4]}" class="admin-readiness-action"><span>${i+1}</span><div><strong>${c[0]}</strong><p>${c[2]}</p></div><b>Review →</b></a>`).join(''):`<div class="admin-readiness-complete"><strong>${next} preparation is complete</strong><p>No readiness items currently need review.</p></div>`;}
 })();
