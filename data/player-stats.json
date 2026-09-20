@@ -2355,14 +2355,6 @@
   ],
   "fielding": [
     {
-      "player_id": "unsure",
-      "name": "Unsure",
-      "catches": 6,
-      "stumpings": 0,
-      "run_outs": 7,
-      "dismissals": 13
-    },
-    {
       "player_id": "876673",
       "name": "Craig Faux",
       "catches": 9,
