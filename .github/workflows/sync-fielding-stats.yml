@@ -38,7 +38,7 @@ jobs:
           season = str(stats.get('season') or '')
           site_id = '6168'
 
-          fielders = defaultdict(lambda: {'name':'', 'catches':0, 'stumpings':0})
+          fielders = defaultdict(lambda: {'name':'', 'catches':0, 'stumpings':0, 'run_outs':0})
           # Match Detail can expose a fielder ID but no name. Build a Sutton player
           # lookup from batting/bowling rows so those dismissals are not left as
           # anonymous/"Unsure" entries.
@@ -74,6 +74,8 @@ jobs:
               f['name'] = name or player_names.get(pid, '') or f['name'] or pid
               if kind == 'stumping':
                   f['stumpings'] += 1
+              elif kind == 'run_out':
+                  f['run_outs'] += 1
               else:
                   f['catches'] += 1
 
@@ -141,8 +143,8 @@ jobs:
                       is_catch = ('caught' in how or how in ('ct','c','catch') or re.search(r'(^|\s)c\s', how) or is_caught_bowled)
 
                       if is_run_out:
-                          continue
-                      if is_stumping:
+                          add_dismissal(batter, 'run_out')
+                      elif is_stumping:
                           add_dismissal(batter, 'stumping')
                       elif is_catch or has_fielder:
                           add_dismissal(batter, 'catch')
@@ -152,13 +154,14 @@ jobs:
               # Resolve ID-only fielders after all scorecards have been scanned.
               if (not f['name'] or f['name'] == pid or f['name'].lower() == 'unsure') and pid in player_names:
                   f['name'] = player_names[pid]
-              dismissals = f['catches'] + f['stumpings']
+              dismissals = f['catches'] + f['stumpings'] + f['run_outs']
               if dismissals:
                   rows.append({
                       'player_id': pid,
                       'name': f['name'],
                       'catches': f['catches'],
                       'stumpings': f['stumpings'],
+                      'run_outs': f['run_outs'],
                       'dismissals': dismissals
                   })
           rows.sort(key=lambda x: (x['dismissals'], x['catches'], x['stumpings']), reverse=True)
