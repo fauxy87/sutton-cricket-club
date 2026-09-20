@@ -154,6 +154,12 @@ jobs:
               # Resolve ID-only fielders after all scorecards have been scanned.
               if (not f['name'] or f['name'] == pid or f['name'].lower() == 'unsure') and pid in player_names:
                   f['name'] = player_names[pid]
+              # Do not publish unresolved fielders. Their dismissals remain in the
+              # source scorecards and will be picked up automatically if Play-Cricket
+              # later provides a usable player ID/name.
+              unresolved = (not f['name'] or f['name'] == pid or f['name'].strip().lower() in ('unsure', 'unknown')) and str(pid).strip().lower() in ('unsure', 'unknown', '')
+              if unresolved:
+                  continue
               dismissals = f['catches'] + f['stumpings'] + f['run_outs']
               if dismissals:
                   rows.append({
