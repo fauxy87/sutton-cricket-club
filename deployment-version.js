@@ -1,1 +1,1 @@
-window.SUTTON_DEPLOYMENT=Object.freeze({version:"ad8a902",label:"PR #38 · Link & image checker",updated:"2026-09-19T06:33:24Z"});
+window.SUTTON_DEPLOYMENT=Object.freeze({version:"a3a07fa",label:"Latest main build",updated:"2026-09-20T06:00:00Z"});
