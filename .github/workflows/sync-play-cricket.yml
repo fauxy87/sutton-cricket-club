@@ -133,12 +133,17 @@ jobs:
               away_is_sutton = str(d.get('away_club_id') or '') == site_id
               if not (home_is_sutton or away_is_sutton):
                   continue
-              sutton_team_id = str(d.get('home_team_id') if home_is_sutton else d.get('away_team_id'))
+              # A normal match has one Sutton side. Internal club friendlies can have
+              # Sutton on BOTH sides, so keep every Sutton team id instead of choosing home only.
+              sutton_team_ids = set()
+              if home_is_sutton: sutton_team_ids.add(str(d.get('home_team_id') or ''))
+              if away_is_sutton: sutton_team_ids.add(str(d.get('away_team_id') or ''))
+              sutton_team_ids.discard('')
               processed += 1
 
               for inn in d.get('innings', []) or []:
                   batting_id = str(inn.get('team_batting_id') or '')
-                  if batting_id == sutton_team_id:
+                  if batting_id in sutton_team_ids:
                       for b in inn.get('bat', []) or []:
                           pid = str(b.get('batsman_id') or b.get('batsman_name') or '')
                           if not pid: continue
@@ -156,7 +161,10 @@ jobs:
                           if runs > p['high_score'] or (runs == p['high_score'] and is_no):
                               p['high_score'] = runs
                               p['high_score_not_out'] = is_no
-                  else:
+                  # Bowling rows belong to the fielding side. Count them when that
+                  # side is Sutton too; this also handles Sutton v Sutton friendlies.
+                  fielding_ids = sutton_team_ids - {batting_id}
+                  if fielding_ids:
                       for bw in inn.get('bowl', []) or []:
                           pid = str(bw.get('bowler_id') or bw.get('bowler_name') or '')
                           if not pid: continue
