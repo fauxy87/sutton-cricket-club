@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-09-20T01:07:10.408315+00:00",
+  "generated_at": "2026-09-20T05:51:46.720286+00:00",
   "season": 2026,
   "scorecards_processed": 84,
   "batting": [
     {
       "player_id": "1154108",
       "name": "Paul Robinson",
-      "runs": 385,
-      "innings": 13,
-      "not_outs": 2,
-      "average": 35.0,
-      "balls": 370,
-      "strike_rate": 104.05,
-      "fours": 67,
-      "sixes": 1,
+      "runs": 416,
+      "innings": 14,
+      "not_outs": 3,
+      "average": 37.82,
+      "balls": 380,
+      "strike_rate": 109.47,
+      "fours": 71,
+      "sixes": 3,
       "high_score": "71"
     },
     {
@@ -45,13 +45,13 @@
     {
       "player_id": "876673",
       "name": "Craig Faux",
-      "runs": 227,
-      "innings": 17,
+      "runs": 245,
+      "innings": 18,
       "not_outs": 2,
-      "average": 15.13,
-      "balls": 246,
-      "strike_rate": 92.28,
-      "fours": 24,
+      "average": 15.31,
+      "balls": 260,
+      "strike_rate": 94.23,
+      "fours": 28,
       "sixes": 3,
       "high_score": "42"
     },
@@ -84,13 +84,13 @@
     {
       "player_id": "4352704",
       "name": "Daniel Grady",
-      "runs": 184,
-      "innings": 18,
-      "not_outs": 4,
-      "average": 13.14,
-      "balls": 387,
-      "strike_rate": 47.55,
-      "fours": 27,
+      "runs": 194,
+      "innings": 20,
+      "not_outs": 6,
+      "average": 13.86,
+      "balls": 410,
+      "strike_rate": 47.32,
+      "fours": 28,
       "sixes": 9,
       "high_score": "46"
     },
@@ -110,13 +110,13 @@
     {
       "player_id": "4681504",
       "name": "Duncan Turner",
-      "runs": 147,
-      "innings": 11,
+      "runs": 157,
+      "innings": 12,
       "not_outs": 0,
-      "average": 13.36,
-      "balls": 208,
-      "strike_rate": 70.67,
-      "fours": 24,
+      "average": 13.08,
+      "balls": 218,
+      "strike_rate": 72.02,
+      "fours": 25,
       "sixes": 1,
       "high_score": "35"
     },
@@ -145,6 +145,32 @@
       "fours": 19,
       "sixes": 0,
       "high_score": "37"
+    },
+    {
+      "player_id": "6350258",
+      "name": "David Frear",
+      "runs": 121,
+      "innings": 13,
+      "not_outs": 5,
+      "average": 15.12,
+      "balls": 195,
+      "strike_rate": 62.05,
+      "fours": 18,
+      "sixes": 1,
+      "high_score": "33*"
+    },
+    {
+      "player_id": "6020481",
+      "name": "Lourens Herselman",
+      "runs": 120,
+      "innings": 5,
+      "not_outs": 2,
+      "average": 40.0,
+      "balls": 70,
+      "strike_rate": 171.43,
+      "fours": 16,
+      "sixes": 6,
+      "high_score": "61"
     },
     {
       "player_id": "6358765",
@@ -212,6 +238,19 @@
       "high_score": "34*"
     },
     {
+      "player_id": "6618432",
+      "name": "Leon Perrin",
+      "runs": 92,
+      "innings": 16,
+      "not_outs": 4,
+      "average": 7.67,
+      "balls": 134,
+      "strike_rate": 68.66,
+      "fours": 17,
+      "sixes": 0,
+      "high_score": "22*"
+    },
+    {
       "player_id": "5375174",
       "name": "Daniel Abbs",
       "runs": 89,
@@ -236,32 +275,6 @@
       "fours": 10,
       "sixes": 0,
       "high_score": "30"
-    },
-    {
-      "player_id": "6020481",
-      "name": "Lourens Herselman",
-      "runs": 88,
-      "innings": 4,
-      "not_outs": 1,
-      "average": 29.33,
-      "balls": 51,
-      "strike_rate": 172.55,
-      "fours": 13,
-      "sixes": 4,
-      "high_score": "61"
-    },
-    {
-      "player_id": "6350258",
-      "name": "David Frear",
-      "runs": 88,
-      "innings": 12,
-      "not_outs": 4,
-      "average": 11.0,
-      "balls": 171,
-      "strike_rate": 51.46,
-      "fours": 12,
-      "sixes": 0,
-      "high_score": "33*"
     },
     {
       "player_id": "5775983",
@@ -303,6 +316,19 @@
       "high_score": "18"
     },
     {
+      "player_id": "2639264",
+      "name": "Jack Boston",
+      "runs": 76,
+      "innings": 12,
+      "not_outs": 0,
+      "average": 6.33,
+      "balls": 100,
+      "strike_rate": 76.0,
+      "fours": 9,
+      "sixes": 0,
+      "high_score": "22"
+    },
+    {
       "player_id": "6908285",
       "name": "Emma Harris",
       "runs": 75,
@@ -342,6 +368,19 @@
       "high_score": "42"
     },
     {
+      "player_id": "5398363",
+      "name": "Jordan Emms",
+      "runs": 72,
+      "innings": 5,
+      "not_outs": 2,
+      "average": 24.0,
+      "balls": 52,
+      "strike_rate": 138.46,
+      "fours": 10,
+      "sixes": 0,
+      "high_score": "28"
+    },
+    {
       "player_id": "6203927",
       "name": "Sharon Fox",
       "runs": 72,
@@ -355,17 +394,17 @@
       "high_score": "24"
     },
     {
-      "player_id": "2639264",
-      "name": "Jack Boston",
-      "runs": 72,
-      "innings": 11,
-      "not_outs": 0,
-      "average": 6.55,
-      "balls": 93,
-      "strike_rate": 77.42,
-      "fours": 9,
+      "player_id": "5314064",
+      "name": "Kaiden Grady",
+      "runs": 71,
+      "innings": 14,
+      "not_outs": 2,
+      "average": 5.92,
+      "balls": 143,
+      "strike_rate": 49.65,
+      "fours": 8,
       "sixes": 0,
-      "high_score": "22"
+      "high_score": "27"
     },
     {
       "player_id": "4338080",
@@ -379,32 +418,6 @@
       "fours": 7,
       "sixes": 0,
       "high_score": "18"
-    },
-    {
-      "player_id": "5398363",
-      "name": "Jordan Emms",
-      "runs": 62,
-      "innings": 4,
-      "not_outs": 2,
-      "average": 31.0,
-      "balls": 38,
-      "strike_rate": 163.16,
-      "fours": 9,
-      "sixes": 0,
-      "high_score": "28"
-    },
-    {
-      "player_id": "6618432",
-      "name": "Leon Perrin",
-      "runs": 58,
-      "innings": 14,
-      "not_outs": 3,
-      "average": 5.27,
-      "balls": 114,
-      "strike_rate": 50.88,
-      "fours": 10,
-      "sixes": 0,
-      "high_score": "21*"
     },
     {
       "player_id": "5806909",
@@ -470,19 +483,6 @@
       "fours": 4,
       "sixes": 2,
       "high_score": "45"
-    },
-    {
-      "player_id": "5314064",
-      "name": "Kaiden Grady",
-      "runs": 44,
-      "innings": 13,
-      "not_outs": 2,
-      "average": 4.0,
-      "balls": 80,
-      "strike_rate": 55.0,
-      "fours": 6,
-      "sixes": 0,
-      "high_score": "21"
     },
     {
       "player_id": "3678556",
@@ -615,6 +615,19 @@
       "high_score": "16*"
     },
     {
+      "player_id": "7209432",
+      "name": "Phil Coulson",
+      "runs": 30,
+      "innings": 1,
+      "not_outs": 1,
+      "average": null,
+      "balls": 36,
+      "strike_rate": 83.33,
+      "fours": 4,
+      "sixes": 1,
+      "high_score": "30*"
+    },
+    {
       "player_id": "6631721",
       "name": "Lucy Marsh",
       "runs": 30,
@@ -626,6 +639,19 @@
       "fours": 2,
       "sixes": 0,
       "high_score": "8"
+    },
+    {
+      "player_id": "1154103",
+      "name": "Chris Robinson",
+      "runs": 25,
+      "innings": 2,
+      "not_outs": 0,
+      "average": 12.5,
+      "balls": 63,
+      "strike_rate": 39.68,
+      "fours": 3,
+      "sixes": 0,
+      "high_score": "18"
     },
     {
       "player_id": "5169581",
@@ -667,6 +693,19 @@
       "high_score": "9"
     },
     {
+      "player_id": "5877405",
+      "name": "George Raynor",
+      "runs": 18,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 18.0,
+      "balls": 13,
+      "strike_rate": 138.46,
+      "fours": 2,
+      "sixes": 0,
+      "high_score": "18"
+    },
+    {
       "player_id": "4439692",
       "name": "Kaiden Grady",
       "runs": 18,
@@ -706,6 +745,45 @@
       "high_score": "7"
     },
     {
+      "player_id": "6814781",
+      "name": "Ryan Frear",
+      "runs": 14,
+      "innings": 1,
+      "not_outs": 1,
+      "average": null,
+      "balls": 18,
+      "strike_rate": 77.78,
+      "fours": 2,
+      "sixes": 0,
+      "high_score": "14*"
+    },
+    {
+      "player_id": "Sully Sully",
+      "name": "Sully Sully",
+      "runs": 14,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 14.0,
+      "balls": 7,
+      "strike_rate": 200.0,
+      "fours": 2,
+      "sixes": 1,
+      "high_score": "14"
+    },
+    {
+      "player_id": "John Falconer",
+      "name": "John Falconer",
+      "runs": 14,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 14.0,
+      "balls": 12,
+      "strike_rate": 116.67,
+      "fours": 3,
+      "sixes": 0,
+      "high_score": "14"
+    },
+    {
       "player_id": "4780585",
       "name": "James Munford",
       "runs": 14,
@@ -732,6 +810,19 @@
       "high_score": "14"
     },
     {
+      "player_id": "7209433",
+      "name": "Callum Steel",
+      "runs": 14,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 14.0,
+      "balls": 15,
+      "strike_rate": 93.33,
+      "fours": 2,
+      "sixes": 0,
+      "high_score": "14"
+    },
+    {
       "player_id": "6564262",
       "name": "Henry Ayres",
       "runs": 12,
@@ -743,6 +834,19 @@
       "fours": 2,
       "sixes": 0,
       "high_score": "7"
+    },
+    {
+      "player_id": "6806617",
+      "name": "Marcus Elsom",
+      "runs": 11,
+      "innings": 2,
+      "not_outs": 1,
+      "average": 11.0,
+      "balls": 13,
+      "strike_rate": 84.62,
+      "fours": 1,
+      "sixes": 1,
+      "high_score": "6"
     },
     {
       "player_id": "5776323",
@@ -797,6 +901,19 @@
       "high_score": "5"
     },
     {
+      "player_id": "Chris Silvain",
+      "name": "Chris Silvain",
+      "runs": 9,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 9.0,
+      "balls": 10,
+      "strike_rate": 90.0,
+      "fours": 2,
+      "sixes": 0,
+      "high_score": "9"
+    },
+    {
       "player_id": "23725",
       "name": "Robert Braybrooke",
       "runs": 9,
@@ -836,17 +953,30 @@
       "high_score": "5"
     },
     {
-      "player_id": "1154103",
-      "name": "Chris Robinson",
+      "player_id": "6175805",
+      "name": "Jason Harnwell",
+      "runs": 8,
+      "innings": 7,
+      "not_outs": 2,
+      "average": 1.6,
+      "balls": 53,
+      "strike_rate": 15.09,
+      "fours": 0,
+      "sixes": 12,
+      "high_score": "3"
+    },
+    {
+      "player_id": "7063676",
+      "name": "Freddie Murfet",
       "runs": 7,
-      "innings": 1,
-      "not_outs": 0,
-      "average": 7.0,
-      "balls": 33,
-      "strike_rate": 21.21,
-      "fours": 1,
+      "innings": 7,
+      "not_outs": 1,
+      "average": 1.17,
+      "balls": 32,
+      "strike_rate": 21.88,
+      "fours": 0,
       "sixes": 0,
-      "high_score": "7"
+      "high_score": "4"
     },
     {
       "player_id": "Adelia Nuttall",
@@ -888,17 +1018,17 @@
       "high_score": "3*"
     },
     {
-      "player_id": "6175805",
-      "name": "Jason Harnwell",
+      "player_id": "6569449",
+      "name": "Charlie Clark",
       "runs": 6,
       "innings": 6,
-      "not_outs": 2,
-      "average": 1.5,
-      "balls": 38,
-      "strike_rate": 15.79,
+      "not_outs": 3,
+      "average": 2.0,
+      "balls": 78,
+      "strike_rate": 7.69,
       "fours": 0,
-      "sixes": 12,
-      "high_score": "3"
+      "sixes": 0,
+      "high_score": "3*"
     },
     {
       "player_id": "7164621",
@@ -914,19 +1044,6 @@
       "high_score": "5"
     },
     {
-      "player_id": "6806617",
-      "name": "Marcus Elsom",
-      "runs": 5,
-      "innings": 1,
-      "not_outs": 1,
-      "average": null,
-      "balls": 7,
-      "strike_rate": 71.43,
-      "fours": 1,
-      "sixes": 0,
-      "high_score": "5*"
-    },
-    {
       "player_id": "7192345",
       "name": "Yarinda Buller",
       "runs": 5,
@@ -938,6 +1055,32 @@
       "fours": 0,
       "sixes": 0,
       "high_score": "5*"
+    },
+    {
+      "player_id": "Kyran Livermore",
+      "name": "Kyran Livermore",
+      "runs": 4,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 4.0,
+      "balls": 15,
+      "strike_rate": 26.67,
+      "fours": 0,
+      "sixes": 0,
+      "high_score": "4"
+    },
+    {
+      "player_id": "3818788",
+      "name": "Alfie Richardson",
+      "runs": 4,
+      "innings": 2,
+      "not_outs": 0,
+      "average": 2.0,
+      "balls": 7,
+      "strike_rate": 57.14,
+      "fours": 1,
+      "sixes": 0,
+      "high_score": "4"
     },
     {
       "player_id": "7060061",
@@ -979,30 +1122,30 @@
       "high_score": "4"
     },
     {
-      "player_id": "6569449",
-      "name": "Charlie Clark",
-      "runs": 3,
+      "player_id": "Unsure",
+      "name": "Unsure",
+      "runs": 4,
       "innings": 5,
-      "not_outs": 3,
-      "average": 1.5,
-      "balls": 59,
-      "strike_rate": 5.08,
+      "not_outs": 1,
+      "average": 1.0,
+      "balls": 13,
+      "strike_rate": 30.77,
       "fours": 0,
       "sixes": 0,
       "high_score": "3*"
     },
     {
-      "player_id": "7063676",
-      "name": "Freddie Murfet",
+      "player_id": "6814780",
+      "name": "Carson Silvain",
       "runs": 3,
-      "innings": 6,
-      "not_outs": 1,
-      "average": 0.6,
-      "balls": 23,
-      "strike_rate": 13.04,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 3.0,
+      "balls": 6,
+      "strike_rate": 50.0,
       "fours": 0,
       "sixes": 0,
-      "high_score": "2"
+      "high_score": "3"
     },
     {
       "player_id": "5983817",
@@ -1013,6 +1156,19 @@
       "average": 2.0,
       "balls": 4,
       "strike_rate": 50.0,
+      "fours": 0,
+      "sixes": 0,
+      "high_score": "2"
+    },
+    {
+      "player_id": "Barry Silvan",
+      "name": "Barry Silvan",
+      "runs": 2,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 2.0,
+      "balls": 16,
+      "strike_rate": 12.5,
       "fours": 0,
       "sixes": 0,
       "high_score": "2"
@@ -1044,17 +1200,17 @@
       "high_score": "2*"
     },
     {
-      "player_id": "Unsure",
-      "name": "Unsure",
-      "runs": 1,
-      "innings": 4,
-      "not_outs": 0,
-      "average": 0.25,
-      "balls": 11,
-      "strike_rate": 9.09,
+      "player_id": "1154095",
+      "name": "Graham Mayle",
+      "runs": 2,
+      "innings": 1,
+      "not_outs": 1,
+      "average": null,
+      "balls": 3,
+      "strike_rate": 66.67,
       "fours": 0,
       "sixes": 0,
-      "high_score": "1"
+      "high_score": "2*"
     },
     {
       "player_id": "3322008",
@@ -1065,6 +1221,19 @@
       "average": 1.0,
       "balls": 9,
       "strike_rate": 11.11,
+      "fours": 0,
+      "sixes": 0,
+      "high_score": "1"
+    },
+    {
+      "player_id": "6850435",
+      "name": "Charlie Hale",
+      "runs": 1,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 1.0,
+      "balls": 3,
+      "strike_rate": 33.33,
       "fours": 0,
       "sixes": 0,
       "high_score": "1"
@@ -1122,19 +1291,6 @@
       "high_score": "0*"
     },
     {
-      "player_id": "3818788",
-      "name": "Alfie Richardson",
-      "runs": 0,
-      "innings": 1,
-      "not_outs": 0,
-      "average": 0.0,
-      "balls": 3,
-      "strike_rate": 0.0,
-      "fours": 0,
-      "sixes": 0,
-      "high_score": "0"
-    },
-    {
       "player_id": "F Ashman",
       "name": "F Ashman",
       "runs": 0,
@@ -1150,6 +1306,19 @@
     {
       "player_id": "1154138",
       "name": "Martin Paul",
+      "runs": 0,
+      "innings": 1,
+      "not_outs": 0,
+      "average": 0.0,
+      "balls": 0,
+      "strike_rate": null,
+      "fours": 0,
+      "sixes": 0,
+      "high_score": "0"
+    },
+    {
+      "player_id": "7209435",
+      "name": "David Drever",
       "runs": 0,
       "innings": 1,
       "not_outs": 0,
@@ -1212,28 +1381,28 @@
       "best": "3-13"
     },
     {
-      "player_id": "876673",
-      "name": "Craig Faux",
-      "wickets": 17,
-      "runs_conceded": 404,
-      "balls": 486,
-      "overs": "81.0",
-      "maidens": 11,
-      "average": 23.76,
-      "economy": 4.99,
-      "best": "4-22"
-    },
-    {
       "player_id": "2639264",
       "name": "Jack Boston",
-      "wickets": 16,
-      "runs_conceded": 327,
-      "balls": 433,
-      "overs": "72.1",
+      "wickets": 18,
+      "runs_conceded": 335,
+      "balls": 445,
+      "overs": "74.1",
       "maidens": 10,
-      "average": 20.44,
-      "economy": 4.53,
+      "average": 18.61,
+      "economy": 4.52,
       "best": "4-9"
+    },
+    {
+      "player_id": "876673",
+      "name": "Craig Faux",
+      "wickets": 18,
+      "runs_conceded": 410,
+      "balls": 492,
+      "overs": "82.0",
+      "maidens": 11,
+      "average": 22.78,
+      "economy": 5.0,
+      "best": "4-22"
     },
     {
       "player_id": "6449933",
@@ -1272,6 +1441,18 @@
       "best": "3-21"
     },
     {
+      "player_id": "5398363",
+      "name": "Jordan Emms",
+      "wickets": 9,
+      "runs_conceded": 102,
+      "balls": 210,
+      "overs": "35.0",
+      "maidens": 12,
+      "average": 11.33,
+      "economy": 2.91,
+      "best": "3-41"
+    },
+    {
       "player_id": "6045271",
       "name": "Cornelio Du Plessis",
       "wickets": 9,
@@ -1308,16 +1489,16 @@
       "best": "3-22"
     },
     {
-      "player_id": "5398363",
-      "name": "Jordan Emms",
-      "wickets": 8,
-      "runs_conceded": 93,
-      "balls": 192,
-      "overs": "32.0",
-      "maidens": 12,
-      "average": 11.62,
-      "economy": 2.91,
-      "best": "3-41"
+      "player_id": "6618432",
+      "name": "Leon Perrin",
+      "wickets": 9,
+      "runs_conceded": 338,
+      "balls": 358,
+      "overs": "59.4",
+      "maidens": 3,
+      "average": 37.56,
+      "economy": 5.66,
+      "best": "2-38"
     },
     {
       "player_id": "5775983",
@@ -1380,16 +1561,16 @@
       "best": "3-24"
     },
     {
-      "player_id": "6618432",
-      "name": "Leon Perrin",
+      "player_id": "5314064",
+      "name": "Kaiden Grady",
       "wickets": 7,
-      "runs_conceded": 279,
-      "balls": 310,
-      "overs": "51.4",
-      "maidens": 3,
-      "average": 39.86,
-      "economy": 5.4,
-      "best": "1-6"
+      "runs_conceded": 244,
+      "balls": 199,
+      "overs": "33.1",
+      "maidens": 1,
+      "average": 34.86,
+      "economy": 7.36,
+      "best": "2-14"
     },
     {
       "player_id": "5806909",
@@ -1404,6 +1585,18 @@
       "best": "3-39"
     },
     {
+      "player_id": "6020481",
+      "name": "Lourens Herselman",
+      "wickets": 6,
+      "runs_conceded": 127,
+      "balls": 204,
+      "overs": "34.0",
+      "maidens": 6,
+      "average": 21.17,
+      "economy": 3.74,
+      "best": "3-17"
+    },
+    {
       "player_id": "6908285",
       "name": "Emma Harris",
       "wickets": 6,
@@ -1416,18 +1609,6 @@
       "best": "1-9"
     },
     {
-      "player_id": "5314064",
-      "name": "Kaiden Grady",
-      "wickets": 6,
-      "runs_conceded": 209,
-      "balls": 175,
-      "overs": "29.1",
-      "maidens": 1,
-      "average": 34.83,
-      "economy": 7.17,
-      "best": "2-14"
-    },
-    {
       "player_id": "6564262",
       "name": "Henry Ayres",
       "wickets": 5,
@@ -1438,6 +1619,18 @@
       "average": 12.4,
       "economy": 5.64,
       "best": "2-8"
+    },
+    {
+      "player_id": "1154108",
+      "name": "Paul Robinson",
+      "wickets": 4,
+      "runs_conceded": 47,
+      "balls": 42,
+      "overs": "7.0",
+      "maidens": 0,
+      "average": 11.75,
+      "economy": 6.71,
+      "best": "2-10"
     },
     {
       "player_id": "6754124",
@@ -1476,40 +1669,16 @@
       "best": "2-15"
     },
     {
-      "player_id": "6020481",
-      "name": "Lourens Herselman",
-      "wickets": 4,
-      "runs_conceded": 100,
-      "balls": 174,
-      "overs": "29.0",
-      "maidens": 6,
-      "average": 25.0,
-      "economy": 3.45,
-      "best": "3-17"
-    },
-    {
       "player_id": "6175805",
       "name": "Jason Harnwell",
       "wickets": 4,
-      "runs_conceded": 118,
-      "balls": 72,
-      "overs": "12.0",
+      "runs_conceded": 137,
+      "balls": 90,
+      "overs": "15.0",
       "maidens": 0,
-      "average": 29.5,
-      "economy": 9.83,
+      "average": 34.25,
+      "economy": 9.13,
       "best": "2-31"
-    },
-    {
-      "player_id": "1154108",
-      "name": "Paul Robinson",
-      "wickets": 3,
-      "runs_conceded": 23,
-      "balls": 24,
-      "overs": "4.0",
-      "maidens": 0,
-      "average": 7.67,
-      "economy": 5.75,
-      "best": "2-10"
     },
     {
       "player_id": "4172459",
@@ -1522,6 +1691,18 @@
       "average": 17.33,
       "economy": 3.95,
       "best": "3-12"
+    },
+    {
+      "player_id": "6569449",
+      "name": "Charlie Clark",
+      "wickets": 3,
+      "runs_conceded": 53,
+      "balls": 36,
+      "overs": "6.0",
+      "maidens": 0,
+      "average": 17.67,
+      "economy": 8.83,
+      "best": "2-18"
     },
     {
       "player_id": "5776323",
@@ -1558,6 +1739,18 @@
       "average": 54.0,
       "economy": 7.97,
       "best": "1-8"
+    },
+    {
+      "player_id": "6806617",
+      "name": "Marcus Elsom",
+      "wickets": 2,
+      "runs_conceded": 9,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 0,
+      "average": 4.5,
+      "economy": 4.5,
+      "best": "2-9"
     },
     {
       "player_id": "1541964",
@@ -1620,18 +1813,6 @@
       "best": "1-16"
     },
     {
-      "player_id": "6569449",
-      "name": "Charlie Clark",
-      "wickets": 2,
-      "runs_conceded": 41,
-      "balls": 24,
-      "overs": "4.0",
-      "maidens": 0,
-      "average": 20.5,
-      "economy": 10.25,
-      "best": "2-18"
-    },
-    {
       "player_id": "6175795",
       "name": "Noah Craven",
       "wickets": 2,
@@ -1692,6 +1873,18 @@
       "best": "1-8"
     },
     {
+      "player_id": "6814781",
+      "name": "Ryan Frear",
+      "wickets": 1,
+      "runs_conceded": 4,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 1,
+      "average": 4.0,
+      "economy": 2.0,
+      "best": "1-4"
+    },
+    {
       "player_id": "5938966",
       "name": "George Bangs",
       "wickets": 1,
@@ -1704,6 +1897,18 @@
       "best": "1-4"
     },
     {
+      "player_id": "6350258",
+      "name": "David Frear",
+      "wickets": 1,
+      "runs_conceded": 6,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 0,
+      "average": 6.0,
+      "economy": 3.0,
+      "best": "1-6"
+    },
+    {
       "player_id": "4338083",
       "name": "Archie Ware",
       "wickets": 1,
@@ -1714,6 +1919,54 @@
       "average": 9.0,
       "economy": 4.5,
       "best": "1-9"
+    },
+    {
+      "player_id": "Kyran Livermore",
+      "name": "Kyran Livermore",
+      "wickets": 1,
+      "runs_conceded": 13,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 0,
+      "average": 13.0,
+      "economy": 6.5,
+      "best": "1-13"
+    },
+    {
+      "player_id": "5877405",
+      "name": "George Raynor",
+      "wickets": 1,
+      "runs_conceded": 14,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 0,
+      "average": 14.0,
+      "economy": 7.0,
+      "best": "1-14"
+    },
+    {
+      "player_id": "3818788",
+      "name": "Alfie Richardson",
+      "wickets": 1,
+      "runs_conceded": 15,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 0,
+      "average": 15.0,
+      "economy": 7.5,
+      "best": "1-15"
+    },
+    {
+      "player_id": "Sully Sully",
+      "name": "Sully Sully",
+      "wickets": 1,
+      "runs_conceded": 17,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 0,
+      "average": 17.0,
+      "economy": 8.5,
+      "best": "1-17"
     },
     {
       "player_id": "7192345",
@@ -1848,6 +2101,30 @@
       "best": "-"
     },
     {
+      "player_id": "Barry Silvan",
+      "name": "Barry Silvan",
+      "wickets": 0,
+      "runs_conceded": 8,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 0,
+      "average": null,
+      "economy": 4.0,
+      "best": "-"
+    },
+    {
+      "player_id": "7209432",
+      "name": "Phil Coulson",
+      "wickets": 0,
+      "runs_conceded": 8,
+      "balls": 7,
+      "overs": "1.1",
+      "maidens": 0,
+      "average": null,
+      "economy": 6.86,
+      "best": "-"
+    },
+    {
       "player_id": "Adelia Nuttall",
       "name": "Adelia Nuttall",
       "wickets": 0,
@@ -1869,6 +2146,18 @@
       "maidens": 0,
       "average": null,
       "economy": 3.33,
+      "best": "-"
+    },
+    {
+      "player_id": "7209433",
+      "name": "Callum Steel",
+      "wickets": 0,
+      "runs_conceded": 11,
+      "balls": 24,
+      "overs": "4.0",
+      "maidens": 1,
+      "average": null,
+      "economy": 2.75,
       "best": "-"
     },
     {
@@ -1896,6 +2185,18 @@
       "best": "-"
     },
     {
+      "player_id": "Chris Silvain",
+      "name": "Chris Silvain",
+      "wickets": 0,
+      "runs_conceded": 15,
+      "balls": 6,
+      "overs": "1.0",
+      "maidens": 0,
+      "average": null,
+      "economy": 15.0,
+      "best": "-"
+    },
+    {
       "player_id": "6462709",
       "name": "Harry Paul",
       "wickets": 0,
@@ -1920,18 +2221,6 @@
       "best": "-"
     },
     {
-      "player_id": "7063676",
-      "name": "Freddie Murfet",
-      "wickets": 0,
-      "runs_conceded": 17,
-      "balls": 12,
-      "overs": "2.0",
-      "maidens": 0,
-      "average": null,
-      "economy": 8.5,
-      "best": "-"
-    },
-    {
       "player_id": "5169581",
       "name": "Molly Ellis",
       "wickets": 0,
@@ -1944,6 +2233,18 @@
       "best": "-"
     },
     {
+      "player_id": "John Falconer",
+      "name": "John Falconer",
+      "wickets": 0,
+      "runs_conceded": 17,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 0,
+      "average": null,
+      "economy": 8.5,
+      "best": "-"
+    },
+    {
       "player_id": "4014123",
       "name": "Andy Cobbin",
       "wickets": 0,
@@ -1953,6 +2254,18 @@
       "maidens": 1,
       "average": null,
       "economy": 4.0,
+      "best": "-"
+    },
+    {
+      "player_id": "4352704",
+      "name": "Daniel Grady",
+      "wickets": 0,
+      "runs_conceded": 22,
+      "balls": 12,
+      "overs": "2.0",
+      "maidens": 0,
+      "average": null,
+      "economy": 11.0,
       "best": "-"
     },
     {
@@ -1992,6 +2305,42 @@
       "best": "-"
     },
     {
+      "player_id": "6850435",
+      "name": "Charlie Hale",
+      "wickets": 0,
+      "runs_conceded": 33,
+      "balls": 18,
+      "overs": "3.0",
+      "maidens": 0,
+      "average": null,
+      "economy": 11.0,
+      "best": "-"
+    },
+    {
+      "player_id": "1154095",
+      "name": "Graham Mayle",
+      "wickets": 0,
+      "runs_conceded": 34,
+      "balls": 30,
+      "overs": "5.0",
+      "maidens": 0,
+      "average": null,
+      "economy": 6.8,
+      "best": "-"
+    },
+    {
+      "player_id": "7063676",
+      "name": "Freddie Murfet",
+      "wickets": 0,
+      "runs_conceded": 37,
+      "balls": 24,
+      "overs": "4.0",
+      "maidens": 0,
+      "average": null,
+      "economy": 9.25,
+      "best": "-"
+    },
+    {
       "player_id": "5530211",
       "name": "James Barrett",
       "wickets": 0,
@@ -2002,323 +2351,6 @@
       "average": null,
       "economy": 5.67,
       "best": "-"
-    }
-  ],
-  "fielding": [
-    {
-      "player_id": "876673",
-      "name": "Craig Faux",
-      "catches": 7,
-      "stumpings": 0,
-      "dismissals": 7
-    },
-    {
-      "player_id": "5878860",
-      "name": "Vineeth Vini",
-      "catches": 7,
-      "stumpings": 0,
-      "dismissals": 7
-    },
-    {
-      "player_id": "5530211",
-      "name": "James Barrett",
-      "catches": 7,
-      "stumpings": 0,
-      "dismissals": 7
-    },
-    {
-      "player_id": "4172459",
-      "name": "Chayse Frear",
-      "catches": 7,
-      "stumpings": 0,
-      "dismissals": 7
-    },
-    {
-      "player_id": "1154108",
-      "name": "Paul Robinson",
-      "catches": 6,
-      "stumpings": 0,
-      "dismissals": 6
-    },
-    {
-      "player_id": "4338086",
-      "name": "Josh Grady",
-      "catches": 6,
-      "stumpings": 0,
-      "dismissals": 6
-    },
-    {
-      "player_id": "unsure",
-      "name": "Unsure",
-      "catches": 6,
-      "stumpings": 0,
-      "dismissals": 6
-    },
-    {
-      "player_id": "4681504",
-      "name": "Duncan Turner",
-      "catches": 5,
-      "stumpings": 0,
-      "dismissals": 5
-    },
-    {
-      "player_id": "2639264",
-      "name": "Jack Boston",
-      "catches": 5,
-      "stumpings": 0,
-      "dismissals": 5
-    },
-    {
-      "player_id": "6175515",
-      "name": "Joshie Pollard",
-      "catches": 5,
-      "stumpings": 0,
-      "dismissals": 5
-    },
-    {
-      "player_id": "5375174",
-      "name": "Daniel Abbs",
-      "catches": 4,
-      "stumpings": 1,
-      "dismissals": 5
-    },
-    {
-      "player_id": "4338080",
-      "name": "Ben Newton",
-      "catches": 4,
-      "stumpings": 0,
-      "dismissals": 4
-    },
-    {
-      "player_id": "6618432",
-      "name": "Leon Perrin",
-      "catches": 4,
-      "stumpings": 0,
-      "dismissals": 4
-    },
-    {
-      "player_id": "4352704",
-      "name": "Daniel Grady",
-      "catches": 4,
-      "stumpings": 0,
-      "dismissals": 4
-    },
-    {
-      "player_id": "6350258",
-      "name": "David Frear",
-      "catches": 3,
-      "stumpings": 0,
-      "dismissals": 3
-    },
-    {
-      "player_id": "6449933",
-      "name": "Michael Ward",
-      "catches": 3,
-      "stumpings": 0,
-      "dismissals": 3
-    },
-    {
-      "player_id": "3678556",
-      "name": "Tim Conquest",
-      "catches": 2,
-      "stumpings": 0,
-      "dismissals": 2
-    },
-    {
-      "player_id": "4942381",
-      "name": "Stephen Tuck",
-      "catches": 2,
-      "stumpings": 0,
-      "dismissals": 2
-    },
-    {
-      "player_id": "6358765",
-      "name": "Katherine Peacock",
-      "catches": 2,
-      "stumpings": 0,
-      "dismissals": 2
-    },
-    {
-      "player_id": "5314064",
-      "name": "Kaiden Grady",
-      "catches": 2,
-      "stumpings": 0,
-      "dismissals": 2
-    },
-    {
-      "player_id": "4069486",
-      "name": "George Ware",
-      "catches": 2,
-      "stumpings": 0,
-      "dismissals": 2
-    },
-    {
-      "player_id": "6754124",
-      "name": "James Short",
-      "catches": 2,
-      "stumpings": 0,
-      "dismissals": 2
-    },
-    {
-      "player_id": "5398363",
-      "name": "Jordan Emms",
-      "catches": 2,
-      "stumpings": 0,
-      "dismissals": 2
-    },
-    {
-      "player_id": "6175805",
-      "name": "Jason Harnwell",
-      "catches": 2,
-      "stumpings": 0,
-      "dismissals": 2
-    },
-    {
-      "player_id": "5775994",
-      "name": "Cameron Brown",
-      "catches": 0,
-      "stumpings": 2,
-      "dismissals": 2
-    },
-    {
-      "player_id": "6908285",
-      "name": "Emma Harris",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "5775983",
-      "name": "Oscar Pergl-Wilson",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "6209993",
-      "name": "Richard Goodjohn",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "6203867",
-      "name": "Isobel Biswell",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "4338421",
-      "name": "Rohan McCarthy",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "5776323",
-      "name": "Robbie Reader",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "3888421",
-      "name": "James Phipps",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "5938966",
-      "name": "George Bangs",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "6646609",
-      "name": "Carson Silvain",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "7066321",
-      "name": "Freddie Yardy",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "7063676",
-      "name": "Freddie Murfet",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "5342774",
-      "name": "Ren Barnard",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "2752774",
-      "name": "Michael Grady",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "6043360",
-      "name": "James Nuttall",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "7164621",
-      "name": "Adam Ford",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "1765611",
-      "name": "Max Loker",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "6045271",
-      "name": "Cornelio Du Plessis",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "6718087",
-      "name": "Georgina Lister",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "1541964",
-      "name": "Jeff Paul",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
-    },
-    {
-      "player_id": "23725",
-      "name": "Robert Braybrooke",
-      "catches": 1,
-      "stumpings": 0,
-      "dismissals": 1
     }
   ]
 }

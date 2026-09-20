@@ -47516,14 +47516,14 @@
       }
     },
     "7757907": {
-      "_last_updated": "18/09/2026",
+      "_last_updated": "20/09/2026",
       "detail": {
         "match_details": [
           {
             "id": 7757907,
             "status": "New",
             "published": "Yes",
-            "last_updated": "18/09/2026",
+            "last_updated": "20/09/2026",
             "league_id": "",
             "competition_name": "",
             "competition_id": "",
@@ -48734,6 +48734,6 @@
       }
     }
   },
-  "generated_at": "2026-09-20T01:07:10.373981+00:00",
+  "generated_at": "2026-09-20T05:51:46.684443+00:00",
   "season": 2026
 }
