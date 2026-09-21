@@ -73,7 +73,7 @@
 
       const fieldingTable = document.getElementById('fielding-leaders');
       if (fieldingTable) {
-        const rows = fielding.slice().sort((a,b) => number(b.dismissals)-number(a.dismissals) || number(b.catches)-number(a.catches) || String(a.name||'').localeCompare(String(b.name||'')));
+        const rows = fielding.slice().sort((a,b) => number(b.dismissals)-number(a.dismissals) || number(b.catches)-number(a.catches) || number(b.run_outs)-number(a.run_outs) || String(a.name||'').localeCompare(String(b.name||''))).slice(0,10);
         fieldingTable.innerHTML = rows.length ? rows.map(p => `<div class="stat-row fielding-stat-row"><span>${player(p)}</span><span>${number(p.catches)}</span><span>${number(p.stumpings)}</span><span>${number(p.run_outs)}</span><strong>${number(p.dismissals)}</strong></div>`).join('') : '<div class="stat-row"><span>Fielding statistics unavailable.</span></div>';
       }
     } catch (err) {
