@@ -37247,14 +37247,14 @@
       }
     },
     "7372148": {
-      "_last_updated": "28/07/2026",
+      "_last_updated": "30/09/2026",
       "detail": {
         "match_details": [
           {
             "id": 7372148,
             "status": "New",
             "published": "Yes",
-            "last_updated": "28/07/2026",
+            "last_updated": "30/09/2026",
             "league_name": "Cambridgeshire Women`s and Girls` Cricket League",
             "league_id": "27796",
             "competition_name": "Women's Hardball T20 League",
@@ -48734,6 +48734,6 @@
       }
     }
   },
-  "generated_at": "2026-09-30T05:34:45.406670+00:00",
+  "generated_at": "2026-09-30T12:37:14.881307+00:00",
   "season": 2026
 }
