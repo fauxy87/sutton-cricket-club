@@ -1,6 +1,42 @@
 {
-  "updated_at": "2026-09-18",
+  "updated_at": "2026-10-06",
   "articles": [
+    {
+      "id": "2026-saturday-team-of-year",
+      "title": "Sutton CC Saturday Team of the Year 2026",
+      "date": "2026-10-06",
+      "category": "club",
+      "category_label": "Club News",
+      "team": "Saturday XI",
+      "summary": "Our 2026 Saturday Team of the Year, selected from league performances across Sutton's 1st XI and 2nd XI.",
+      "lead": "After reviewing the 2026 Saturday League season across both the 1st XI and 2nd XI, we have selected a balanced Team of the Year based on consistency, match impact, all-round contribution and the positions players actually filled.",
+      "body": [
+        "1. Michael Grady – Opener / Bowler. Michael scored 264 1st XI league runs at 33.00, including 127 not out, and took 19 wickets at just 9.47 with best figures of 5/24.",
+        "2. Paul Robinson – Opener. Paul scored 263 2nd XI league runs at 43.83, including three half-centuries, and added a further 54 runs for the 1st XI.",
+        "3. James Phipps – Top-order batter. James scored 142 league runs for the 2nd XI at 28.40, including two half-centuries, plus another 76 for the 1st XI.",
+        "4. James Nuttall – Batter / Bowler. James made 184 runs in only six league innings at 30.67, including a superb 136, and also took eight wickets. His 241-run partnership with Michael Grady against Bluntisham was one of the standout batting performances of the season.",
+        "5. James Barrett – Middle-order batter. James scored 156 1st XI league runs, with a highest score of 65 and a strike rate of 104.70.",
+        "6. Craig Faux – All-rounder. Craig scored 190 1st XI league runs and took 16 wickets, with best figures of 4/22, while contributing in several important middle and lower-order partnerships.",
+        "7. Joshie Pollard – Wicketkeeper / Batter. Joshie scored 114 combined Saturday league runs and recorded four wicketkeeping dismissals across the two Saturday sides.",
+        "8. Josh Grady – Bowling all-rounder. Josh was Sutton's leading Saturday league wicket-taker with 22 wickets across the 1st XI and 2nd XI, while also contributing useful lower-order runs.",
+        "9. Michael Ward – Bowler. Michael took 13 2nd XI league wickets at an outstanding average of 9.15, including best figures of 5/15.",
+        "10. Jack Boston – Bowler. Jack finished with 16 1st XI league wickets, including best figures of 4/9.",
+        "11. George Ware – Bowler. George took 12 Saturday league wickets across the two sides, including 10 for the 2nd XI at an economy rate of 3.71.",
+        "12th Man: Richard Goodjohn. Richard took nine 1st XI league wickets at 11.56 with an economy rate of 3.47, including a superb 5/17, and was extremely unlucky to miss the final XI.",
+        "Honourable mentions go to Daniel Grady, Daniel Abbs, Cornelio Du Plessis, Stephen Tuck, Jordan Emms, Lourens Herselman and Ren Barnard, all of whom made strong contributions during the Saturday league season.",
+        "The final XI gives Sutton a realistic batting order, genuine wicketkeeping, several all-round options and a strong bowling attack, while recognising performances from both Saturday sides."
+      ],
+      "links": [
+        {
+          "label": "2026 statistics",
+          "href": "honours.html#season-tables"
+        },
+        {
+          "label": "Fixtures & results",
+          "href": "fixtures.html"
+        }
+      ]
+    },
     {
       "id": "2026-presentation-evening-awards",
       "title": "Sutton CC celebrates its 2026 award winners",
