@@ -24,15 +24,72 @@
     const d = new Date(raw);
     return Number.isNaN(d.getTime()) ? null : d;
   };
-  const resultText = m => val(m,'result','result_description','result_text','match_result','result_summary') || 'Result recorded';
+  const rawResult = m => String(val(m,'result','result_text','match_result') || '').trim().toUpperCase();
+  const resultText = m => val(m,'result_description','result_text','match_result','result_summary','result') || 'Result recorded';
+  const sideName = (club, team) => {
+    const cleanClub = String(club || '').replace(/, Cambs$/i,'').trim();
+    const cleanTeam = String(team || '').trim();
+    if (!cleanClub) return cleanTeam || 'Opposition';
+    if (!cleanTeam || cleanClub.toLowerCase().includes(cleanTeam.toLowerCase())) return cleanClub;
+    return `${cleanClub} · ${cleanTeam}`;
+  };
   const opposition = (m, ids) => {
     const homeId = id(val(m,'home_team_id','home_club_team_id'));
     const awayId = id(val(m,'away_team_id','away_club_team_id'));
-    const home = val(m,'home_team_name','home_team','home_club_name') || 'Home';
-    const away = val(m,'away_team_name','away_team','away_club_name') || 'Away';
+    const home = sideName(val(m,'home_club_name'), val(m,'home_team_name','home_team'));
+    const away = sideName(val(m,'away_club_name'), val(m,'away_team_name','away_team'));
     if (ids.includes(homeId)) return away;
     if (ids.includes(awayId)) return home;
     return `${home} v ${away}`;
+  };
+  const inningsFor = (m, teamId) => (Array.isArray(m.innings) ? m.innings : []).find(i => id(i.team_batting_id) === id(teamId));
+  const friendlyResult = (m, ids) => {
+    const code = rawResult(m);
+    if (code === 'C' || /cancel/i.test(String(val(m,'result_description')||''))) return 'Cancelled';
+    if (/abandon/i.test(String(val(m,'result_description')||'')) || code === 'A') return 'Abandoned';
+    if (/tie/i.test(String(val(m,'result_description')||'')) || code === 'T') return 'Tied';
+
+    const ourId = ids.find(teamId => teamIds(m).includes(teamId));
+    const winnerId = id(val(m,'result_applied_to'));
+    if (!ourId) return resultText(m);
+
+    if (code === 'CON') return winnerId === ourId ? 'Won – opposition conceded' : 'Lost – conceded';
+
+    const won = winnerId && winnerId === ourId;
+    const lost = winnerId && winnerId !== ourId;
+    if (!won && !lost) return resultText(m);
+
+    const homeId = id(val(m,'home_team_id','home_club_team_id'));
+    const awayId = id(val(m,'away_team_id','away_club_team_id'));
+    const otherId = ourId === homeId ? awayId : homeId;
+    const ourInn = inningsFor(m, ourId);
+    const oppInn = inningsFor(m, otherId);
+
+    if (ourInn && oppInn) {
+      const ourRuns = Number(ourInn.runs);
+      const oppRuns = Number(oppInn.runs);
+      const ourWkts = Number(ourInn.wickets);
+      const oppWkts = Number(oppInn.wickets);
+      if (Number.isFinite(ourRuns) && Number.isFinite(oppRuns)) {
+        if (won) {
+          if (ourRuns > oppRuns && Number.isFinite(ourWkts) && ourInn === (m.innings || [])[1]) {
+            const wickets = Math.max(0,10-ourWkts);
+            return `Won by ${wickets} wicket${wickets===1?'':'s'}`;
+          }
+          const runs = ourRuns - oppRuns;
+          if (runs > 0) return `Won by ${runs} run${runs===1?'':'s'}`;
+        }
+        if (lost) {
+          if (oppRuns > ourRuns && Number.isFinite(oppWkts) && oppInn === (m.innings || [])[1]) {
+            const wickets = Math.max(0,10-oppWkts);
+            return `Lost by ${wickets} wicket${wickets===1?'':'s'}`;
+          }
+          const runs = oppRuns - ourRuns;
+          if (runs > 0) return `Lost by ${runs} run${runs===1?'':'s'}`;
+        }
+      }
+    }
+    return won ? 'Won' : 'Lost';
   };
   const formatDate = m => { const d = dateObj(m); return d ? d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : ''; };
   const dedupe = items => {
@@ -66,7 +123,7 @@
         return `<a class="team-live-card" href="${team.href}">
           <div class="team-live-head"><span class="team-live-dot" aria-hidden="true"></span><strong>${esc(team.name)}</strong><b aria-hidden="true">→</b></div>
           <div class="team-live-metrics"><div><span>Results</span><strong>${played}</strong></div><div><span>${next ? 'Next' : 'Latest'}</span><strong>${esc(next ? formatDate(next) : latest ? formatDate(latest) : '—')}</strong></div></div>
-          <p>${next ? `Next: ${esc(opposition(next,team.ids))}` : latest ? `${esc(opposition(latest,team.ids))} · ${esc(resultText(latest))}` : 'Season data will appear here when available.'}</p>
+          <p>${next ? `Next: ${esc(opposition(next,team.ids))}` : latest ? `${esc(opposition(latest,team.ids))} · ${esc(friendlyResult(latest,team.ids))}` : 'Season data will appear here when available.'}</p>
           <span class="team-live-link">Open team dashboard</span>
         </a>`;
       }).join('');
