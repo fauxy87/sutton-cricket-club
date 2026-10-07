@@ -2,6 +2,52 @@
   "updated_at": "2026-10-07",
   "articles": [
     {
+      "id": "2026-saturday-season-in-numbers",
+      "title": "2026 Saturday Season in Numbers",
+      "date": "2026-10-07",
+      "category": "club",
+      "category_label": "Club News",
+      "team": "Saturday Cricket",
+      "summary": "The key numbers from Sutton CC’s 2026 Saturday League season across the 1st XI and 2nd XI.",
+      "lead": "From hundreds and five-wicket hauls to leading run-scorers and wicket-takers, here are some of the standout numbers from Sutton Cricket Club’s 2026 Saturday League season.",
+      "body": [
+        "Paul Robinson finished as Sutton’s leading Saturday league run-scorer across the two senior sides with 317 runs in total – 263 for the 2nd XI and a further 54 for the 1st XI.",
+        "Michael Grady scored 264 1st XI league runs at an average of 33.00, including a superb unbeaten 127.",
+        "James Nuttall made a huge impact in only six league innings, scoring 184 runs at 30.67 with a highest score of 136 and a strike rate of 141.54.",
+        "James Phipps scored 218 combined league runs across the two Saturday sides, including two half-centuries for the 2nd XI.",
+        "Craig Faux added 190 1st XI league runs, while James Barrett contributed 156 runs with a highest score of 65.",
+        "One of the biggest batting highlights of the season was the 241-run partnership between Michael Grady and James Nuttall against Bluntisham on 8 August.",
+        "Josh Grady finished as Sutton’s leading Saturday league wicket-taker with 22 wickets across the 1st XI and 2nd XI.",
+        "Michael Grady took 19 1st XI league wickets at an outstanding average of 9.47, including best figures of 5/24.",
+        "Jack Boston and Craig Faux both finished with 16 1st XI league wickets. Jack’s best return was 4/9, while Craig’s best was 4/22.",
+        "Michael Ward was one of the standout 2nd XI bowlers, taking 13 wickets at an average of just 9.15, including a five-wicket haul of 5/15.",
+        "George Ware took 12 Saturday league wickets across the two sides, including 10 for the 2nd XI at an economy rate of 3.71.",
+        "Richard Goodjohn produced one of the strongest short-run bowling returns of the season, taking nine 1st XI wickets at 11.56, including 5/17.",
+        "Cornelio Du Plessis also enjoyed an excellent 2nd XI bowling season, taking nine wickets at 11.44.",
+        "Jordan Emms combined eight wickets with an exceptional 2nd XI economy rate of 2.91.",
+        "With the gloves, Daniel Abbs recorded five 1st XI wicketkeeping dismissals, while Joshie Pollard recorded four across the two Saturday sides.",
+        "The numbers underline the depth of contribution across both Sutton Saturday teams, with match-winning performances coming from experienced players, all-rounders and emerging cricketers throughout the summer."
+      ],
+      "links": [
+        {
+          "label": "2026 Team of the Year",
+          "href": "article.html?id=2026-saturday-team-of-year"
+        },
+        {
+          "label": "2026 Season Review",
+          "href": "article.html?id=sutton-cc-2026-season-review"
+        },
+        {
+          "label": "Honours & statistics",
+          "href": "honours.html"
+        },
+        {
+          "label": "Fixtures & results",
+          "href": "fixtures.html"
+        }
+      ]
+    },
+    {
       "id": "sutton-cc-2026-season-review",
       "title": "Sutton CC 2026 Season Review",
       "date": "2026-10-07",
