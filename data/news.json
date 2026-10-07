@@ -2,6 +2,40 @@
   "updated_at": "2026-10-07",
   "articles": [
     {
+      "id": "thank-you-2026-sponsors",
+      "title": "Thank You to Our 2026 Sponsors",
+      "date": "2026-10-07",
+      "category": "club",
+      "category_label": "Club News",
+      "team": "Club Sponsors",
+      "summary": "Sutton Cricket Club thanks every business and individual who supported the club during the 2026 season.",
+      "lead": "Sutton Cricket Club would like to say a huge thank you to every sponsor who supported the club throughout the 2026 season.",
+      "body": [
+        "The backing of local businesses and individuals makes a real difference to Sutton Cricket Club, helping us support senior cricket, junior development, women’s cricket, facilities, equipment and the wider running of the club.",
+        "Our 2026 supporters included Cheffins, AC Timbers, Polly Glaze, FTR Suspension, Latta Hire, Ports Plumbing and The Chequers, all of whom backed the club through pitchside and club sponsorship.",
+        "We were also grateful for match-ball support from Rimbles, East Skips and AMK Car Detailing.",
+        "David Frear continued his support of our junior cricket, while Envy Hair Salon supported the senior sides.",
+        "Every contribution, whether through sponsorship, match-ball support, team backing or other help, plays a part in keeping cricket thriving at Sutton.",
+        "Sponsorship allows us to keep investing in the club and creating opportunities for players of all ages, from our youngest juniors through to senior and women’s cricket.",
+        "We are hugely grateful to all of our 2026 sponsors for their continued support and for being part of the Sutton Cricket Club community.",
+        "Thank you for backing Sutton CC throughout the 2026 season. 🏏💛💚"
+      ],
+      "links": [
+        {
+          "label": "Meet our sponsors",
+          "href": "sponsors.html"
+        },
+        {
+          "label": "Support Sutton CC",
+          "href": "sponsor-enquiry.html"
+        },
+        {
+          "label": "2026 Season Review",
+          "href": "article.html?id=sutton-cc-2026-season-review"
+        }
+      ]
+    },
+    {
       "id": "2026-saturday-season-in-numbers",
       "title": "2026 Saturday Season in Numbers",
       "date": "2026-10-07",
