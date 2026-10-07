@@ -6,8 +6,7 @@
     { key: '1st', label: '1st XI', href: 'team-1st-xi.html' },
     { key: '2nd', label: '2nd XI', href: 'team-2nd-xi.html' },
     { key: 'development', label: 'Development XI', href: 'team-development.html' },
-    { key: 'women', label: 'Women’s Cricket', href: 'team-women.html' },
-    { key: 'u14', label: 'U14s', href: 'team-u14.html' }
+    { key: 'women', label: 'Women’s Cricket', href: 'team-women.html' }
   ];
 
   const hero = document.querySelector('body[data-team-page] .page-hero');
