@@ -8,7 +8,7 @@
     const d = new Date(`${value}T12:00:00`);
     return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   };
-  const articleHref = item => `article.html?id=${encodeURIComponent(item.id)}`;
+  const articleHref = item => `news-${encodeURIComponent(item.id)}.html`;
   const imageHtml = (item,cls) => item.image ? `<a class="${cls}" href="${articleHref(item)}"><img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.image_alt || item.title || 'Sutton Cricket Club news')}"></a>` : '';
 
   function newsCard(item) {
