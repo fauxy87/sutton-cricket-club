@@ -3,7 +3,7 @@
   style.textContent='.article-image{margin:0 0 28px}.article-image img{display:block;width:100%;max-height:560px;object-fit:cover;border-radius:16px}.article-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0 0 30px}.article-gallery figure{margin:0}.article-gallery img{display:block;width:100%;height:300px;object-fit:cover;border-radius:14px}.article-gallery figure:first-child{grid-column:1/-1}.article-gallery figure:first-child img{height:min(560px,60vw)}@media(max-width:600px){.article-image img,.article-gallery img{border-radius:12px}.article-gallery{grid-template-columns:1fr}.article-gallery figure:first-child{grid-column:auto}.article-gallery img,.article-gallery figure:first-child img{height:auto;max-height:520px}}';
   document.head.appendChild(style);
   const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  const id = new URLSearchParams(location.search).get('id');
+  const id = new URLSearchParams(location.search).get('id') || document.body.dataset.articleId;
   const title = document.getElementById('article-title');
   const category = document.getElementById('article-category');
   const summary = document.getElementById('article-summary');
@@ -28,7 +28,7 @@
       const item = (data.articles || []).find(article => article.id === id);
       if (!item) throw new Error('Story not found');
       document.title = `${item.title} | Sutton Cricket Club`;
-      const canonicalUrl = `${location.origin}${location.pathname}?id=${encodeURIComponent(item.id)}`;
+      const canonicalUrl = document.body.dataset.articleId ? `${location.origin}${location.pathname}` : `${location.origin}${location.pathname}?id=${encodeURIComponent(item.id)}`;
       let canonical = document.querySelector('link[rel="canonical"]');
       if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
       canonical.href = canonicalUrl;
