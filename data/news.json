@@ -2,6 +2,51 @@
   "updated_at": "2026-10-07",
   "articles": [
     {
+      "id": "sutton-cc-2026-season-review",
+      "title": "Sutton CC 2026 Season Review",
+      "date": "2026-10-07",
+      "category": "club",
+      "category_label": "Club News",
+      "team": "2026 Season Review",
+      "summary": "A look back at the 2026 season across Sutton Cricket Club, from senior and women’s cricket to juniors, awards and standout performances.",
+      "lead": "The 2026 season was another busy and memorable year for Sutton Cricket Club, with strong performances across the senior sides, continued growth in women’s and junior cricket, and plenty of individual highlights along the way.",
+      "body": [
+        "The Saturday season saw Sutton’s 1st XI and 2nd XI compete throughout the summer, with several standout individual performances and plenty of contributions across both teams.",
+        "Michael Grady produced one of the performances of the season with an unbeaten 127 against Bluntisham, while James Nuttall also made a major impact with a superb 136 during the campaign. Their 241-run partnership was one of the biggest batting highlights of the year.",
+        "With the ball, Josh Grady led Sutton’s Saturday league wicket-taking with 22 wickets across the two sides. Michael Grady took 19 1st XI league wickets at an average of 9.47, while Jack Boston and Craig Faux both finished with 16 1st XI league wickets.",
+        "The 2nd XI also produced some excellent bowling performances, including Michael Ward’s 13 wickets at an average of 9.15 and George Ware’s 10 wickets at an economy rate of 3.71.",
+        "Paul Robinson was one of the most consistent Saturday batters of the season, scoring 263 league runs for the 2nd XI at 43.83 and adding a further 54 for the 1st XI. James Phipps also contributed strongly across both Saturday sides.",
+        "Away from the Saturday teams, the Sunday and Development side continued to provide important opportunities for players to gain match experience and for younger cricketers to make the step towards senior cricket.",
+        "Women’s cricket continued to grow at Sutton & Haddenham during 2026, with both softball and hardball opportunities giving more players the chance to represent the club and develop their game.",
+        "The women’s end-of-season awards recognised another strong year, with Izzy Biswell named Hardball Player, Mia Karpinaite Softball Player, Lucy Marsh receiving the Team Spirit award, Georgina Lister named Coaches’ Player, Charlotte Hough Players’ Player and Karen Thorpe receiving the Jon Megginson Memorial award.",
+        "Junior cricket remained at the heart of the club. All Stars, U12 Softball and U14 cricket provided regular opportunities for young players throughout the summer, supported by coaches, scorers, parents and volunteers.",
+        "The season also brought success and recognition at the club’s annual awards. Michael Grady was named 1st XI Batter of the Year and Player of the Year, with Josh Grady taking the 1st XI Bowler award. James Short was 2nd XI Batter of the Year, Michael Ward 2nd XI Bowler of the Year and Paul Robinson 2nd XI Player of the Year.",
+        "Kaiden Grady was named Sunday Player of the Year, Vini Vineeth Fielder of the Year, George Ware Clubman and Josh Pollard Young Player of the Year. The U14 awards went to Leon Perrin as Batter of the Year, Jason Harnwell as Bowler of the Year and Oscar Pergl-Wilson as Player of the Year.",
+        "One of the most important events away from league cricket was the Colin Coulson Memorial Game, which brought players, families and supporters together and raised £275 for the British Heart Foundation.",
+        "The club also continued to benefit from the support of sponsors, volunteers, coaches, scorers, ground staff, parents and supporters, all of whom played a part in making the 2026 season possible.",
+        "As Sutton Cricket Club looks ahead to 2027, the aim remains the same: to provide competitive senior cricket, continue growing the women’s game, support junior development and keep the club a welcoming place for players of all ages.",
+        "Thank you to everyone who represented, supported and helped Sutton Cricket Club throughout 2026."
+      ],
+      "links": [
+        {
+          "label": "2026 Team of the Year",
+          "href": "article.html?id=2026-saturday-team-of-year"
+        },
+        {
+          "label": "2026 award winners",
+          "href": "article.html?id=2026-presentation-evening-awards"
+        },
+        {
+          "label": "Honours & statistics",
+          "href": "honours.html"
+        },
+        {
+          "label": "Fixtures & results",
+          "href": "fixtures.html"
+        }
+      ]
+    },
+    {
       "id": "remembering-jon-megginson",
       "title": "Remembering Jon Megginson – A Lifetime of Service to Sutton CC",
       "date": "2026-10-07",
