@@ -2,6 +2,47 @@
   "updated_at": "2026-10-07",
   "articles": [
     {
+      "id": "looking-ahead-to-2027",
+      "title": "Looking Ahead to 2027",
+      "date": "2026-10-07",
+      "category": "club",
+      "category_label": "Club News",
+      "team": "2027 Preview",
+      "summary": "Sutton Cricket Club looks ahead to the 2027 season, with plans taking shape across senior, women’s and junior cricket.",
+      "lead": "With the 2026 season now wrapped up, attention is already turning to 2027 as Sutton Cricket Club prepares for another busy year across the senior, women’s and junior sections.",
+      "body": [
+        "The club’s 2027 season rollover is planned for March, when fixtures and league details are expected to be in place. That will allow the website, team pages and season information to move cleanly into the new campaign.",
+        "For the senior sides, the focus will be on confirming team names, captains, coaches and committee roles, as well as making sure the 1st XI, 2nd XI and Sunday/Development setup is ready for the new season.",
+        "Junior cricket will once again be a major part of the club. All Stars, U12 Softball and U14 cricket are all planned to return, with 2027 dates and registration information to be confirmed.",
+        "All Stars registration will continue through the ECB system, while separate registration forms are planned for the club-run junior programmes.",
+        "The club will also continue to support the development of women’s cricket, with both softball and hardball opportunities forming part of the 2027 programme.",
+        "The Weekly Draw has already been prepared for the 2027 season, with entries currently closed until the next round of information is released.",
+        "The Join & Contact section of the website is already set up to support new players, parents, volunteers and supporters who want to get involved ahead of the new season.",
+        "Sponsorship will again play an important role in supporting the club, with renewals and updated sponsor information to be confirmed over the winter.",
+        "As always, volunteers will be central to everything the club does, from coaching and scoring to ground work, administration, fundraising and matchday support.",
+        "More details on fixtures, training dates, registrations and team arrangements will be shared as plans are finalised.",
+        "We are already looking forward to another exciting season at Sutton Cricket Club in 2027. 🏏💛💚"
+      ],
+      "links": [
+        {
+          "label": "Join Sutton CC",
+          "href": "join.html"
+        },
+        {
+          "label": "Junior cricket",
+          "href": "juniors.html"
+        },
+        {
+          "label": "Teams",
+          "href": "teams.html"
+        },
+        {
+          "label": "Sponsors",
+          "href": "sponsors.html"
+        }
+      ]
+    },
+    {
       "id": "volunteers-behind-sutton-cc-2026",
       "title": "Volunteers Behind Sutton CC",
       "date": "2026-10-07",
