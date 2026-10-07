@@ -2,6 +2,41 @@
   "updated_at": "2026-10-07",
   "articles": [
     {
+      "id": "volunteers-behind-sutton-cc-2026",
+      "title": "Volunteers Behind Sutton CC",
+      "date": "2026-10-07",
+      "category": "community",
+      "category_label": "Community",
+      "team": "Club Volunteers",
+      "summary": "A thank you to the volunteers whose time, energy and commitment keep Sutton Cricket Club running throughout the season.",
+      "lead": "Behind every match, training session, junior programme, club event and successful season at Sutton Cricket Club is a team of volunteers giving their time to make it happen.",
+      "body": [
+        "Sutton Cricket Club simply could not operate without the people who volunteer week after week, often behind the scenes and without fuss.",
+        "From coaches and team managers to scorers, ground staff, committee members, safeguarding volunteers, event helpers, parents and supporters, every contribution makes a real difference.",
+        "Our junior cricket relies heavily on volunteers who organise sessions, coach young players, set up equipment, score matches and support children as they develop their confidence and enjoyment of the game.",
+        "The same is true across our senior and women’s sections, where captains, coaches, scorers and matchday helpers give up their time to make sure teams can take the field and enjoy their cricket.",
+        "Away from matches, volunteers help prepare and maintain the ground, move and store covers, tidy facilities, organise events, manage administration, support fundraising and sponsorship, update club communications and help keep the whole club moving forward.",
+        "The 2026 season again showed just how much can be achieved when people come together to support the club.",
+        "Whether someone gives a few minutes, an hour, a morning or countless evenings across the season, every bit of help matters.",
+        "Sutton Cricket Club would like to say a huge thank you to every volunteer who helped during 2026. Your time, effort and commitment are what make the club such a welcoming place for players of all ages.",
+        "We are extremely grateful for everything you do for Sutton CC. 🏏💛💚"
+      ],
+      "links": [
+        {
+          "label": "Join Sutton CC",
+          "href": "join.html"
+        },
+        {
+          "label": "2026 Season Review",
+          "href": "article.html?id=sutton-cc-2026-season-review"
+        },
+        {
+          "label": "Club news",
+          "href": "news.html"
+        }
+      ]
+    },
+    {
       "id": "thank-you-2026-sponsors",
       "title": "Thank You to Our 2026 Sponsors",
       "date": "2026-10-07",
