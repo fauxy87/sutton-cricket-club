@@ -1,6 +1,43 @@
 {
-  "updated_at": "2026-10-06",
+  "updated_at": "2026-10-07",
   "articles": [
+    {
+      "id": "remembering-jon-megginson",
+      "title": "Remembering Jon Megginson – A Lifetime of Service to Sutton CC",
+      "date": "2026-10-07",
+      "category": "club",
+      "category_label": "Club News",
+      "team": "Club Tribute",
+      "image": "assets/jon-megginson-memorial.jpg",
+      "image_alt": "Jon Megginson representing Sutton Cricket Club",
+      "summary": "Sutton Cricket Club remembers Jon Megginson, whose decades of service shaped generations of players and left a lasting legacy across the club.",
+      "lead": "It is with great sadness that Sutton Cricket Club has learned of the passing of Jon Megginson over the weekend.",
+      "body": [
+        "Jon was a huge part of Sutton Cricket Club for many decades and gave an enormous amount to the club throughout his life.",
+        "During his time at Sutton, Jon served in a number of important roles, including Chairman, Captain, Vice President, Colts Coach and Colts Manager. His contribution went far beyond the titles he held, and his influence can still be seen throughout the club today.",
+        "Jon was particularly passionate about junior cricket and dedicated countless hours to coaching, encouraging and supporting young players.",
+        "Generations of Sutton cricketers benefited from his guidance, and many of the players representing the club today were coached by Jon during their own cricketing journeys.",
+        "He played a major part in helping young players develop their confidence and love for the game, while also helping create the welcoming environment that has become such an important part of Sutton Cricket Club.",
+        "Jon was also a huge influence in helping establish the club's Ladies team and was always keen to see cricket at Sutton continue to grow and provide opportunities for more people to become involved.",
+        "Even up until last season, Jon remained involved as Colts Manager, continuing a lifetime of commitment to supporting the next generation of Sutton cricketers.",
+        "For so many people at the club, Jon was much more than a coach or committee member. He was a friend, a familiar face around the ground and someone who genuinely cared about Sutton Cricket Club and the people within it.",
+        "His contribution spans decades, teams and generations, and the impact he had on the club will continue long into the future.",
+        "Jon's passion for cricket, friendship and unmistakable presence around Sutton CC will be greatly missed by everyone who knew him.",
+        "The thoughts and deepest condolences of everyone at Sutton Cricket Club are with Jon's family and friends at this very difficult time.",
+        "Thank you for everything, Jon. You will always be part of Sutton Cricket Club.",
+        "Rest in peace, Jon. 🏏💛💚"
+      ],
+      "links": [
+        {
+          "label": "More club news",
+          "href": "news.html"
+        },
+        {
+          "label": "Club history",
+          "href": "history.html"
+        }
+      ]
+    },
     {
       "id": "2026-saturday-team-of-year",
       "title": "Sutton CC Saturday Team of the Year 2026",
