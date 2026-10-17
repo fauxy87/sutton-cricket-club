@@ -214,7 +214,24 @@ jobs:
               'batting': batting,
               'bowling': bowling,
           }
-          (data_dir / 'player-stats.json').write_text(
+          # Fielding is maintained by a separate Play-Cricket fielding sync.
+          # Preserve verified fielding rows when refreshing batting/bowling,
+          # provided they are for this same season. Otherwise a routine sync
+          # silently deletes catches, stumpings and run-outs from player pages.
+          stats_path = data_dir / 'player-stats.json'
+          try:
+              previous_stats = json.loads(stats_path.read_text(encoding='utf-8'))
+          except (FileNotFoundError, ValueError):
+              previous_stats = {}
+          if (str(previous_stats.get('season') or '') == str(season)
+                  and isinstance(previous_stats.get('fielding'), list)):
+              stats['fielding'] = previous_stats['fielding']
+              if previous_stats.get('fielding_generated_at'):
+                  stats['fielding_generated_at'] = previous_stats['fielding_generated_at']
+              print(f"Retained {len(stats['fielding'])} fielding records from the separate fielding sync")
+          else:
+              print('No matching-season fielding records to retain (waiting for fielding sync)')
+          stats_path.write_text(
               json.dumps(stats, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
           )
           print(f"Wrote {len(match_rows)} matches, {len(result_rows)} results; fetched {fetched} scorecards; processed {processed}")
