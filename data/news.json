@@ -1,6 +1,38 @@
 {
-  "updated_at": "2026-10-07",
+  "updated_at": "2026-10-17",
   "articles": [
+    {
+      "id": "sutton-cricket-history-1832",
+      "title": "Cricket in Sutton: Records Dating Back to 1832",
+      "date": "2026-10-17",
+      "category": "club",
+      "category_label": "Club News",
+      "team": "Club History",
+      "summary": "Historical research has uncovered Sutton cricket matches from 1832, decades before the club's traditional 1877 founding year.",
+      "lead": "As Sutton Cricket Club investigates its early history, published research has revealed that cricket was being played in Sutton in 1832—45 years before our traditional founding date of 1877.",
+      "body": [
+        "According to A History of Cambridgeshire Cricket, Sutton played Mepal on 26 September 1832, with Mepal winning by 13 runs. The research cites the Huntingdon, Bedford & Peterborough Gazette of 29 September 1832.",
+        "Further historical references describe Sutton matches involving Ely, St Ives and Mepal during 1833. These findings show that cricket was played in the village long before 1877, although they do not establish that today's club has existed continuously since then.",
+        "Sutton Cricket Club has traditionally used 1877 as its founding year, and that date remains part of our badge and identity. We're now keen to understand what happened in 1877 and whether it marked the establishment of the current club, a move of ground, or another milestone.",
+        "Local recollections suggest cricket may once have been played in a field on the right-hand side of Ely Road leaving Sutton towards Witcham Toll, close to the village. Neither the exact location nor the date of a move to our present Station Road ground has yet been confirmed.",
+        "We are looking for old photographs, scorebooks, newspaper cuttings, maps, deeds and recollections that could help tell Sutton's cricket story. If you have information, please contact the club through our website.",
+        "With 2027 approaching, we'd love to build a well-sourced history that celebrates the people and places involved in village cricket over the generations."
+      ],
+      "links": [
+        {
+          "label": "Read our club history",
+          "href": "history.html"
+        },
+        {
+          "label": "Cambridgeshire cricket history research",
+          "href": "https://www.cambscrickethistory.co.uk/"
+        },
+        {
+          "label": "Share your memories",
+          "href": "join.html"
+        }
+      ]
+    },
     {
       "id": "looking-ahead-to-2027",
       "title": "Looking Ahead to 2027",
