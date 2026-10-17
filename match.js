@@ -13,31 +13,35 @@ function teamNameFromInnings(inn,detail){
   return first(inn,'team_batting_name','batting_team_name','team_name')||'Innings';
 }
 function dismissalText(b){
-  const direct=first(b,'how_out','dismissal','out_description','dismissal_text','dismissal_description');
-  if(direct && typeof direct==='string' && !/^(caught|bowled|lbw|stumped|run out)$/i.test(direct.trim()))return direct;
-  const kind=String(first(b,'how_out','dismissal_type','dismissal','out_type')||'').toLowerCase();
-  const bowler=first(b,'bowler_name','dismissed_by','bowler','out_bowler_name');
-  const catcher=first(b,'fielder_name','caught_by','catcher_name','catch_by','catcher');
-  if(kind.includes('caught')||kind==='c')return ['c '+(catcher||'?'),bowler?'b '+bowler:''].filter(Boolean).join(' ');
-  if(kind.includes('stump'))return ['st '+(catcher||'?'),bowler?'b '+bowler:''].filter(Boolean).join(' ');
-  if(kind.includes('bowled')||kind==='b')return bowler?'b '+bowler:String(direct||'Bowled');
-  if(kind.includes('lbw'))return bowler?'lbw b '+bowler:'lbw';
-  if(kind.includes('run out'))return catcher?'run out ('+catcher+')':'run out';
-  return String(direct||'');
+  // Play-Cricket uses compact how_out codes: ct (caught), b (bowled),
+  // st (stumped), no (not out), plus free-text variations.
+  const raw=String(first(b,'how_out','dismissal_type','dismissal','out_description')||'').trim();
+  const kind=raw.toLowerCase();
+  const bowler=String(first(b,'bowler_name','dismissed_by','out_bowler_name')||'').trim();
+  const fielder=String(first(b,'fielder_name','caught_by','catcher_name','stumped_by')||'').trim();
+  if(['no','not out','n.o.'].includes(kind))return 'not out';
+  if(['dnb','did not bat'].includes(kind))return 'did not bat';
+  if(['ct','c','caught'].includes(kind))return ['c '+(fielder||'unknown'),bowler?'b '+bowler:''].filter(Boolean).join(' ');
+  if(['c&b','c & b','caught and bowled','caught & bowled','cb'].includes(kind))return 'c & b '+(bowler||fielder||'unknown');
+  if(['b','bowled'].includes(kind))return 'b '+(bowler||'unknown');
+  if(['st','stumped'].includes(kind))return ['st '+(fielder||'unknown'),bowler?'b '+bowler:''].filter(Boolean).join(' ');
+  if(['lbw','l.b.w.'].includes(kind))return ['lbw',bowler?'b '+bowler:''].filter(Boolean).join(' ');
+  if(['ro','run out','runout'].includes(kind))return fielder?'run out ('+fielder+')':'run out';
+  if(['hw','hit wicket'].includes(kind))return bowler?'hit wicket b '+bowler:'hit wicket';
+  if(['ret','retired','retired hurt','retired out'].includes(kind))return kind==='ret'?'retired':raw;
+  return raw||'—';
 }
 function fieldingSummary(innings){
-  const caught=new Map(), wicketNotes=[];
+  const caught=new Map();
   for(const inn of innings){
     for(const b of (first(inn,'bat','batting')||[])){
       const d=dismissalText(b);
       if(!d)continue;
-      const batter=first(b,'batsman_name','player_name','name');
       const catchMatch=d.match(/^c\s+(.+?)(?:\s+b\s+.+)?$/i);
       if(catchMatch && catchMatch[1]!=='?'){
         const catcher=catchMatch[1].trim();
         caught.set(catcher,(caught.get(catcher)||0)+1);
       }
-      if(batter)wicketNotes.push({batter,dismissal:d});
     }
   }
   if(!caught.size)return '';
