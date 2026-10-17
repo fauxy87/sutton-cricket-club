@@ -139,7 +139,7 @@
       "runs": 130,
       "innings": 12,
       "not_outs": 2,
-      "average": 13.0,
+      "average": 13,
       "balls": 177,
       "strike_rate": 73.45,
       "fours": 19,
@@ -165,7 +165,7 @@
       "runs": 120,
       "innings": 5,
       "not_outs": 2,
-      "average": 40.0,
+      "average": 40,
       "balls": 70,
       "strike_rate": 171.43,
       "fours": 16,
@@ -323,7 +323,7 @@
       "not_outs": 0,
       "average": 6.33,
       "balls": 100,
-      "strike_rate": 76.0,
+      "strike_rate": 76,
       "fours": 9,
       "sixes": 0,
       "high_score": "22"
@@ -373,7 +373,7 @@
       "runs": 72,
       "innings": 5,
       "not_outs": 2,
-      "average": 24.0,
+      "average": 24,
       "balls": 52,
       "strike_rate": 138.46,
       "fours": 10,
@@ -388,7 +388,7 @@
       "not_outs": 0,
       "average": 10.29,
       "balls": 80,
-      "strike_rate": 90.0,
+      "strike_rate": 90,
       "fours": 8,
       "sixes": 0,
       "high_score": "24"
@@ -425,7 +425,7 @@
       "runs": 56,
       "innings": 4,
       "not_outs": 0,
-      "average": 14.0,
+      "average": 14,
       "balls": 11,
       "strike_rate": 509.09,
       "fours": 10,
@@ -505,7 +505,7 @@
       "not_outs": 0,
       "average": 7.33,
       "balls": 55,
-      "strike_rate": 80.0,
+      "strike_rate": 80,
       "fours": 2,
       "sixes": 0,
       "high_score": "12"
@@ -516,7 +516,7 @@
       "runs": 40,
       "innings": 3,
       "not_outs": 1,
-      "average": 20.0,
+      "average": 20,
       "balls": 64,
       "strike_rate": 62.5,
       "fours": 8,
@@ -596,7 +596,7 @@
       "not_outs": 1,
       "average": null,
       "balls": 30,
-      "strike_rate": 110.0,
+      "strike_rate": 110,
       "fours": 6,
       "sixes": 0,
       "high_score": "33*"
@@ -674,7 +674,7 @@
       "not_outs": 0,
       "average": 4.75,
       "balls": 38,
-      "strike_rate": 50.0,
+      "strike_rate": 50,
       "fours": 1,
       "sixes": 0,
       "high_score": "16"
@@ -698,7 +698,7 @@
       "runs": 18,
       "innings": 1,
       "not_outs": 0,
-      "average": 18.0,
+      "average": 18,
       "balls": 13,
       "strike_rate": 138.46,
       "fours": 2,
@@ -711,7 +711,7 @@
       "runs": 18,
       "innings": 2,
       "not_outs": 0,
-      "average": 9.0,
+      "average": 9,
       "balls": 29,
       "strike_rate": 62.07,
       "fours": 3,
@@ -724,7 +724,7 @@
       "runs": 17,
       "innings": 1,
       "not_outs": 0,
-      "average": 17.0,
+      "average": 17,
       "balls": 18,
       "strike_rate": 94.44,
       "fours": 1,
@@ -737,7 +737,7 @@
       "runs": 15,
       "innings": 3,
       "not_outs": 0,
-      "average": 5.0,
+      "average": 5,
       "balls": 37,
       "strike_rate": 40.54,
       "fours": 1,
@@ -763,9 +763,9 @@
       "runs": 14,
       "innings": 1,
       "not_outs": 0,
-      "average": 14.0,
+      "average": 14,
       "balls": 7,
-      "strike_rate": 200.0,
+      "strike_rate": 200,
       "fours": 2,
       "sixes": 1,
       "high_score": "14"
@@ -776,7 +776,7 @@
       "runs": 14,
       "innings": 1,
       "not_outs": 0,
-      "average": 14.0,
+      "average": 14,
       "balls": 12,
       "strike_rate": 116.67,
       "fours": 3,
@@ -789,7 +789,7 @@
       "runs": 14,
       "innings": 1,
       "not_outs": 0,
-      "average": 14.0,
+      "average": 14,
       "balls": 15,
       "strike_rate": 93.33,
       "fours": 2,
@@ -802,7 +802,7 @@
       "runs": 14,
       "innings": 1,
       "not_outs": 0,
-      "average": 14.0,
+      "average": 14,
       "balls": 11,
       "strike_rate": 127.27,
       "fours": 2,
@@ -815,7 +815,7 @@
       "runs": 14,
       "innings": 1,
       "not_outs": 0,
-      "average": 14.0,
+      "average": 14,
       "balls": 15,
       "strike_rate": 93.33,
       "fours": 2,
@@ -828,7 +828,7 @@
       "runs": 12,
       "innings": 6,
       "not_outs": 0,
-      "average": 2.0,
+      "average": 2,
       "balls": 36,
       "strike_rate": 33.33,
       "fours": 2,
@@ -841,7 +841,7 @@
       "runs": 11,
       "innings": 2,
       "not_outs": 1,
-      "average": 11.0,
+      "average": 11,
       "balls": 13,
       "strike_rate": 84.62,
       "fours": 1,
@@ -880,7 +880,7 @@
       "runs": 10,
       "innings": 1,
       "not_outs": 0,
-      "average": 10.0,
+      "average": 10,
       "balls": 15,
       "strike_rate": 66.67,
       "fours": 1,
@@ -893,7 +893,7 @@
       "runs": 10,
       "innings": 2,
       "not_outs": 0,
-      "average": 5.0,
+      "average": 5,
       "balls": 24,
       "strike_rate": 41.67,
       "fours": 1,
@@ -906,9 +906,9 @@
       "runs": 9,
       "innings": 1,
       "not_outs": 0,
-      "average": 9.0,
+      "average": 9,
       "balls": 10,
-      "strike_rate": 90.0,
+      "strike_rate": 90,
       "fours": 2,
       "sixes": 0,
       "high_score": "9"
@@ -932,9 +932,9 @@
       "runs": 9,
       "innings": 5,
       "not_outs": 2,
-      "average": 3.0,
+      "average": 3,
       "balls": 15,
-      "strike_rate": 60.0,
+      "strike_rate": 60,
       "fours": 2,
       "sixes": 0,
       "high_score": "5*"
@@ -984,9 +984,9 @@
       "runs": 6,
       "innings": 1,
       "not_outs": 0,
-      "average": 6.0,
+      "average": 6,
       "balls": 10,
-      "strike_rate": 60.0,
+      "strike_rate": 60,
       "fours": 3,
       "sixes": 0,
       "high_score": "6"
@@ -997,7 +997,7 @@
       "runs": 6,
       "innings": 3,
       "not_outs": 0,
-      "average": 2.0,
+      "average": 2,
       "balls": 21,
       "strike_rate": 28.57,
       "fours": 1,
@@ -1010,9 +1010,9 @@
       "runs": 6,
       "innings": 4,
       "not_outs": 2,
-      "average": 3.0,
+      "average": 3,
       "balls": 25,
-      "strike_rate": 24.0,
+      "strike_rate": 24,
       "fours": 0,
       "sixes": 0,
       "high_score": "3*"
@@ -1023,7 +1023,7 @@
       "runs": 6,
       "innings": 6,
       "not_outs": 3,
-      "average": 2.0,
+      "average": 2,
       "balls": 78,
       "strike_rate": 7.69,
       "fours": 0,
@@ -1038,7 +1038,7 @@
       "not_outs": 0,
       "average": 1.67,
       "balls": 1,
-      "strike_rate": 500.0,
+      "strike_rate": 500,
       "fours": 1,
       "sixes": 0,
       "high_score": "5"
@@ -1049,9 +1049,9 @@
       "runs": 5,
       "innings": 2,
       "not_outs": 1,
-      "average": 5.0,
+      "average": 5,
       "balls": 2,
-      "strike_rate": 250.0,
+      "strike_rate": 250,
       "fours": 0,
       "sixes": 0,
       "high_score": "5*"
@@ -1062,7 +1062,7 @@
       "runs": 4,
       "innings": 1,
       "not_outs": 0,
-      "average": 4.0,
+      "average": 4,
       "balls": 15,
       "strike_rate": 26.67,
       "fours": 0,
@@ -1075,7 +1075,7 @@
       "runs": 4,
       "innings": 2,
       "not_outs": 0,
-      "average": 2.0,
+      "average": 2,
       "balls": 7,
       "strike_rate": 57.14,
       "fours": 1,
@@ -1088,7 +1088,7 @@
       "runs": 4,
       "innings": 2,
       "not_outs": 0,
-      "average": 2.0,
+      "average": 2,
       "balls": 7,
       "strike_rate": 57.14,
       "fours": 1,
@@ -1101,7 +1101,7 @@
       "runs": 4,
       "innings": 1,
       "not_outs": 0,
-      "average": 4.0,
+      "average": 4,
       "balls": 17,
       "strike_rate": 23.53,
       "fours": 0,
@@ -1114,7 +1114,7 @@
       "runs": 4,
       "innings": 1,
       "not_outs": 0,
-      "average": 4.0,
+      "average": 4,
       "balls": 3,
       "strike_rate": 133.33,
       "fours": 1,
@@ -1127,7 +1127,7 @@
       "runs": 4,
       "innings": 5,
       "not_outs": 1,
-      "average": 1.0,
+      "average": 1,
       "balls": 13,
       "strike_rate": 30.77,
       "fours": 0,
@@ -1140,9 +1140,9 @@
       "runs": 3,
       "innings": 1,
       "not_outs": 0,
-      "average": 3.0,
+      "average": 3,
       "balls": 6,
-      "strike_rate": 50.0,
+      "strike_rate": 50,
       "fours": 0,
       "sixes": 0,
       "high_score": "3"
@@ -1153,9 +1153,9 @@
       "runs": 2,
       "innings": 1,
       "not_outs": 0,
-      "average": 2.0,
+      "average": 2,
       "balls": 4,
-      "strike_rate": 50.0,
+      "strike_rate": 50,
       "fours": 0,
       "sixes": 0,
       "high_score": "2"
@@ -1166,7 +1166,7 @@
       "runs": 2,
       "innings": 1,
       "not_outs": 0,
-      "average": 2.0,
+      "average": 2,
       "balls": 16,
       "strike_rate": 12.5,
       "fours": 0,
@@ -1218,7 +1218,7 @@
       "runs": 1,
       "innings": 1,
       "not_outs": 0,
-      "average": 1.0,
+      "average": 1,
       "balls": 9,
       "strike_rate": 11.11,
       "fours": 0,
@@ -1231,7 +1231,7 @@
       "runs": 1,
       "innings": 1,
       "not_outs": 0,
-      "average": 1.0,
+      "average": 1,
       "balls": 3,
       "strike_rate": 33.33,
       "fours": 0,
@@ -1244,9 +1244,9 @@
       "runs": 0,
       "innings": 1,
       "not_outs": 0,
-      "average": 0.0,
+      "average": 0,
       "balls": 1,
-      "strike_rate": 0.0,
+      "strike_rate": 0,
       "fours": 0,
       "sixes": 0,
       "high_score": "0"
@@ -1257,7 +1257,7 @@
       "runs": 0,
       "innings": 1,
       "not_outs": 0,
-      "average": 0.0,
+      "average": 0,
       "balls": 0,
       "strike_rate": null,
       "fours": 0,
@@ -1270,7 +1270,7 @@
       "runs": 0,
       "innings": 1,
       "not_outs": 0,
-      "average": 0.0,
+      "average": 0,
       "balls": 0,
       "strike_rate": null,
       "fours": 0,
@@ -1285,7 +1285,7 @@
       "not_outs": 1,
       "average": null,
       "balls": 1,
-      "strike_rate": 0.0,
+      "strike_rate": 0,
       "fours": 0,
       "sixes": 0,
       "high_score": "0*"
@@ -1296,7 +1296,7 @@
       "runs": 0,
       "innings": 1,
       "not_outs": 0,
-      "average": 0.0,
+      "average": 0,
       "balls": 0,
       "strike_rate": null,
       "fours": 0,
@@ -1309,7 +1309,7 @@
       "runs": 0,
       "innings": 1,
       "not_outs": 0,
-      "average": 0.0,
+      "average": 0,
       "balls": 0,
       "strike_rate": null,
       "fours": 0,
@@ -1322,7 +1322,7 @@
       "runs": 0,
       "innings": 1,
       "not_outs": 0,
-      "average": 0.0,
+      "average": 0,
       "balls": 0,
       "strike_rate": null,
       "fours": 0,
@@ -1335,7 +1335,7 @@
       "runs": 0,
       "innings": 1,
       "not_outs": 0,
-      "average": 0.0,
+      "average": 0,
       "balls": 0,
       "strike_rate": null,
       "fours": 0,
@@ -1401,7 +1401,7 @@
       "overs": "82.0",
       "maidens": 11,
       "average": 22.78,
-      "economy": 5.0,
+      "economy": 5,
       "best": "4-22"
     },
     {
@@ -1412,7 +1412,7 @@
       "balls": 189,
       "overs": "31.3",
       "maidens": 5,
-      "average": 10.0,
+      "average": 10,
       "economy": 4.13,
       "best": "5-15"
     },
@@ -1508,7 +1508,7 @@
       "balls": 130,
       "overs": "21.4",
       "maidens": 1,
-      "average": 16.0,
+      "average": 16,
       "economy": 5.91,
       "best": "2-12"
     },
@@ -1712,7 +1712,7 @@
       "balls": 100,
       "overs": "16.4",
       "maidens": 0,
-      "average": 36.0,
+      "average": 36,
       "economy": 6.48,
       "best": "2-22"
     },
@@ -1736,7 +1736,7 @@
       "balls": 122,
       "overs": "20.2",
       "maidens": 0,
-      "average": 54.0,
+      "average": 54,
       "economy": 7.97,
       "best": "1-8"
     },
@@ -1784,7 +1784,7 @@
       "balls": 30,
       "overs": "5.0",
       "maidens": 0,
-      "average": 14.0,
+      "average": 14,
       "economy": 5.6,
       "best": "2-17"
     },
@@ -1820,7 +1820,7 @@
       "balls": 90,
       "overs": "15.0",
       "maidens": 1,
-      "average": 35.0,
+      "average": 35,
       "economy": 4.67,
       "best": "2-11"
     },
@@ -1833,7 +1833,7 @@
       "overs": "11.0",
       "maidens": 0,
       "average": 38.5,
-      "economy": 7.0,
+      "economy": 7,
       "best": "1-9"
     },
     {
@@ -1844,7 +1844,7 @@
       "balls": 114,
       "overs": "19.0",
       "maidens": 1,
-      "average": 53.0,
+      "average": 53,
       "economy": 5.58,
       "best": "1-8"
     },
@@ -1880,8 +1880,8 @@
       "balls": 12,
       "overs": "2.0",
       "maidens": 1,
-      "average": 4.0,
-      "economy": 2.0,
+      "average": 4,
+      "economy": 2,
       "best": "1-4"
     },
     {
@@ -1892,8 +1892,8 @@
       "balls": 12,
       "overs": "2.0",
       "maidens": 0,
-      "average": 4.0,
-      "economy": 2.0,
+      "average": 4,
+      "economy": 2,
       "best": "1-4"
     },
     {
@@ -1904,8 +1904,8 @@
       "balls": 12,
       "overs": "2.0",
       "maidens": 0,
-      "average": 6.0,
-      "economy": 3.0,
+      "average": 6,
+      "economy": 3,
       "best": "1-6"
     },
     {
@@ -1916,7 +1916,7 @@
       "balls": 12,
       "overs": "2.0",
       "maidens": 0,
-      "average": 9.0,
+      "average": 9,
       "economy": 4.5,
       "best": "1-9"
     },
@@ -1928,7 +1928,7 @@
       "balls": 12,
       "overs": "2.0",
       "maidens": 0,
-      "average": 13.0,
+      "average": 13,
       "economy": 6.5,
       "best": "1-13"
     },
@@ -1940,8 +1940,8 @@
       "balls": 12,
       "overs": "2.0",
       "maidens": 0,
-      "average": 14.0,
-      "economy": 7.0,
+      "average": 14,
+      "economy": 7,
       "best": "1-14"
     },
     {
@@ -1952,7 +1952,7 @@
       "balls": 12,
       "overs": "2.0",
       "maidens": 0,
-      "average": 15.0,
+      "average": 15,
       "economy": 7.5,
       "best": "1-15"
     },
@@ -1964,7 +1964,7 @@
       "balls": 12,
       "overs": "2.0",
       "maidens": 0,
-      "average": 17.0,
+      "average": 17,
       "economy": 8.5,
       "best": "1-17"
     },
@@ -1976,7 +1976,7 @@
       "balls": 24,
       "overs": "4.0",
       "maidens": 1,
-      "average": 19.0,
+      "average": 19,
       "economy": 4.75,
       "best": "1-6"
     },
@@ -1988,8 +1988,8 @@
       "balls": 30,
       "overs": "5.0",
       "maidens": 1,
-      "average": 20.0,
-      "economy": 4.0,
+      "average": 20,
+      "economy": 4,
       "best": "1-20"
     },
     {
@@ -2000,8 +2000,8 @@
       "balls": 18,
       "overs": "3.0",
       "maidens": 0,
-      "average": 27.0,
-      "economy": 9.0,
+      "average": 27,
+      "economy": 9,
       "best": "1-27"
     },
     {
@@ -2012,7 +2012,7 @@
       "balls": 36,
       "overs": "6.0",
       "maidens": 1,
-      "average": 28.0,
+      "average": 28,
       "economy": 4.67,
       "best": "1-28"
     },
@@ -2024,8 +2024,8 @@
       "balls": 42,
       "overs": "7.0",
       "maidens": 0,
-      "average": 42.0,
-      "economy": 6.0,
+      "average": 42,
+      "economy": 6,
       "best": "1-13"
     },
     {
@@ -2036,7 +2036,7 @@
       "balls": 30,
       "overs": "5.0",
       "maidens": 0,
-      "average": 49.0,
+      "average": 49,
       "economy": 9.8,
       "best": "1-21"
     },
@@ -2048,7 +2048,7 @@
       "balls": 60,
       "overs": "10.0",
       "maidens": 0,
-      "average": 59.0,
+      "average": 59,
       "economy": 5.9,
       "best": "1-17"
     },
@@ -2060,7 +2060,7 @@
       "balls": 66,
       "overs": "11.0",
       "maidens": 0,
-      "average": 61.0,
+      "average": 61,
       "economy": 5.55,
       "best": "1-12"
     },
@@ -2073,7 +2073,7 @@
       "overs": "1.0",
       "maidens": 0,
       "average": null,
-      "economy": 5.0,
+      "economy": 5,
       "best": "-"
     },
     {
@@ -2085,7 +2085,7 @@
       "overs": "1.0",
       "maidens": 0,
       "average": null,
-      "economy": 6.0,
+      "economy": 6,
       "best": "-"
     },
     {
@@ -2097,7 +2097,7 @@
       "overs": "1.0",
       "maidens": 0,
       "average": null,
-      "economy": 6.0,
+      "economy": 6,
       "best": "-"
     },
     {
@@ -2109,7 +2109,7 @@
       "overs": "2.0",
       "maidens": 0,
       "average": null,
-      "economy": 4.0,
+      "economy": 4,
       "best": "-"
     },
     {
@@ -2133,7 +2133,7 @@
       "overs": "1.0",
       "maidens": 0,
       "average": null,
-      "economy": 8.0,
+      "economy": 8,
       "best": "-"
     },
     {
@@ -2169,7 +2169,7 @@
       "overs": "1.0",
       "maidens": 0,
       "average": null,
-      "economy": 14.0,
+      "economy": 14,
       "best": "-"
     },
     {
@@ -2193,7 +2193,7 @@
       "overs": "1.0",
       "maidens": 0,
       "average": null,
-      "economy": 15.0,
+      "economy": 15,
       "best": "-"
     },
     {
@@ -2205,7 +2205,7 @@
       "overs": "3.0",
       "maidens": 0,
       "average": null,
-      "economy": 5.0,
+      "economy": 5,
       "best": "-"
     },
     {
@@ -2217,7 +2217,7 @@
       "overs": "1.0",
       "maidens": 0,
       "average": null,
-      "economy": 15.0,
+      "economy": 15,
       "best": "-"
     },
     {
@@ -2253,7 +2253,7 @@
       "overs": "5.0",
       "maidens": 1,
       "average": null,
-      "economy": 4.0,
+      "economy": 4,
       "best": "-"
     },
     {
@@ -2265,7 +2265,7 @@
       "overs": "2.0",
       "maidens": 0,
       "average": null,
-      "economy": 11.0,
+      "economy": 11,
       "best": "-"
     },
     {
@@ -2277,7 +2277,7 @@
       "overs": "3.0",
       "maidens": 0,
       "average": null,
-      "economy": 8.0,
+      "economy": 8,
       "best": "-"
     },
     {
@@ -2301,7 +2301,7 @@
       "overs": "2.1",
       "maidens": 0,
       "average": null,
-      "economy": 12.0,
+      "economy": 12,
       "best": "-"
     },
     {
@@ -2313,7 +2313,7 @@
       "overs": "3.0",
       "maidens": 0,
       "average": null,
-      "economy": 11.0,
+      "economy": 11,
       "best": "-"
     },
     {
@@ -2352,5 +2352,401 @@
       "economy": 5.67,
       "best": "-"
     }
-  ]
+  ],
+  "fielding": [
+    {
+      "player_id": "876673",
+      "name": "Craig Faux",
+      "catches": 9,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 9
+    },
+    {
+      "player_id": "4681504",
+      "name": "Duncan Turner",
+      "catches": 7,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 7
+    },
+    {
+      "player_id": "5878860",
+      "name": "Vineeth Vini",
+      "catches": 7,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 7
+    },
+    {
+      "player_id": "5530211",
+      "name": "James Barrett",
+      "catches": 7,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 7
+    },
+    {
+      "player_id": "4172459",
+      "name": "Chayse Frear",
+      "catches": 7,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 7
+    },
+    {
+      "player_id": "4338086",
+      "name": "Josh Grady",
+      "catches": 6,
+      "stumpings": 0,
+      "run_outs": 1,
+      "dismissals": 7
+    },
+    {
+      "player_id": "6618432",
+      "name": "Leon Perrin",
+      "catches": 5,
+      "stumpings": 0,
+      "run_outs": 2,
+      "dismissals": 7
+    },
+    {
+      "player_id": "1154108",
+      "name": "Paul Robinson",
+      "catches": 6,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 6
+    },
+    {
+      "player_id": "2639264",
+      "name": "Jack Boston",
+      "catches": 5,
+      "stumpings": 0,
+      "run_outs": 1,
+      "dismissals": 6
+    },
+    {
+      "player_id": "6175515",
+      "name": "Joshie Pollard",
+      "catches": 5,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 5
+    },
+    {
+      "player_id": "5375174",
+      "name": "Daniel Abbs",
+      "catches": 4,
+      "stumpings": 1,
+      "run_outs": 0,
+      "dismissals": 5
+    },
+    {
+      "player_id": "4338080",
+      "name": "Ben Newton",
+      "catches": 4,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 4
+    },
+    {
+      "player_id": "4352704",
+      "name": "Daniel Grady",
+      "catches": 4,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 4
+    },
+    {
+      "player_id": "6350258",
+      "name": "David Frear",
+      "catches": 3,
+      "stumpings": 0,
+      "run_outs": 1,
+      "dismissals": 4
+    },
+    {
+      "player_id": "6449933",
+      "name": "Michael Ward",
+      "catches": 3,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 3
+    },
+    {
+      "player_id": "3678556",
+      "name": "Tim Conquest",
+      "catches": 2,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "4942381",
+      "name": "Stephen Tuck",
+      "catches": 2,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "6358765",
+      "name": "Katherine Peacock",
+      "catches": 2,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "5314064",
+      "name": "Kaiden Grady",
+      "catches": 2,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "john falconer",
+      "name": "John Falconer",
+      "catches": 2,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "4069486",
+      "name": "George Ware",
+      "catches": 2,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "6754124",
+      "name": "James Short",
+      "catches": 2,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "5398363",
+      "name": "Jordan Emms",
+      "catches": 2,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "6175805",
+      "name": "Jason Harnwell",
+      "catches": 2,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "4338421",
+      "name": "Rohan McCarthy",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 1,
+      "dismissals": 2
+    },
+    {
+      "player_id": "3888421",
+      "name": "James Phipps",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 1,
+      "dismissals": 2
+    },
+    {
+      "player_id": "6718087",
+      "name": "Georgina Lister",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 1,
+      "dismissals": 2
+    },
+    {
+      "player_id": "5775994",
+      "name": "Cameron Brown",
+      "catches": 0,
+      "stumpings": 2,
+      "run_outs": 0,
+      "dismissals": 2
+    },
+    {
+      "player_id": "6908285",
+      "name": "Emma Harris",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "5775983",
+      "name": "Oscar Pergl-Wilson",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "6209993",
+      "name": "Richard Goodjohn",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "6203867",
+      "name": "Isobel Biswell",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "5776323",
+      "name": "Robbie Reader",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "6806617",
+      "name": "Marcus Elsom",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "3818788",
+      "name": "Alfie Richardson",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "5938966",
+      "name": "George Bangs",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "6646609",
+      "name": "Carson Silvain",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "7066321",
+      "name": "Freddie Yardy",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "7063676",
+      "name": "Freddie Murfet",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "5342774",
+      "name": "Ren Barnard",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "2752774",
+      "name": "Michael Grady",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "6043360",
+      "name": "James Nuttall",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "7164621",
+      "name": "Adam Ford",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "1765611",
+      "name": "Max Loker",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "6045271",
+      "name": "Cornelio Du Plessis",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "6020481",
+      "name": "Lourens Herselman",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "1541964",
+      "name": "Jeff Paul",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "23725",
+      "name": "Robert Braybrooke",
+      "catches": 1,
+      "stumpings": 0,
+      "run_outs": 0,
+      "dismissals": 1
+    },
+    {
+      "player_id": "7072127",
+      "name": "Mia Karpinaite",
+      "catches": 0,
+      "stumpings": 0,
+      "run_outs": 1,
+      "dismissals": 1
+    }
+  ],
+  "fielding_generated_at": "2026-10-17T09:19:30.292642+00:00",
+  "fielding_source_note": "Recovered from the Play-Cricket fielding update of 17 October 2026. Pending independent scorecard reconciliation."
 }
