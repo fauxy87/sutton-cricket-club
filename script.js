@@ -159,13 +159,40 @@ function fixtureCard(m) {
   return `<article class="result-card" data-team="${itemTeamKey(m)}"><span class="tag">${escapeHtml(m.match_date || '')}${m.match_time ? ' · ' + escapeHtml(m.match_time) : ''}</span><h3>${escapeHtml(home)} v ${escapeHtml(away)}</h3><p>${escapeHtml(meta)}</p></article>`;
 }
 
-function resultCard(r) {
+function matchHighlights(entry) {
+  const list=entry?.detail?.match_details||entry?.detail?.matches||[];
+  const d=list[0]||entry?.detail||{};
+  const batting=[], bowling=[], catches=new Map();
+  for(const inn of (d.innings||[])){
+    for(const b of (inn.bat||inn.batting||[])){
+      const name=String(b.batsman_name||'').trim(), runs=Number(b.runs);
+      if(name&&Number.isFinite(runs))batting.push({name,runs});
+      const code=String(b.how_out||'').trim().toLowerCase();
+      const who=String(b.fielder_name||b.catcher_name||b.caught_by||'').trim();
+      if(['ct','caught','c'].includes(code)&&who)catches.set(who,(catches.get(who)||0)+1);
+    }
+    for(const b of (inn.bowl||inn.bowling||[])){
+      const name=String(b.bowler_name||'').trim(), wickets=Number(b.wickets);
+      if(name&&Number.isFinite(wickets)&&wickets>0)bowling.push({name,wickets,runs:Number(b.runs)||0});
+    }
+  }
+  const chunks=[];
+  const topBat=batting.sort((a,b)=>b.runs-a.runs)[0];
+  const topBowl=bowling.sort((a,b)=>b.wickets-a.wickets||a.runs-b.runs)[0];
+  const topCatch=[...catches].sort((a,b)=>b[1]-a[1])[0];
+  if(topBat)chunks.push('<span>🏏 '+escapeHtml(topBat.name)+' '+topBat.runs+'</span>');
+  if(topBowl)chunks.push('<span>🎯 '+escapeHtml(topBowl.name)+' '+topBowl.wickets+'-'+topBowl.runs+'</span>');
+  if(topCatch)chunks.push('<span>🙌 '+escapeHtml(topCatch[0])+' · '+topCatch[1]+' catch'+(topCatch[1]===1?'':'es')+'</span>');
+  return chunks.length?'<div class="result-highlights" aria-label="Match highlights">'+chunks.join('')+'</div>':'';
+}
+
+function resultCard(r,scorecards={}) {
   const home = sideLabel(r.home_club_name, r.home_team_name);
   const away = sideLabel(r.away_club_name, r.away_team_name);
   const hs = scoreText(r, 'home');
   const as = scoreText(r, 'away');
   const scoreline = `${home}${hs ? ' ' + hs : ''} — ${away}${as ? ' ' + as : ''}`;
-  return `<article class="result-card" data-team="${itemTeamKey(r)}"><span class="tag">${escapeHtml(r.match_date || '')}</span><h3>${escapeHtml(scoreline)}</h3><p>${escapeHtml(resultDescription(r))}</p></article>`;
+  return `<article class="result-card" data-team="${itemTeamKey(r)}"><span class="tag">${escapeHtml(r.match_date || '')}</span><h3>${escapeHtml(scoreline)}</h3><p>${escapeHtml(resultDescription(r))}</p>${matchHighlights(scorecards[String(r.id||r.match_id||'')])}</article>`;
 }
 
 function formatHomeFixture(m) {
@@ -254,6 +281,8 @@ async function loadPlayCricket() {
     const res = await fetch(`data/play-cricket.json?v=${Date.now()}`, { cache: 'no-store' });
     if (!res.ok) throw new Error('No synced data yet');
     const data = await res.json();
+    let scorecards={};
+    if(resultBox){try{const response=await fetch(`data/play-cricket-scorecards.json?v=${Date.now()}`,{cache:'no-store'});if(response.ok)scorecards=(await response.json()).matches||{};}catch(e){console.info('Match highlights unavailable',e);}}
     const today = new Date();
     today.setHours(0,0,0,0);
 
@@ -277,7 +306,7 @@ async function loadPlayCricket() {
     }
 
     if (fixtureBox) fixtureBox.innerHTML = allUpcoming.length ? allUpcoming.slice(0, 18).map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures found</h3><p>There are no future fixtures currently published in Play-Cricket.</p></article>';
-    if (resultBox) resultBox.innerHTML = allResults.length ? allResults.slice(0, 18).map(resultCard).join('') : '<article class="result-card"><h3>No results found</h3><p>No completed results are currently published in Play-Cricket.</p></article>';
+    if (resultBox) resultBox.innerHTML = allResults.length ? allResults.slice(0, 18).map(r=>resultCard(r,scorecards)).join('') : '<article class="result-card"><h3>No results found</h3><p>No completed results are currently published in Play-Cricket.</p></article>';
 
     if (homeNext) {
       if (allUpcoming[0]) formatHomeFixture(allUpcoming[0]);
