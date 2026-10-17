@@ -159,21 +159,34 @@ function fixtureCard(m) {
   return `<article class="result-card" data-team="${itemTeamKey(m)}"><span class="tag">${escapeHtml(m.match_date || '')}${m.match_time ? ' · ' + escapeHtml(m.match_time) : ''}</span><h3>${escapeHtml(home)} v ${escapeHtml(away)}</h3><p>${escapeHtml(meta)}</p></article>`;
 }
 
-function matchHighlights(entry) {
+function matchHighlights(entry, result={}) {
   const list=entry?.detail?.match_details||entry?.detail?.matches||[];
   const d=list[0]||entry?.detail||{};
-  const batting=[], bowling=[], catches=new Map();
+  const detail={...result,...d};
+  const home=String(detail.home_club_id||'')===SUTTON_SITE_ID;
+  const away=String(detail.away_club_id||'')===SUTTON_SITE_ID;
+  if(!home&&!away)return '';
+  const suttonIds=new Set([home?String(detail.home_team_id||''):'',away?String(detail.away_team_id||''):''].filter(Boolean));
+  if(!suttonIds.size)return '';
+  const batting=[],bowling=[],catches=new Map();
   for(const inn of (d.innings||[])){
+    const batId=String(inn.team_batting_id||inn.batting_team_id||'');
+    if(!batId)continue;
+    const suttonBatting=suttonIds.has(batId);
     for(const b of (inn.bat||inn.batting||[])){
-      const name=String(b.batsman_name||'').trim(), runs=Number(b.runs);
-      if(name&&Number.isFinite(runs))batting.push({name,runs});
-      const code=String(b.how_out||'').trim().toLowerCase();
-      const who=String(b.fielder_name||b.catcher_name||b.caught_by||'').trim();
-      if(['ct','caught','c'].includes(code)&&who)catches.set(who,(catches.get(who)||0)+1);
+      const name=String(b.batsman_name||'').trim(),runs=Number(b.runs);
+      if(suttonBatting&&name&&b.runs!==''&&b.runs!=null&&Number.isFinite(runs))batting.push({name,runs});
+      if(!suttonBatting){
+        const code=String(b.how_out||'').trim().toLowerCase();
+        const who=String(b.fielder_name||b.catcher_name||b.caught_by||'').trim();
+        if(['ct','caught','c'].includes(code)&&who)catches.set(who,(catches.get(who)||0)+1);
+      }
     }
-    for(const b of (inn.bowl||inn.bowling||[])){
-      const name=String(b.bowler_name||'').trim(), wickets=Number(b.wickets);
-      if(name&&Number.isFinite(wickets)&&wickets>0)bowling.push({name,wickets,runs:Number(b.runs)||0});
+    if(!suttonBatting){
+      for(const bw of (inn.bowl||inn.bowling||[])){
+        const name=String(bw.bowler_name||'').trim(),wickets=Number(bw.wickets);
+        if(name&&Number.isFinite(wickets)&&wickets>0)bowling.push({name,wickets,runs:Number(bw.runs)||0});
+      }
     }
   }
   const chunks=[];
@@ -183,7 +196,7 @@ function matchHighlights(entry) {
   if(topBat)chunks.push('<span>🏏 '+escapeHtml(topBat.name)+' '+topBat.runs+'</span>');
   if(topBowl)chunks.push('<span>🎯 '+escapeHtml(topBowl.name)+' '+topBowl.wickets+'-'+topBowl.runs+'</span>');
   if(topCatch)chunks.push('<span>🙌 '+escapeHtml(topCatch[0])+' · '+topCatch[1]+' catch'+(topCatch[1]===1?'':'es')+'</span>');
-  return chunks.length?'<div class="result-highlights" aria-label="Match highlights">'+chunks.join('')+'</div>':'';
+  return chunks.length?'<div class="result-highlights" aria-label="Sutton match highlights">'+chunks.join('')+'</div>':'';
 }
 
 function resultCard(r,scorecards={}) {
@@ -192,7 +205,7 @@ function resultCard(r,scorecards={}) {
   const hs = scoreText(r, 'home');
   const as = scoreText(r, 'away');
   const scoreline = `${home}${hs ? ' ' + hs : ''} — ${away}${as ? ' ' + as : ''}`;
-  return `<article class="result-card" data-team="${itemTeamKey(r)}"><span class="tag">${escapeHtml(r.match_date || '')}</span><h3>${escapeHtml(scoreline)}</h3><p>${escapeHtml(resultDescription(r))}</p>${matchHighlights(scorecards[String(r.id||r.match_id||'')])}</article>`;
+  return `<article class="result-card" data-team="${itemTeamKey(r)}"><span class="tag">${escapeHtml(r.match_date || '')}</span><h3>${escapeHtml(scoreline)}</h3><p>${escapeHtml(resultDescription(r))}</p>${matchHighlights(scorecards[String(r.id||r.match_id||'')],r)}</article>`;
 }
 
 function formatHomeFixture(m) {
