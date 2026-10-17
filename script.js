@@ -13,6 +13,31 @@ document.querySelectorAll('.main-nav').forEach(mainNav => {
   mainNav.insertBefore(shopLink, contactLink || null);
 });
 
+// Keep the most-used pages visible; move the rest under one accessible menu.
+// This runs on all pages so their original HTML links continue to work.
+document.querySelectorAll('.main-nav').forEach(mainNav => {
+  if(mainNav.querySelector('.nav-more'))return;
+  const primary=new Set(['Home','Fixtures','Teams','Juniors','News','Contact']);
+  const links=[...mainNav.querySelectorAll(':scope > a')];
+  const extras=links.filter(a=>!primary.has(a.textContent.trim()));
+  if(!extras.length)return;
+  const more=document.createElement('details');
+  more.className='nav-more';
+  const summary=document.createElement('summary');
+  summary.textContent='More';
+  summary.setAttribute('aria-label','More club pages');
+  more.appendChild(summary);
+  const menu=document.createElement('div');
+  menu.className='nav-more-menu';
+  for(const a of extras)menu.appendChild(a);
+  more.appendChild(menu);
+  const contact=links.find(a=>a.textContent.trim()==='Contact');
+  mainNav.insertBefore(more,contact||null);
+  if(extras.some(a=>a.classList.contains('active')))summary.classList.add('active');
+  document.addEventListener('click',e=>{if(!more.contains(e.target))more.open=false;});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&more.open){more.open=false;summary.focus();}});
+});
+
 const button = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.main-nav');
 
