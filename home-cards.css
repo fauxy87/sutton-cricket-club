@@ -51,3 +51,19 @@
 @media(max-width:1100px){#teams .team-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:850px){#fixtures .fixture-grid{grid-template-columns:1fr}#teams .team-grid{grid-template-columns:repeat(2,1fr)}#fixtures .fixture-card{min-height:230px}}
 @media(max-width:560px){#teams .team-grid{grid-template-columns:1fr}#teams .team-card{min-height:220px;padding:24px;border-radius:16px}#teams .team-card>span{margin-bottom:24px}#fixtures .fixture-card{min-height:220px;padding:22px;border-radius:16px}#fixtures .fixture-top{margin-bottom:20px}#fixtures .fixture-card h3{font-size:1.3rem}#fixtures .fixture-card.highlight h3{font-size:1.55rem}#fixtures .versus{font-size:.96rem}}
+
+/* Homepage welcome pathways: simple actions for new visitors. */
+.home-pathway-heading{max-width:740px;margin:0 0 24px}
+.home-pathway-heading h2{margin:6px 0 12px;font-family:Montserrat,Arial,sans-serif;font-size:clamp(1.8rem,3.5vw,2.6rem);letter-spacing:-.03em}
+.home-pathway-heading p:last-child{margin:0;color:var(--muted)}
+.quick-links .home-pathway-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.home-pathway-grid .quick-card{display:flex;flex-direction:column;align-items:flex-start;gap:9px;border-radius:18px;min-height:210px;border:1px solid #dbe7de;padding:23px;background:#fff;box-shadow:0 8px 24px rgba(7,62,34,.05);transition:transform .18s ease,box-shadow .18s ease}
+.home-pathway-grid .quick-card:hover,.home-pathway-grid .quick-card:focus-visible{transform:translateY(-3px);box-shadow:0 15px 30px rgba(7,62,34,.11)}
+.home-pathway-grid .quick-card .quick-icon{font-size:1.7rem}
+.home-pathway-grid .quick-card strong{font-size:1.07rem;color:var(--dark)}
+.home-pathway-grid .quick-card>span:not(.quick-icon){color:#617166;font-size:.91rem}
+.home-pathway-grid .quick-card b{display:block;margin-top:auto;color:var(--green);font-size:.91rem}
+.home-pathway-more{margin:19px 0 0;color:var(--muted);font-size:.94rem}
+.home-pathway-more a{font-weight:750;color:var(--green);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:950px){.quick-links .home-pathway-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.quick-links .home-pathway-grid{grid-template-columns:1fr}.home-pathway-grid .quick-card{min-height:0;padding:19px}.home-pathway-heading{margin-bottom:20px}}
