@@ -230,6 +230,11 @@ jobs:
               print(f"Retained {len(stats['fielding'])} fielding records from the separate fielding sync")
           else:
               print('No matching-season fielding records to retain (waiting for fielding sync)')
+          # Do not silently publish inconsistent fielding totals.
+          for player in stats.get('fielding', []):
+              parts = sum(num(player.get(k)) for k in ('catches', 'stumpings', 'run_outs'))
+              if parts != num(player.get('dismissals')):
+                  raise SystemExit(f"Fielding totals inconsistent for {player.get('name', 'unknown')}")
           stats_path.write_text(
               json.dumps(stats, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
           )
