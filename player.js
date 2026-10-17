@@ -29,9 +29,9 @@ function matchFielding(innings,d,id,name){
       const named=fielder&&same(fielder);
       const catchDescription=how.match(/^c(?:aught)?\s+(.+?)(?:\s+b\s+.+)?$/i);
       const stumpingDescription=how.match(/^st(?:umped)?\s+(.+?)(?:\s+b\s+.+)?$/i);
-      const isCaught=/^(caught|c\s)/i.test(how);
-      const isStumped=/^(stumped|st\s)/i.test(how);
-      const isRunOut=/run\s*out/i.test(how);
+      const isCaught=/^(ct|caught|c\s)/i.test(how);
+      const isStumped=/^(st|stumped|st\s)/i.test(how);
+      const isRunOut=/run\s*out/i.test(how)||/^ro$/i.test(how);
       if(isCaught && (matchId||named||(!catcherId&&!fielder&&catchDescription&&same(catchDescription[1]))))tally.catches++;
       else if(isStumped && (matchId||named||(!catcherId&&!fielder&&stumpingDescription&&same(stumpingDescription[1]))))tally.stumpings++;
       else if(isRunOut){
