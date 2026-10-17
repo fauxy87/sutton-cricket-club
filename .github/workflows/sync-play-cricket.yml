@@ -223,8 +223,7 @@ jobs:
               previous_stats = json.loads(stats_path.read_text(encoding='utf-8'))
           except (FileNotFoundError, ValueError):
               previous_stats = {}
-          if (str(previous_stats.get('season') or '') == str(season)
-                  and isinstance(previous_stats.get('fielding'), list)):
+          if str(previous_stats.get('season') or '') == str(season) and isinstance(previous_stats.get('fielding'), list):
               stats['fielding'] = previous_stats['fielding']
               if previous_stats.get('fielding_generated_at'):
                   stats['fielding_generated_at'] = previous_stats['fielding_generated_at']
