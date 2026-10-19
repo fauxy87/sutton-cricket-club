@@ -30,6 +30,20 @@ document.querySelectorAll('.main-nav').forEach(mainNav => {
   const menu=document.createElement('div');
   menu.className='nav-more-menu';
   for(const a of extras)menu.appendChild(a);
+  // Make the anniversary appeal and photo archive accessible site-wide.
+  for(const [label,href] of [
+    ['Share Club History','share-history.html'],
+    ['Historical Photos','historical-gallery.html#complete-photo-archive']
+  ]){
+    if(![...menu.querySelectorAll('a')].some(a=>a.getAttribute('href')===href)){
+      const link=document.createElement('a');
+      link.href=href;
+      link.textContent=label;
+      if(location.pathname.endsWith('/'+href.split('#')[0]))link.classList.add('active');
+      menu.appendChild(link);
+    }
+  }
+
   more.appendChild(menu);
   const contact=links.find(a=>a.textContent.trim()==='Contact');
   mainNav.insertBefore(more,contact||null);
