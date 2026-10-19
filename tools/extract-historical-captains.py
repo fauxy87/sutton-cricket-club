@@ -50,6 +50,50 @@ def find_captains(obj, trail=""):
             found.extend(find_captains(val, trail + "/" + str(i)))
     return found
 
+
+def field(obj, *keys):
+    if not isinstance(obj, dict): return ""
+    for key in keys:
+        val = obj.get(key)
+        if val is not None and not isinstance(val, (dict, list)) and str(val).strip():
+            return str(val).strip()
+    return ""
+
+def identify_side(match, site_id):
+    """Use club identity, never generic team names such as '1st XI'."""
+    home_id = field(match, "home_club_id", "home_site_id", "home_club_site_id")
+    away_id = field(match, "away_club_id", "away_site_id", "away_club_site_id")
+    home_club = field(match, "home_club_name", "home_site_name")
+    away_club = field(match, "away_club_name", "away_site_name")
+    def is_sutton(name):
+        return name.casefold().replace(".", "").strip() in ("sutton cc", "sutton cricket club")
+    home = home_id == str(site_id) or is_sutton(home_club)
+    away = away_id == str(site_id) or is_sutton(away_club)
+    if home == away:
+        return "", "ambiguous club identity (needs manual check)"
+    # Reject name/ID contradictions instead of silently picking a side.
+    if (home and away_id == str(site_id)) or (away and home_id == str(site_id)):
+        return "", "conflicting club identity"
+    return ("home_team" if home else "away_team"), ("club ID" if (home_id if home else away_id) == str(site_id) else "club name")
+
+def captain_side(path):
+    if "/home_team/" in path: return "home_team"
+    if "/away_team/" in path: return "away_team"
+    return ""
+
+def captain_team(match, side):
+    prefix = "home" if side == "home_team" else "away"
+    return field(match, prefix + "_team_name", prefix + "_team") or "Unidentified Sutton team"
+
+def classify_team(name):
+    n = name.casefold()
+    if "women" in n or "ladies" in n or "female" in n: return "Women"
+    if "midweek" in n or "mid-week" in n: return "Midweek XI"
+    if "sunday" in n or "development" in n: return "Sunday XI"
+    if "2nd" in n or "second" in n: return "2nd XI"
+    if "1st" in n or "first" in n: return "1st XI"
+    return "Other / check"
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--site-id", type=int, default=6168)
@@ -73,35 +117,54 @@ def main():
             if not mid: continue
             try:
                 detail = get("match_detail.json", {"match_id": mid})
-                captains = find_captains(detail)
-                # Retain evidence path/team fields for manual checks: a scorecard
-                # includes opposition captains as well as Sutton captains.
-                for c in captains:
+                details = items(detail, "match_details", "match_detail")
+                info = details[0] if details else {}
+                # Only authoritative club fields may establish the Sutton side.
+                side, basis = identify_side(match, args.site_id)
+                if not side:
+                    side, basis = identify_side(info, args.site_id)
+                for c in find_captains(detail):
+                    listed_side = captain_side(c["path"])
+                    status = ("Sutton side verified" if side and side == listed_side
+                              else "Opposition excluded" if side and listed_side and side != listed_side
+                              else "Needs Sutton side verification")
+                    team_name = captain_team(match, side) if side else ""
                     rows.append({
-                        "season":season, "match_id":mid,
-                        "date":match.get("match_date") or match.get("date") or "",
-                        "home_team":match.get("home_team_name") or match.get("home_team") or "",
-                        "away_team":match.get("away_team_name") or match.get("away_team") or "",
-                        "captain_name":c["name"],"data_path":c["path"],
-                        "player_site_id":c["raw"].get("site_id", ""),
-                        "team_id":c["raw"].get("team_id",""),
-                        "review_status":"Needs team/opposition verification"
+                        "season": season, "match_id": mid,
+                        "date": field(match, "match_date", "date"),
+                        "home_team": field(match, "home_team_name", "home_team"),
+                        "away_team": field(match, "away_team_name", "away_team"),
+                        "home_club": field(match, "home_club_name", "home_site_name") or field(info, "home_club_name", "home_site_name"),
+                        "away_club": field(match, "away_club_name", "away_site_name") or field(info, "away_club_name", "away_site_name"),
+                        "captain_name": c["name"], "data_path": c["path"],
+                        "captain_side": listed_side, "sutton_side": side,
+                        "sutton_team": team_name, "team_group": classify_team(team_name) if side else "",
+                        "identity_basis": basis, "review_status": status
                     })
                 time.sleep(0.15)
             except Exception as exc:
                 print(f"  Match {mid}: {type(exc).__name__}")
-    fields = ["season","match_id","date","home_team","away_team","captain_name",
-              "data_path","player_site_id","team_id","review_status"]
+    fields = ["season","match_id","date","home_team","away_team","home_club","away_club",
+              "captain_name","data_path","captain_side","sutton_side","sutton_team",
+              "team_group","identity_basis","review_status"]
     with (out/"captain-appearances.csv").open("w",newline="",encoding="utf-8") as f:
-        writer=csv.DictWriter(f,fieldnames=fields);writer.writeheader();writer.writerows(rows)
-    counts=collections.Counter((r["season"],r["captain_name"]) for r in rows)
-    with (out/"captain-candidates.csv").open("w",newline="",encoding="utf-8") as f:
-        w=csv.writer(f);w.writerow(["season","captain_name","match_appearances_unverified"])
-        for (year,name),n in sorted(counts.items()):
-            w.writerow([year,name,n])
-    print(f"Wrote {len(rows)} unverified captain records to {out}/")
-    print("IMPORTANT: Opposition captains may be included; confirm Sutton team,")
-    print("match status and stand-in vs season captain before publishing.")
+        w = csv.DictWriter(f, fieldnames=fields); w.writeheader(); w.writerows(rows)
+    verified = [r for r in rows if r["review_status"] == "Sutton side verified"]
+    counts = collections.Counter((r["season"],r["team_group"],r["sutton_team"],r["captain_name"]) for r in verified)
+    totals = collections.Counter((r["season"],r["team_group"],r["sutton_team"]) for r in verified)
+    with (out/"sutton-captain-candidates.csv").open("w",newline="",encoding="utf-8") as f:
+        w=csv.writer(f)
+        w.writerow(["season","team_group","sutton_team","captain_name","captain_matches","team_matches_with_identified_captain","review_note"])
+        for (year,group,team,name),n in sorted(counts.items()):
+            total=totals[(year,group,team)]
+            note = "Possible stand-in / verify" if n < total else "Verify season appointment against AGM"
+            w.writerow([year,group,team,name,n,total,note])
+    with (out/"needs-manual-review.csv").open("w",newline="",encoding="utf-8") as f:
+        w=csv.DictWriter(f,fieldnames=fields);w.writeheader()
+        w.writerows(r for r in rows if r["review_status"] == "Needs Sutton side verification")
+    print(f"Records: {len(rows)}; verified Sutton captain appearances: {len(verified)}; unclassified: {sum(r['review_status'] == 'Needs Sutton side verification' for r in rows)}")
+    print("Only verified Sutton-side appearances appear in the candidate summary.")
+    print("Stand-ins and season appointments must still be checked against AGM records.")
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main()
