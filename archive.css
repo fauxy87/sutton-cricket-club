@@ -25,3 +25,6 @@
 .fenland-links a{display:inline-flex;padding:9px 13px;border:1px solid #c6dcca;border-radius:9px;background:white;color:#0b5d31;font-weight:700;text-decoration:none}
 .fenland-links a:hover{text-decoration:underline}
 @media(max-width:850px){.fenland-honours{grid-template-columns:1fr}.fenland-honour{padding:22px}}
+
+.fenland-scorecard{display:inline-block;align-self:flex-start;margin:12px 0 16px;color:#0b5d31;font-size:.86rem;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.fenland-scorecard:hover{color:#07401e}
