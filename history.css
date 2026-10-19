@@ -187,3 +187,8 @@
 .archive-identify-send:disabled{opacity:.65;cursor:wait}
 .archive-identify-status{font-size:.85rem;line-height:1.45;color:#14522e;margin:9px 0 0}
 @media(max-width:560px){.archive-identify-row{grid-template-columns:1fr}}
+
+/* Confirm photo information submission without leaving the form visible */
+.archive-identify.archive-identify-success> :not(h3):not(.archive-identify-status){display:none!important}
+.archive-identify.archive-identify-success h3{display:none}
+.archive-identify.archive-identify-success .archive-identify-status{margin:0;padding:15px;border-radius:9px;background:#e7f5e9;color:#0b5d31;font-size:1rem;font-weight:800;text-align:center}
