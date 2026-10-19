@@ -130,3 +130,14 @@
 .history-photo-more a{color:#0b5d31}
 @media(max-width:950px){.history-photo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.history-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.history-photo figcaption{padding:10px}}
+
+
+/* Complete photographic history collection */
+.archive-full-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin:26px 0 8px}
+.archive-full-card{margin:0;min-width:0;border:1px solid #dce8df;background:#fff;border-radius:13px;overflow:hidden}
+.archive-full-thumb{width:100%;aspect-ratio:1/1;background-color:#eef3ef;background-position:center;background-size:cover;background-repeat:no-repeat}
+.archive-full-card figcaption{padding:12px 13px}
+.archive-full-card figcaption strong{display:block;font-size:.91rem;line-height:1.4;color:#173b26}
+.archive-full-card figcaption span{display:block;margin-top:5px;font-size:.78rem;color:#66796b;line-height:1.45}
+@media(max-width:900px){.archive-full-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:530px){.archive-full-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.archive-full-card figcaption{padding:10px}}
