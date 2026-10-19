@@ -145,3 +145,23 @@
 /* Photo reference numbers for archive identification */
 .archive-full-card{position:relative}
 .archive-photo-ref{position:absolute;top:9px;left:9px;z-index:1;padding:5px 8px;background:rgba(12,63,34,.93);color:#fff;border-radius:6px;font:700 .72rem/1.1 Arial,sans-serif;letter-spacing:.02em}
+
+
+/* Historical photo viewer */
+.archive-full-card[role="button"]{cursor:pointer}
+.archive-full-card[role="button"]:hover{box-shadow:0 7px 24px rgba(9,56,31,.16);transform:translateY(-2px)}
+.archive-full-card[role="button"]:focus-visible{outline:3px solid #d4b321;outline-offset:3px}
+.archive-lightbox[hidden]{display:none!important}
+.archive-lightbox{position:fixed;z-index:10000;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,18,10,.9)}
+.archive-lightbox-open{overflow:hidden}
+.archive-lightbox-panel{position:relative;display:flex;flex-direction:column;width:min(90vw,800px);max-height:95vh;padding:15px;background:#fff;border-radius:14px;overflow:auto}
+.archive-lightbox-close{position:absolute;right:15px;top:13px;z-index:2;border:0;border-radius:50%;background:#143f2a;color:#fff;font-size:26px;line-height:1;width:38px;height:38px;cursor:pointer}
+.archive-lightbox-image{height:min(64vh,620px);min-height:200px;background-color:#edf4ef;background-size:contain;background-repeat:no-repeat;background-position:center;border-radius:8px}
+.archive-lightbox-details{padding:12px 4px 0;color:#193a29}
+.archive-lightbox-number{display:block;font-weight:800;font-size:.8rem;color:#397550}
+.archive-lightbox-title{display:block;margin-top:3px;font-size:1.12rem}
+.archive-lightbox-caption{margin:5px 0 0;color:#59705f;font-size:.9rem}
+.archive-lightbox-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.archive-lightbox-controls button{border:1px solid #b9d4c2;background:#f0f7f1;border-radius:7px;color:#14522e;font-weight:800;padding:10px 12px;cursor:pointer}
+.archive-lightbox-count{font-size:.85rem;color:#5e7264}
+@media(max-width:500px){.archive-lightbox{padding:7px}.archive-lightbox-panel{width:100%;padding:10px}.archive-lightbox-image{height:53vh}}
