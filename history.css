@@ -165,3 +165,13 @@
 .archive-lightbox-controls button{border:1px solid #b9d4c2;background:#f0f7f1;border-radius:7px;color:#14522e;font-weight:800;padding:10px 12px;cursor:pointer}
 .archive-lightbox-count{font-size:.85rem;color:#5e7264}
 @media(max-width:500px){.archive-lightbox{padding:7px}.archive-lightbox-panel{width:100%;padding:10px}.archive-lightbox-image{height:53vh}}
+
+
+/* Identifying photos in the historical gallery */
+.archive-identify{margin:13px 2px 2px;padding:13px 15px;background:#f3f8f4;border:1px solid #dceadf;border-radius:10px}
+.archive-identify h3{margin:0 0 8px;color:#17472d;font-size:1rem}
+.archive-identify label{display:block;font-size:.82rem;font-weight:700;color:#315941;margin-bottom:6px}
+.archive-identify textarea{box-sizing:border-box;display:block;width:100%;min-height:62px;padding:10px;border:1px solid #b7cdbd;border-radius:7px;background:#fff;color:#172c20;font:inherit;font-size:.9rem;resize:vertical}
+.archive-identify-send{display:inline-block;margin-top:10px;padding:10px 13px;background:#0b5d31;color:#fff!important;border-radius:8px;text-decoration:none;font-weight:800;font-size:.87rem}
+.archive-identify-send:hover{background:#084722}
+.archive-identify small{display:block;margin-top:7px;color:#617367;font-size:.76rem;line-height:1.5}
