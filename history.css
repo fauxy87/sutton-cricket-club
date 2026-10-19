@@ -204,3 +204,21 @@
 .history-photo-more a{display:inline-block;background:#0b5d31;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:750}
 .history-photo-more a:hover{background:#084825}
 @media(max-width:530px){.archive-photo-ref,.archive-photo-status{font-size:.64rem;padding:4px 5px;top:6px}.archive-photo-ref{left:6px}.archive-photo-status{right:6px}.archive-full-card figcaption strong{font-size:.83rem;min-height:2.6em}.archive-full-card figcaption span{font-size:.75rem;line-height:1.35}}
+
+/* 150th anniversary memory submission */
+.history-submission-wrap{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:32px;align-items:start}
+.history-submission-wrap>div>p{line-height:1.7}
+.history-memory-form{background:#fff;border:1px solid #d7e6dc;border-radius:14px;padding:24px;box-shadow:0 8px 24px rgba(0,45,19,.06)}
+.history-memory-form .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.history-memory-form label{font-weight:700;color:#173d28}
+.history-memory-form input:not([type="hidden"]),.history-memory-form select,.history-memory-form textarea{box-sizing:border-box;width:100%;padding:11px 12px;border:1px solid #b8d2bf;border-radius:7px;font:inherit;color:#203a29;background:#fff}
+.history-memory-form textarea{resize:vertical}
+.history-memory-form small,.history-memory-note{font-size:.82rem;color:#5c7062;line-height:1.5}
+.history-memory-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.history-memory-error{padding:10px;color:#8f2020;background:#ffefef;border-radius:6px}
+.history-memory-form button:disabled{opacity:.7;cursor:wait}
+.history-memory-thanks{max-width:650px;margin:48px auto;text-align:center}
+.history-memory-check{width:64px;height:64px;margin:0 auto 20px;border-radius:50%;background:#e4f5e8;color:#0b5d31;font-size:42px;font-weight:700}
+.history-memory-thanks p{line-height:1.7}.history-memory-thanks .historic-links{justify-content:center}
+@media(max-width:760px){.history-submission-wrap{grid-template-columns:1fr}.history-memory-form{padding:18px}}
+@media(max-width:480px){.history-memory-row{grid-template-columns:1fr}}
