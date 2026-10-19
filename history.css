@@ -175,3 +175,15 @@
 .archive-identify-send{display:inline-block;margin-top:10px;padding:10px 13px;background:#0b5d31;color:#fff!important;border-radius:8px;text-decoration:none;font-weight:800;font-size:.87rem}
 .archive-identify-send:hover{background:#084722}
 .archive-identify small{display:block;margin-top:7px;color:#617367;font-size:.76rem;line-height:1.5}
+
+
+.archive-identify-reference{margin:0 0 10px;font-size:.84rem;font-weight:800;color:#165c34}
+.archive-identify-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 0}
+.archive-identify-row label{display:block}
+.archive-identify-row input{box-sizing:border-box;display:block;width:100%;padding:9px;border:1px solid #b7cdbd;border-radius:7px;font:inherit;margin-top:5px;background:#fff;color:#172c20}
+.archive-identify-row small{display:inline;font-weight:400}
+.archive-identify-honey{position:absolute!important;left:-9999px!important;height:1px!important;width:1px!important;overflow:hidden!important}
+.archive-identify-send{border:0;cursor:pointer}
+.archive-identify-send:disabled{opacity:.65;cursor:wait}
+.archive-identify-status{font-size:.85rem;line-height:1.45;color:#14522e;margin:9px 0 0}
+@media(max-width:560px){.archive-identify-row{grid-template-columns:1fr}}
