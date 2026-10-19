@@ -28,3 +28,23 @@
 
 .fenland-scorecard{display:inline-block;align-self:flex-start;margin:12px 0 16px;color:#0b5d31;font-size:.86rem;font-weight:800;text-decoration:underline;text-underline-offset:3px}
 .fenland-scorecard:hover{color:#07401e}
+
+
+/* Refined trophy card presentation */
+.fenland-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.fenland-card-head .fenland-status{margin:0}
+.fenland-opposition{margin:20px 0 15px!important;color:#345741!important;font-weight:700}
+.fenland-opposition span{font-size:.82rem;font-weight:400;color:#63796c}
+.fenland-score{display:grid;gap:0;padding:4px 15px;border:1px solid #e1ebe4;border-radius:12px;background:#f5f9f5}
+.fenland-score>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0}
+.fenland-score>div+div{border-top:1px solid #dde9df}
+.fenland-score span{font-size:.9rem;color:#345540;font-weight:700}
+.fenland-score strong{font:800 1.1rem/1.4 Montserrat,Arial,sans-serif;color:#0b5d31;white-space:nowrap}
+.fenland-margin{margin:13px 0 8px!important;color:#0b5d31!important;font-weight:800}
+.fenland-performance{font-size:.85rem;color:#5c7063!important;line-height:1.55}
+.fenland-rain{display:flex;flex-direction:column;justify-content:center;gap:8px;min-height:142px;padding:18px;border-radius:12px;border:1px solid #e8e4d6;background:#fcf9ed}
+.fenland-rain strong{color:#574b27;font-size:1rem}
+.fenland-rain span{color:#756747;font-size:.88rem;line-height:1.5}
+.fenland-honour .fenland-award{margin-top:auto;padding-top:17px}
+.fenland-honour .fenland-scorecard{margin:17px 0 0}
+@media(max-width:850px){.fenland-honours{gap:14px}.fenland-rain{min-height:110px}}
