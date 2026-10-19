@@ -89,3 +89,15 @@
  .officials-leader strong{font-size:1rem}
 }
 @media(max-width:380px){.officials-leaders{grid-template-columns:1fr}}
+
+
+/* Compact historical records */
+.officials-earlier{border-top:1px solid #e0e9e1}
+.officials-earlier summary{display:flex;justify-content:space-between;gap:12px;align-items:center;cursor:pointer;padding:16px 26px;color:#0b5d31;font-weight:800;list-style-position:inside}
+.officials-earlier summary span{font-size:.82rem;color:#57715d;font-weight:600}
+.officials-earlier[open] summary{background:#f5f9f5}
+.history-cup-summary{display:flex;justify-content:space-between;align-items:center;gap:25px;padding:22px 28px;background:#f5f9f5;border:1px solid #deebdf;border-radius:16px}
+.history-cup-summary h2{margin:5px 0 8px;color:#123b25}
+.history-cup-summary p:last-child{margin:0;line-height:1.55}
+.history-cup-summary>a{flex-shrink:0;font-weight:800;color:#0b5d31}
+@media(max-width:650px){.officials-earlier summary{padding:15px 18px;flex-wrap:wrap}.history-cup-summary{display:block;padding:20px}.history-cup-summary>a{display:inline-block;margin-top:15px}}
