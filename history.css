@@ -101,3 +101,7 @@
 .history-cup-summary p:last-child{margin:0;line-height:1.55}
 .history-cup-summary>a{flex-shrink:0;font-weight:800;color:#0b5d31}
 @media(max-width:650px){.officials-earlier summary{padding:15px 18px;flex-wrap:wrap}.history-cup-summary{display:block;padding:20px}.history-cup-summary>a{display:inline-block;margin-top:15px}}
+
+/* Separate historical officers by role */
+.leaders-group-heading{margin:25px 0 13px;font:800 1.3rem/1.3 Montserrat,Arial,sans-serif;color:#124c2d}
+.leaders-records-note{margin:18px 0 0;color:var(--muted);font-size:.9rem;line-height:1.55}
