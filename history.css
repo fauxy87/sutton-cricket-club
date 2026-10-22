@@ -222,3 +222,18 @@
 .history-memory-thanks p{line-height:1.7}.history-memory-thanks .historic-links{justify-content:center}
 @media(max-width:760px){.history-submission-wrap{grid-template-columns:1fr}.history-memory-form{padding:18px}}
 @media(max-width:480px){.history-memory-row{grid-template-columns:1fr}}
+
+
+/* Early nineteenth-century Sutton cricket newspaper research */
+.early-records-intro{background:#f6f8ee;border-left:4px solid #c5ad32;border-radius:7px;padding:16px 20px;margin:8px 0 24px}
+.early-records-intro p{margin:6px 0 0;line-height:1.6}
+.early-records-list{display:grid;gap:10px}
+.early-record{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;background:#fff;border:1px solid #dce7df;border-radius:11px;padding:15px 18px}
+.early-record-date{display:flex;flex-direction:column;gap:3px;color:#0b5d31}
+.early-record-date strong{font-size:1.12rem}
+.early-record-date span{font-size:.85rem;color:#526a59}
+.early-record-body h3{margin:0 0 5px;font-size:1.05rem;color:#193b27}
+.early-record-body p{margin:0 0 7px;line-height:1.55}
+.early-record-body small{display:block;font-size:.78rem;color:#5e7163;line-height:1.45}
+.early-records-credit{margin-top:22px;font-size:.87rem;color:#53685a;line-height:1.55}
+@media(max-width:550px){.early-record{grid-template-columns:1fr;gap:8px;padding:13px}.early-record-date{flex-direction:row;align-items:baseline;gap:10px}}
