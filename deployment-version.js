@@ -1,1 +1,1 @@
-window.SUTTON_DEPLOYMENT=Object.freeze({version:"8823e97",label:"Automatic website build",updated:"2026-10-27T18:03:47.555985+00:00"});\n
+window.SUTTON_DEPLOYMENT=Object.freeze({version:"7abeb07",label:"Automatic website build",updated:"2026-10-27T22:15:21.314409+00:00"});\n
