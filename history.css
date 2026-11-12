@@ -237,3 +237,6 @@
 .early-record-body small{display:block;font-size:.78rem;color:#5e7163;line-height:1.45}
 .early-records-credit{margin-top:22px;font-size:.87rem;color:#53685a;line-height:1.55}
 @media(max-width:550px){.early-record{grid-template-columns:1fr;gap:8px;padding:13px}.early-record-date{flex-direction:row;align-items:baseline;gap:10px}}
+
+/* Historic presidents photo gallery */
+.club-people-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.club-people-gallery figure{margin:0;background:#fff;border:1px solid #dce5dc;border-radius:14px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.06)}.club-people-gallery img{display:block;width:100%;height:230px;object-fit:contain;background:#f3f0e9}.club-people-gallery figcaption{padding:16px;line-height:1.55}.club-people-gallery figcaption strong{color:#0b5d31}@media(max-width:800px){.club-people-gallery{grid-template-columns:1fr 1fr}}@media(max-width:560px){.club-people-gallery{grid-template-columns:1fr}.club-people-gallery img{height:auto;max-height:350px}}
