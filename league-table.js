@@ -10,6 +10,11 @@ async function loadLeagueTable(){
     if(!res.ok)throw new Error('League table data has not synced yet');
     const data=await res.json();
     const table=(data.tables||{})[team];
+    const expectedSeason=window.SUTTON_CC?.currentSeason || (new Date().getMonth()>=2?new Date().getFullYear():new Date().getFullYear()-1);
+    if(Number(data.season)!==Number(expectedSeason)){
+      box.innerHTML=`<article class="league-table-card"><div class="league-table-loading"><h3>${expectedSeason} standings coming soon</h3><p>The ${expectedSeason} league tables will appear here when the new season begins. The confirmed 2027 divisions and official Play-Cricket links are shown above.</p></div></article>`;
+      return;
+    }
     if(!table||table.error)throw new Error(table?.error||'League table not found');
     const headings=table.headings||{};
     const values=table.values||[];
