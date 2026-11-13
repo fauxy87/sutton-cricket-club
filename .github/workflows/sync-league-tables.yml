@@ -33,7 +33,8 @@ jobs:
           if not token:
               raise SystemExit('Missing repository secret PLAY_CRICKET_API_TOKEN')
 
-          season = datetime.now(timezone.utc).year
+          now = datetime.now(timezone.utc)
+          season = now.year if now.month >= 3 else now.year - 1
           base = 'https://www.play-cricket.com/api/v2'
           source_path = Path('data/play-cricket.json')
           if not source_path.exists():
@@ -53,10 +54,12 @@ jobs:
               '1st': {
                   'team_id': '63723',
                   'competition_name': 'CCA Junior League 2 North',
+                  'confirmed_2027_division_id': '143915',
               },
               '2nd': {
                   'team_id': '63724',
                   'competition_name': 'CCA Junior League 4 North',
+                  'confirmed_2027_division_id': '143938',
               },
           }
 
@@ -92,6 +95,13 @@ jobs:
           tables = {}
           for key, target in targets.items():
               info = found.get(key)
+              if season == 2027:
+                  info = {
+                      'division_id': target['confirmed_2027_division_id'],
+                      'division_name': target['competition_name'],
+                      'league_name': 'Cambridgeshire & Huntingdonshire Premier League',
+                      'source': 'Confirmed 2027 Play-Cricket division',
+                  }
               if not info:
                   tables[key] = {
                       'target': target['competition_name'],
