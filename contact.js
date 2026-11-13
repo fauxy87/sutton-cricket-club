@@ -11,6 +11,7 @@
   });
 
   if (window.location.hash === '#women-cricket-enquiry') topic.value = 'Women & Girls cricket';
+  if (window.location.hash === '#development-enquiry') { topic.value = 'Senior cricket'; const message = document.getElementById('contact-message'); if (message && !message.value) message.value = 'I would like to enquire about Sunday Development XI cricket in 2027.'; }
 
   form.addEventListener('submit', event => {
     event.preventDefault();
