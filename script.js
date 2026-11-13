@@ -1,3 +1,19 @@
+// Make the 2027 Season Hub accessible from the main navigation on every page.
+document.querySelectorAll('.main-nav').forEach(mainNav => {
+  if (mainNav.querySelector('[data-season-hub]')) return;
+  const link = document.createElement('a');
+  link.href = 'season-2027.html';
+  link.textContent = '2027 Season';
+  link.dataset.seasonHub = 'true';
+  if (location.pathname.endsWith('/season-2027.html')) {
+    link.classList.add('active');
+    link.setAttribute('aria-current', 'page');
+  }
+  const teamsLink = [...mainNav.querySelectorAll(':scope > a')].find(a => a.textContent.trim() === 'Teams');
+  if (teamsLink) teamsLink.insertAdjacentElement('afterend', link);
+  else mainNav.prepend(link);
+});
+
 const CLUB_SHOP_URL = 'https://www.mrcrickethockey.com/product-category/club-shop/sutton-cricket-club/';
 
 // Keep the external club shop available from the main navigation on every page.
@@ -17,7 +33,7 @@ document.querySelectorAll('.main-nav').forEach(mainNav => {
 // This runs on all pages so their original HTML links continue to work.
 document.querySelectorAll('.main-nav').forEach(mainNav => {
   if(mainNav.querySelector('.nav-more'))return;
-  const primary=new Set(['Home','Fixtures','Teams','Juniors','News','Contact']);
+  const primary=new Set(['Home','Fixtures','Teams','2027 Season','Juniors','News','Contact']);
   const links=[...mainNav.querySelectorAll(':scope > a')];
   const extras=links.filter(a=>!primary.has(a.textContent.trim()));
   if(!extras.length)return;
