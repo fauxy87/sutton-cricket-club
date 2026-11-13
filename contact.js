@@ -10,6 +10,8 @@
     });
   });
 
+  if (window.location.hash === '#women-cricket-enquiry') topic.value = 'Women & Girls cricket';
+
   form.addEventListener('submit', event => {
     event.preventDefault();
     if (!form.reportValidity()) return;
