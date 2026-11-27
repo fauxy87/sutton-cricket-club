@@ -25,3 +25,14 @@
  .archive-identify-send{width:100%;min-height:46px}
 }
 @media(prefers-reduced-motion:reduce){.archive-full-card{transition:none}}
+
+/* Skip painting offscreen gallery groups until they approach the viewport. */
+#archive-category-1,#archive-category-2,#archive-category-3,#archive-category-4{
+ content-visibility:auto;
+ contain-intrinsic-size:auto 1100px;
+}
+@media(min-width:900px){
+ #archive-category-1,#archive-category-2,#archive-category-3,#archive-category-4{
+  contain-intrinsic-size:auto 760px;
+ }
+}
