@@ -434,8 +434,6 @@ async function loadPlayCricket() {
 
   try {
     const data = await window.getSuttonPlayCricketData();
-    let scorecards={};
-    if(resultBox){try{const response=await fetch(`data/play-cricket-scorecards.json?v=${Date.now()}`,{cache:'no-store'});if(response.ok)scorecards=(await response.json()).matches||{};}catch(e){console.info('Match highlights unavailable',e);}}
     const today = new Date();
     today.setHours(0,0,0,0);
 
@@ -459,7 +457,7 @@ async function loadPlayCricket() {
     }
 
     if (fixtureBox) fixtureBox.innerHTML = allUpcoming.length ? allUpcoming.slice(0, 18).map(fixtureCard).join('') : '<article class="result-card"><h3>No upcoming fixtures found</h3><p>There are no future fixtures currently published in Play-Cricket.</p></article>';
-    if (resultBox) resultBox.innerHTML = allResults.length ? allResults.slice(0, 18).map(r=>resultCard(r,scorecards)).join('') : '<article class="result-card"><h3>No results found</h3><p>No completed results are currently published in Play-Cricket.</p></article>';
+    if (resultBox) resultBox.innerHTML = allResults.length ? allResults.slice(0, 18).map(r=>resultCard(r)).join('') : '<article class="result-card"><h3>No results found</h3><p>No completed results are currently published in Play-Cricket.</p></article>';
 
     if (homeNext) {
       if (allUpcoming[0]) formatHomeFixture(allUpcoming[0]);
@@ -490,6 +488,35 @@ async function loadPlayCricket() {
     }
 
     activateTeamFilters();
+    // Scorecard highlights are an optional 1.7 MB dataset: fetch only when
+    // visitors approach the results rather than blocking the fixture list.
+    if (resultBox && allResults.length) {
+      let requested = false;
+      const loadHighlights = async () => {
+        if (requested) return;
+        requested = true;
+        try {
+          const response = await fetch(`data/play-cricket-scorecards.json?v=${Date.now()}`, {cache:'no-store'});
+          if (!response.ok) return;
+          const scorecards = (await response.json()).matches || {};
+          resultBox.innerHTML = allResults.slice(0, 18).map(r => resultCard(r, scorecards)).join('');
+          activateTeamFilters();
+        } catch (error) {
+          console.info('Optional match highlights unavailable', error);
+        }
+      };
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+          if (entries.some(entry => entry.isIntersecting)) {
+            observer.disconnect();
+            loadHighlights();
+          }
+        }, {rootMargin:'300px'});
+        observer.observe(resultBox);
+      } else {
+        loadHighlights();
+      }
+    }
   } catch (err) {
     if (fixtureBox) fixtureBox.innerHTML = unavailableCard();
     if (resultBox) resultBox.innerHTML = unavailableCard();
