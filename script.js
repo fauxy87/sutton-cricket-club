@@ -107,6 +107,7 @@ const nav = document.querySelector('.main-nav');
 
 if (button && nav) {
   if (!nav.id) nav.id = 'site-navigation';
+  nav.setAttribute('aria-label', 'Main navigation');
   button.setAttribute('type', 'button');
   button.setAttribute('aria-controls', nav.id);
   button.setAttribute('aria-label', 'Open navigation menu');
@@ -131,8 +132,23 @@ if (button && nav) {
     if (event.target.closest('a')) closeNav();
   });
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && nav.classList.contains('open')) {
+    if (!nav.classList.contains('open')) return;
+    if (event.key === 'Escape') {
       closeNav(true);
+    } else if (event.key === 'Tab') {
+      // Keep keyboard navigation inside the open mobile menu.
+      const focusable = [button, ...nav.querySelectorAll('a, summary')]
+        .filter(element => element.getClientRects().length > 0);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
   });
   document.addEventListener('click', event => {
