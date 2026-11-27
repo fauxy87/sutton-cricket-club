@@ -3,3 +3,8 @@
 
 /* 150th anniversary countdown inside the existing official-badge feature */
 .anniversary-countdown{margin:20px 0;padding:17px 20px;background:#fffdf5;border:1px solid #dccb8e;border-radius:13px;max-width:470px}.anniversary-countdown-label{font-weight:800;color:#0b5d31;margin:0 0 12px!important}.anniversary-countdown-numbers{display:flex;gap:10px}.anniversary-countdown-numbers>div{flex:1;text-align:center;background:#f3f5ed;padding:12px 6px;border-radius:9px}.anniversary-countdown-numbers strong{display:block;font:800 clamp(1.6rem,4vw,2.3rem)/1.2 Montserrat,Arial,sans-serif;color:#0b5d31;font-variant-numeric:tabular-nums}.anniversary-countdown-numbers span{display:block;font-size:.8rem;color:#445a48}.anniversary-countdown small{display:block;margin-top:11px;color:#536253;line-height:1.45}
+
+/* Clear Season Hub action with fewer repeated homepage banners. */
+.home-2027-heading-actions{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+.home-2027-heading-actions .btn{white-space:normal;text-align:center}
+@media(max-width:650px){.home-2027-heading-actions{width:100%;justify-content:stretch;align-items:stretch;flex-direction:column;gap:10px}.home-2027-heading-actions .btn{width:100%}}
