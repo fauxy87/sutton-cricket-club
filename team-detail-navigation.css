@@ -1,0 +1,14 @@
+/* Shared Sunday Development, Women's and junior team section shortcuts. */
+.team-detail-jump{padding:16px 0 18px;background:#eef6ef;border-bottom:1px solid #d4e5d8}
+.team-detail-jump-label{font-weight:800;color:#0b5d31;margin:0 0 10px}
+.team-detail-jump-links{display:flex;gap:9px;flex-wrap:wrap}
+.team-detail-jump-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border:1px solid #c4d9ca;border-radius:999px;background:#fff;color:#0b5d31;font-weight:750;line-height:1.2;text-decoration:none}
+.team-detail-jump-links a:hover,.team-detail-jump-links a:focus-visible{background:#0b5d31;color:white}
+body[data-team-page] [id$="-section"],body[data-team-page] #development-pathway,body[data-team-page] #development-2027,body[data-team-page] #ways-to-play,body[data-team-page] #women-2027{scroll-margin-top:96px}
+@media(max-width:650px){
+.team-detail-jump{padding:14px 0 15px}
+.team-detail-jump-label{margin-bottom:9px}
+.team-detail-jump-links{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:thin;-webkit-overflow-scrolling:touch;padding-bottom:9px}
+.team-detail-jump-links a{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start}
+}
+@media(prefers-reduced-motion:reduce){.team-detail-jump-links{scroll-snap-type:none}}
