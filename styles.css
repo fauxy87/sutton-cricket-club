@@ -105,7 +105,7 @@ footer .footer-grid>div:last-child p:last-child{margin-top:14px;color:#c9d5cd}
 .main-nav .nav-more-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:50;min-width:210px;max-height:75vh;overflow-y:auto;display:flex;flex-direction:column;gap:3px;padding:9px;background:white;border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 30px rgba(7,62,34,.16)}
 .main-nav .nav-more-menu a{display:block;white-space:nowrap}
 .main-nav .nav-more>summary:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
-@media(max-width:1000px){
+@media(max-width:850px){
   .main-nav .nav-more{width:100%}
   .main-nav .nav-more>summary{padding:12px 14px}
   .main-nav .nav-more-menu{position:static;box-shadow:none;border:0;border-left:3px solid var(--green);border-radius:0;min-width:0;max-height:none;margin-left:13px;padding:4px 0 4px 10px}
