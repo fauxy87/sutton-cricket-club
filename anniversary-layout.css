@@ -1,0 +1,32 @@
+/* Anniversary page: easy-to-scan index and comfortable mobile reading. */
+.anniversary-jump .container{display:block}
+.anniversary-jump-heading{font-weight:800;color:#0b5d31;margin:0 0 13px;font-size:1rem}
+.anniversary-jump-heading span{display:none}
+.anniversary-jump-links{display:flex;gap:9px;flex-wrap:wrap}
+.anniversary-jump-links a{min-height:44px;align-items:center}
+.anniversary-section .container{min-width:0}
+.anniversary-return{margin:26px 0 0;font-weight:800}
+.anniversary-return a{display:inline-block;padding:10px 0}
+.anniversary-hero .anniversary-actions a{min-height:44px;display:inline-flex;align-items:center}
+.anniversary-section:target{scroll-margin-top:100px}
+@media(max-width:650px){
+  .anniversary-hero{padding:42px 0 48px}
+  .anniversary-hero img{width:86px;height:auto;max-width:25vw;margin-left:12px}
+  .anniversary-hero h1{font-size:clamp(2.4rem,10vw,4.2rem)}
+  .anniversary-hero p{font-size:1rem}
+  .anniversary-actions{gap:9px}
+  .anniversary-actions a{min-height:44px}
+  .anniversary-jump{padding:17px 0 16px}
+  .anniversary-jump-heading{margin-bottom:10px}
+  .anniversary-jump-heading span{display:inline}
+  .anniversary-jump-links{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scrollbar-width:thin;padding:0 0 9px}
+  .anniversary-jump-links a{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start;padding:10px 13px}
+  .anniversary-section{padding:38px 0}
+  .anniversary-section h2{line-height:1.2}
+  .anniversary-grid{grid-template-columns:1fr;gap:14px}
+  .anniversary-card{padding:19px}
+  .anniversary-timeline{grid-template-columns:1fr;gap:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .anniversary-jump-links{scroll-snap-type:none}
+}
