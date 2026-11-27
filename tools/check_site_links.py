@@ -19,6 +19,10 @@ SKIP_TARGET_PREFIXES = ("/api/",)
 GENERATED_FRAGMENTS = {"admin.html": {"play-cricket-admin", "season-admin"}}
 URL_RE = re.compile(r"""url\(\s*(['"]?)(.*?)\1\s*\)""", re.I | re.S)
 CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
+MAIN_NAV_RE = re.compile(r'<nav\\b[^>]*class=["\\\'][^"\\\']*\\bmain-nav\\b[^"\\\']*["\\\'][^>]*>(.*?)</nav>', re.I | re.S)
+NAV_LINK_RE = re.compile(r'<a\\b[^>]*href=["\\\']([^"\\\']+)["\\\']', re.I)
+SHARED_NAV_SCRIPT_RE = re.compile(r'<script\\b[^>]*src=["\\\'][^"\\\']*script\\.js(?:\\?[^"\\\']*)?["\\\']', re.I)
+
 ATTRS = {"href", "src", "action", "poster"}
 errors: list[str] = []
 checked = 0
@@ -116,6 +120,18 @@ def main():
             errors.append(f"{page.relative_to(ROOT)}: {parser.alt_missing} img tag(s) without alt text")
         if parser.h1_count > 1:
             errors.append(f"{page.relative_to(ROOT)}: {parser.h1_count} H1 headings")
+        # All public pages sharing the club menu must use the navigation script.
+        for menu in MAIN_NAV_RE.findall(page.read_text(encoding="utf-8")):
+            markup = page.read_text(encoding="utf-8")
+            if not SHARED_NAV_SCRIPT_RE.search(markup):
+                errors.append(f"{page.relative_to(ROOT)}: main navigation missing shared script.js")
+            destinations: set[str] = set()
+            for href in NAV_LINK_RE.findall(menu):
+                target = urlsplit(href)
+                key = (target.scheme.lower(), target.netloc.lower(), unquote(target.path).rstrip("/"), target.query, target.fragment)
+                if key in destinations:
+                    errors.append(f"{page.relative_to(ROOT)}: duplicate main-nav link: {href}")
+                destinations.add(key)
         for url in parser.links:
             validate_link(page, url, parser.ids)
     for css in styles:
