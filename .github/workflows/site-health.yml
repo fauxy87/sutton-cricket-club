@@ -1,0 +1,29 @@
+name: Website static health check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - '**.css'
+      - 'assets/**'
+      - 'tools/check_site_links.py'
+      - '.github/workflows/site-health.yml'
+  pull_request:
+    paths:
+      - '**.html'
+      - '**.css'
+      - 'assets/**'
+      - 'tools/check_site_links.py'
+  workflow_dispatch:
+
+jobs:
+  static-site-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Check internal links, images and HTML
+        run: python3 tools/check_site_links.py
