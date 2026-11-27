@@ -499,8 +499,16 @@ async function loadPlayCricket() {
           const response = await fetch(`data/play-cricket-scorecards.json?v=${Date.now()}`, {cache:'no-store'});
           if (!response.ok) return;
           const scorecards = (await response.json()).matches || {};
-          resultBox.innerHTML = allResults.slice(0, 18).map(r => resultCard(r, scorecards)).join('');
-          activateTeamFilters();
+          // Enrich the existing cards in place: preserve active team filters,
+          // focus, and any scorecard links already inserted by match-links.js.
+          const cards = [...resultBox.querySelectorAll('.result-card')];
+          allResults.slice(0, 18).forEach((result, index) => {
+            const card = cards[index];
+            const html = matchHighlights(scorecards[String(result.id || result.match_id || '')], result);
+            if (card && html && !card.querySelector('.match-highlights')) {
+              card.insertAdjacentHTML('beforeend', html);
+            }
+          });
         } catch (error) {
           console.info('Optional match highlights unavailable', error);
         }
