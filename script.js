@@ -49,7 +49,9 @@ document.querySelectorAll('.main-nav').forEach(mainNav => {
   // Make the anniversary appeal and photo archive accessible site-wide.
   for(const [label,href] of [
     ['Share Club History','share-history.html'],
-    ['Historical Photos','historical-gallery.html#complete-photo-archive']
+    ['Historical Photos','historical-gallery.html#complete-photo-archive'],
+    ['150th Anniversary','150-years.html'],
+    ['Anniversary Sponsorship','sponsor-enquiry.html?package=150th%20Anniversary%20Sponsorship%20%E2%80%94%202027%20(enquiry)']
   ]){
     if(![...menu.querySelectorAll('a')].some(a=>a.getAttribute('href')===href)){
       const link=document.createElement('a');
@@ -68,17 +70,45 @@ document.querySelectorAll('.main-nav').forEach(mainNav => {
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&more.open){more.open=false;summary.focus();}});
 });
 
+// On narrow screens, keep the three most useful 2027 destinations at the top.
+// They stay hidden on desktop, which retains the compact primary/More layout.
+document.querySelectorAll('.main-nav').forEach(mainNav => {
+  if (mainNav.querySelector('.mobile-2027-links')) return;
+  const shortcuts = document.createElement('div');
+  shortcuts.className = 'mobile-2027-links';
+  shortcuts.setAttribute('aria-label', '2027 quick links');
+  for (const [label, href] of [
+    ['2027 Season Hub', 'season-2027.html'],
+    ['150th Anniversary', '150-years.html'],
+    ['2027 Sponsorship', 'sponsors.html#anniversary-sponsorship']
+  ]) {
+    const link = document.createElement('a');
+    link.href = href;
+    link.textContent = label;
+    if (location.pathname.endsWith('/' + href.split('#')[0])) {
+      link.setAttribute('aria-current', 'page');
+    }
+    shortcuts.appendChild(link);
+  }
+  mainNav.prepend(shortcuts);
+});
+
 const button = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.main-nav');
 
 if (button && nav) {
+  if (!nav.id) nav.id = 'site-navigation';
+  button.setAttribute('aria-controls', nav.id);
+  button.setAttribute('aria-label', 'Open navigation menu');
   button.addEventListener('click', () => {
     const isOpen = nav.classList.toggle('open');
     button.setAttribute('aria-expanded', String(isOpen));
+    button.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
   });
   const closeNav = () => {
     nav.classList.remove('open');
     button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', 'Open navigation menu');
   };
   document.querySelectorAll('.main-nav a').forEach(link => link.addEventListener('click', closeNav));
   document.addEventListener('keydown', event => {
