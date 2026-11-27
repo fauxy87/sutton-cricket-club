@@ -103,7 +103,10 @@ footer .footer-grid>div:last-child p:last-child{margin-top:14px;color:#c9d5cd}
 .main-nav .nav-more>summary::after{content:'▾';font-size:.7em}
 .main-nav .nav-more>summary:hover,.main-nav .nav-more>summary.active,.main-nav .nav-more[open]>summary{background:#eef6f1;color:var(--green)}
 .main-nav .nav-more-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:50;min-width:210px;max-height:75vh;overflow-y:auto;display:flex;flex-direction:column;gap:3px;padding:9px;background:white;border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 30px rgba(7,62,34,.16)}
+.main-nav .nav-more:not([open]) .nav-more-menu{display:none}
 .main-nav .nav-more-menu a{display:block;white-space:nowrap}
+.main-nav .nav-more-menu a:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.main-nav .nav-more>summary{outline-offset:2px}
 .main-nav .nav-more>summary:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
 @media(max-width:850px){
   .main-nav .nav-more{width:100%}
@@ -112,7 +115,7 @@ footer .footer-grid>div:last-child p:last-child{margin-top:14px;color:#c9d5cd}
   .main-nav .nav-more-menu a{white-space:normal}
 }
 
-/* 2027 mobile navigation shortcuts: visible only inside the collapsed mobile menu. */
+/* Mobile menu controls, scrollable without hiding important destinations. */
 .mobile-2027-links{display:none}
 @media(max-width:850px){
   .main-nav.open{align-items:stretch;gap:3px;padding:12px 16px 20px;max-height:calc(100dvh - 76px);overflow-y:auto}
@@ -123,4 +126,15 @@ footer .footer-grid>div:last-child p:last-child{margin-top:14px;color:#c9d5cd}
   .main-nav .nav-more>summary{min-height:48px;font-weight:800}
   .main-nav .nav-more-menu{margin-left:8px}
   .main-nav .nav-more-menu a{min-height:46px}
+}
+
+/* Keep the dropdown aligned with mobile header, keyboard and screen-reader states. */
+@media(max-width:850px){
+  .main-nav.open{max-height:calc(100vh - 76px);max-height:calc(100dvh - 76px);overscroll-behavior:contain}
+  .main-nav .nav-more-menu{width:100%;padding-right:8px}
+  .main-nav .nav-more>summary{min-height:48px}
+  .main-nav .nav-more-menu a{white-space:normal;overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+  .main-nav a{transition:none}
 }
