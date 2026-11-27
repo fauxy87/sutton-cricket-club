@@ -505,7 +505,7 @@ async function loadPlayCricket() {
           allResults.slice(0, 18).forEach((result, index) => {
             const card = cards[index];
             const html = matchHighlights(scorecards[String(result.id || result.match_id || '')], result);
-            if (card && html && !card.querySelector('.match-highlights')) {
+            if (card && html && !card.querySelector('.result-highlights')) {
               card.insertAdjacentHTML('beforeend', html);
             }
           });
