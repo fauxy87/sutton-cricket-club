@@ -402,6 +402,23 @@ function unavailableCard(title = 'Play-Cricket data unavailable') {
   return `<article class="result-card"><h3>${escapeHtml(title)}</h3><p>Please try again shortly. The website will refresh automatically after the next successful sync.</p></article>`;
 }
 
+// Share a single current-page request between match cards and scorecard links.
+window.getSuttonPlayCricketData = function getSuttonPlayCricketData() {
+  if (!window.SUTTON_CC_PLAY_CRICKET_PROMISE) {
+    window.SUTTON_CC_PLAY_CRICKET_PROMISE =
+      fetch(`data/play-cricket.json?v=${Date.now()}`, { cache: 'no-store' })
+        .then(response => {
+          if (!response.ok) throw new Error('No synced Play-Cricket data yet');
+          return response.json();
+        })
+        .catch(error => {
+          window.SUTTON_CC_PLAY_CRICKET_PROMISE = null;
+          throw error;
+        });
+  }
+  return window.SUTTON_CC_PLAY_CRICKET_PROMISE;
+};
+
 async function loadPlayCricket() {
   const fixtureBox = document.getElementById('live-fixtures');
   const resultBox = document.getElementById('live-results');
@@ -416,9 +433,7 @@ async function loadPlayCricket() {
   if (!fixtureBox && !resultBox && !homeNext && !homeResult && !homeWeekend && !teamPageKey && !homeSnapshot) return;
 
   try {
-    const res = await fetch(`data/play-cricket.json?v=${Date.now()}`, { cache: 'no-store' });
-    if (!res.ok) throw new Error('No synced data yet');
-    const data = await res.json();
+    const data = await window.getSuttonPlayCricketData();
     let scorecards={};
     if(resultBox){try{const response=await fetch(`data/play-cricket-scorecards.json?v=${Date.now()}`,{cache:'no-store'});if(response.ok)scorecards=(await response.json()).matches||{};}catch(e){console.info('Match highlights unavailable',e);}}
     const today = new Date();
