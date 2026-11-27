@@ -16,16 +16,20 @@ document.querySelectorAll('.main-nav').forEach(mainNav => {
 
 const CLUB_SHOP_URL = 'https://www.mrcrickethockey.com/product-category/club-shop/sutton-cricket-club/';
 
-// Keep the external club shop available from the main navigation on every page.
+// Keep exactly one club shop link, even if a page already includes it in HTML.
 document.querySelectorAll('.main-nav').forEach(mainNav => {
-  if (mainNav.querySelector('[data-club-shop]')) return;
-  const shopLink = document.createElement('a');
+  const existing = [...mainNav.querySelectorAll('a')].filter(link =>
+    link.textContent.trim().toLowerCase() === 'shop' ||
+    link.href.replace(/\/$/, '') === CLUB_SHOP_URL.replace(/\/$/, '')
+  );
+  const shopLink = existing.shift() || document.createElement('a');
+  existing.forEach(duplicate => duplicate.remove());
   shopLink.href = CLUB_SHOP_URL;
   shopLink.target = '_blank';
-  shopLink.rel = 'noopener';
+  shopLink.rel = 'noopener noreferrer';
   shopLink.dataset.clubShop = 'true';
   shopLink.textContent = 'Shop';
-  const contactLink = [...mainNav.querySelectorAll('a')].find(link => link.textContent.trim() === 'Contact');
+  const contactLink = [...mainNav.querySelectorAll(':scope > a')].find(link => link.textContent.trim() === 'Contact');
   mainNav.insertBefore(shopLink, contactLink || null);
 });
 
