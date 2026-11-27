@@ -1,100 +1,105 @@
-// Make the 2027 Season Hub accessible from the main navigation on every page.
-document.querySelectorAll('.main-nav').forEach(mainNav => {
-  if (mainNav.querySelector('[data-season-hub]')) return;
-  const link = document.createElement('a');
-  link.href = 'season-2027.html';
-  link.textContent = '2027 Season';
-  link.dataset.seasonHub = 'true';
-  if (location.pathname.endsWith('/season-2027.html')) {
-    link.classList.add('active');
-    link.setAttribute('aria-current', 'page');
-  }
-  const teamsLink = [...mainNav.querySelectorAll(':scope > a')].find(a => a.textContent.trim() === 'Teams');
-  if (teamsLink) teamsLink.insertAdjacentElement('afterend', link);
-  else mainNav.prepend(link);
-});
-
+// Sutton CC shared navigation: deduplicate links before building the More menu.
 const CLUB_SHOP_URL = 'https://www.mrcrickethockey.com/product-category/club-shop/sutton-cricket-club/';
+const CORE_NAV = [
+  ['Home', 'index.html'],
+  ['Fixtures', 'fixtures.html'],
+  ['Teams', 'teams.html'],
+  ['2027 Season', 'season-2027.html'],
+  ['Juniors', 'juniors.html'],
+  ['News', 'news.html'],
+  ['Contact', 'join.html']
+];
+const EXTRA_NAV = [
+  ['150th Anniversary', '150-years.html'],
+  ['History', 'history.html'],
+  ['Historical Photos', 'historical-gallery.html#complete-photo-archive'],
+  ['Honours', 'honours.html'],
+  ['Highlights', 'gallery.html'],
+  ['Fantasy', 'fantasy.html'],
+  ['Weekly Draw', 'weekly-draw.html'],
+  ['Sponsors', 'sponsors.html'],
+  ['Shop', CLUB_SHOP_URL],
+  ['Share Club History', 'share-history.html'],
+  ['Anniversary Sponsorship', 'sponsor-enquiry.html?package=150th%20Anniversary%20Sponsorship%20%E2%80%94%202027%20(enquiry)']
+];
 
-// Keep exactly one club shop link, even if a page already includes it in HTML.
-document.querySelectorAll('.main-nav').forEach(mainNav => {
-  const existing = [...mainNav.querySelectorAll('a')].filter(link =>
-    link.textContent.trim().toLowerCase() === 'shop' ||
-    link.href.replace(/\/$/, '') === CLUB_SHOP_URL.replace(/\/$/, '')
+function sameNavDestination(first, second) {
+  try {
+    const a = new URL(first, location.href);
+    const b = new URL(second, location.href);
+    return a.origin === b.origin && a.pathname.replace(/\/$/, '') === b.pathname.replace(/\/$/, '') &&
+      a.search === b.search && a.hash === b.hash;
+  } catch (_) { return first === second; }
+}
+
+function getOrCreateNavLink(mainNav, label, href) {
+  const existing = [...mainNav.querySelectorAll(':scope > a')].find(a =>
+    sameNavDestination(a.href, href) ||
+    (label === 'Shop' && a.textContent.trim().toLowerCase() === 'shop')
   );
-  const shopLink = existing.shift() || document.createElement('a');
-  existing.forEach(duplicate => duplicate.remove());
-  shopLink.href = CLUB_SHOP_URL;
-  shopLink.target = '_blank';
-  shopLink.rel = 'noopener noreferrer';
-  shopLink.dataset.clubShop = 'true';
-  shopLink.textContent = 'Shop';
-  const contactLink = [...mainNav.querySelectorAll(':scope > a')].find(link => link.textContent.trim() === 'Contact');
-  mainNav.insertBefore(shopLink, contactLink || null);
-});
+  const link = existing || document.createElement('a');
+  link.href = href;
+  link.textContent = label;
+  if (href === CLUB_SHOP_URL) {
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.dataset.clubShop = 'true';
+  }
+  return link;
+}
 
-// Keep the most-used pages visible; move the rest under one accessible menu.
-// This runs on all pages so their original HTML links continue to work.
+// Keep the same primary destinations on every page, using one link per destination.
 document.querySelectorAll('.main-nav').forEach(mainNav => {
-  if(mainNav.querySelector('.nav-more'))return;
-  const primary=new Set(['Home','Fixtures','Teams','2027 Season','Juniors','News','Contact']);
-  const links=[...mainNav.querySelectorAll(':scope > a')];
-  const extras=links.filter(a=>!primary.has(a.textContent.trim()));
-  if(!extras.length)return;
-  const more=document.createElement('details');
-  more.className='nav-more';
-  const summary=document.createElement('summary');
-  summary.textContent='More';
-  summary.setAttribute('aria-label','More club pages');
+  if (mainNav.querySelector('.nav-more')) return;
+  const original = [...mainNav.querySelectorAll(':scope > a')];
+  const links = [...CORE_NAV, ...EXTRA_NAV].map(([label, href]) =>
+    getOrCreateNavLink(mainNav, label, href)
+  );
+  // Remove old page-specific links duplicated by the canonical menu.
+  original.forEach(link => {
+    if (!links.includes(link)) link.remove();
+  });
+  const currentPage = location.pathname.split('/').pop() || 'index.html';
+  links.forEach(link => {
+    const target = new URL(link.href, location.href);
+    const isCurrent = target.origin === location.origin &&
+      target.pathname.split('/').pop() === currentPage;
+    // Keep one explicit current-page indicator without colouring multiple links.
+    link.classList.toggle('active', isCurrent && !target.search && !target.hash);
+    if (isCurrent && !target.search && !target.hash) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  });
+
+  const more = document.createElement('details');
+  more.className = 'nav-more';
+  const summary = document.createElement('summary');
+  summary.textContent = 'More';
+  summary.setAttribute('aria-label', 'More club pages');
   more.appendChild(summary);
-  const menu=document.createElement('div');
-  menu.className='nav-more-menu';
-  for(const a of extras)menu.appendChild(a);
-  // Make the anniversary appeal and photo archive accessible site-wide.
-  for(const [label,href] of [
-    ['Share Club History','share-history.html'],
-    ['Historical Photos','historical-gallery.html#complete-photo-archive'],
-    ['150th Anniversary','150-years.html'],
-    ['Anniversary Sponsorship','sponsor-enquiry.html?package=150th%20Anniversary%20Sponsorship%20%E2%80%94%202027%20(enquiry)']
-  ]){
-    if(![...menu.querySelectorAll('a')].some(a=>a.getAttribute('href')===href)){
-      const link=document.createElement('a');
-      link.href=href;
-      link.textContent=label;
-      if(location.pathname.endsWith('/'+href.split('#')[0]))link.classList.add('active');
-      menu.appendChild(link);
-    }
-  }
-
+  const menu = document.createElement('div');
+  menu.className = 'nav-more-menu';
+  EXTRA_NAV.forEach(([label], i) => {
+    const link = links[CORE_NAV.length + i];
+    menu.appendChild(link);
+  });
   more.appendChild(menu);
-  const contact=links.find(a=>a.textContent.trim()==='Contact');
-  mainNav.insertBefore(more,contact||null);
-  if(extras.some(a=>a.classList.contains('active')))summary.classList.add('active');
-  document.addEventListener('click',e=>{if(!more.contains(e.target))more.open=false;});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&more.open){more.open=false;summary.focus();}});
-});
-
-// On narrow screens, keep the three most useful 2027 destinations at the top.
-// They stay hidden on desktop, which retains the compact primary/More layout.
-document.querySelectorAll('.main-nav').forEach(mainNav => {
-  if (mainNav.querySelector('.mobile-2027-links')) return;
-  const shortcuts = document.createElement('div');
-  shortcuts.className = 'mobile-2027-links';
-  shortcuts.setAttribute('aria-label', '2027 quick links');
-  for (const [label, href] of [
-    ['2027 Season Hub', 'season-2027.html'],
-    ['150th Anniversary', '150-years.html'],
-    ['2027 Sponsorship', 'sponsors.html#anniversary-sponsorship']
-  ]) {
-    const link = document.createElement('a');
-    link.href = href;
-    link.textContent = label;
-    if (location.pathname.endsWith('/' + href.split('#')[0])) {
-      link.setAttribute('aria-current', 'page');
-    }
-    shortcuts.appendChild(link);
+  // Only the seven most used destinations remain outside the More menu.
+  CORE_NAV.forEach((_, i) => mainNav.appendChild(links[i]));
+  const contact = links.find(link => link.textContent === 'Contact');
+  mainNav.insertBefore(more, contact || null);
+  if ([...menu.querySelectorAll('a')].some(a => a.classList.contains('active'))) {
+    summary.classList.add('active');
   }
-  mainNav.prepend(shortcuts);
+  document.addEventListener('click', event => {
+    if (more.open && !more.contains(event.target)) more.open = false;
+  });
+  more.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && more.open) {
+      event.stopPropagation();
+      more.open = false;
+      summary.focus();
+    }
+  });
 });
 
 const button = document.querySelector('.nav-toggle');
@@ -102,27 +107,42 @@ const nav = document.querySelector('.main-nav');
 
 if (button && nav) {
   if (!nav.id) nav.id = 'site-navigation';
+  button.setAttribute('type', 'button');
   button.setAttribute('aria-controls', nav.id);
   button.setAttribute('aria-label', 'Open navigation menu');
+  button.setAttribute('aria-expanded', 'false');
+  const closeNav = (restoreFocus = false) => {
+    nav.classList.remove('open');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', 'Open navigation menu');
+    nav.querySelectorAll('.nav-more[open]').forEach(details => { details.open = false; });
+    if (restoreFocus) button.focus();
+  };
   button.addEventListener('click', () => {
     const isOpen = nav.classList.toggle('open');
     button.setAttribute('aria-expanded', String(isOpen));
     button.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
-  });
-  const closeNav = () => {
-    nav.classList.remove('open');
-    button.setAttribute('aria-expanded', 'false');
-    button.setAttribute('aria-label', 'Open navigation menu');
-  };
-  document.querySelectorAll('.main-nav a').forEach(link => link.addEventListener('click', closeNav));
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && nav.classList.contains('open')) {
-      closeNav();
+    if (!isOpen) {
+      nav.querySelectorAll('.nav-more[open]').forEach(details => { details.open = false; });
       button.focus();
     }
   });
+  nav.addEventListener('click', event => {
+    if (event.target.closest('a')) closeNav();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && nav.classList.contains('open')) {
+      closeNav(true);
+    }
+  });
   document.addEventListener('click', event => {
-    if (nav.classList.contains('open') && !nav.contains(event.target) && !button.contains(event.target)) closeNav();
+    if (nav.classList.contains('open') && !nav.contains(event.target) && !button.contains(event.target)) {
+      closeNav();
+    }
+  });
+  // Reset the mobile-only state after rotating a phone or widening the window.
+  window.matchMedia('(min-width: 851px)').addEventListener('change', event => {
+    if (event.matches) closeNav();
   });
 }
 
