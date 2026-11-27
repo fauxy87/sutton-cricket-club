@@ -19,10 +19,9 @@ SKIP_TARGET_PREFIXES = ("/api/",)
 GENERATED_FRAGMENTS = {"admin.html": {"play-cricket-admin", "season-admin"}}
 URL_RE = re.compile(r"""url\(\s*(['"]?)(.*?)\1\s*\)""", re.I | re.S)
 CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
-MAIN_NAV_RE = re.compile(r'<nav\\b[^>]*class=["\\\'][^"\\\']*\\bmain-nav\\b[^"\\\']*["\\\'][^>]*>(.*?)</nav>', re.I | re.S)
-NAV_LINK_RE = re.compile(r'<a\\b[^>]*href=["\\\']([^"\\\']+)["\\\']', re.I)
-SHARED_NAV_SCRIPT_RE = re.compile(r'<script\\b[^>]*src=["\\\'][^"\\\']*script\\.js(?:\\?[^"\\\']*)?["\\\']', re.I)
-
+MAIN_NAV_RE = re.compile(r'<nav\b[^>]*class=["\x27][^"\x27]*\bmain-nav\b[^"\x27]*["\x27][^>]*>(.*?)</nav>', re.I | re.S)
+NAV_LINK_RE = re.compile(r'<a\b[^>]*href=["\x27]([^"\x27]+)["\x27]', re.I)
+SHARED_NAV_SCRIPT_RE = re.compile(r'<script\b[^>]*src=["\x27][^"\x27]*script\.js(?:\?[^"\x27]*)?["\x27]', re.I)
 ATTRS = {"href", "src", "action", "poster"}
 errors: list[str] = []
 checked = 0
