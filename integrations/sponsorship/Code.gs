@@ -24,7 +24,7 @@ function doPost(e) {
   const message = clean_(data.Message, 4000);
 
   if (!name || !business || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return html_('Please complete your name, business and a valid email address.');
+    return html_('Please complete your name and a valid email address.');
   }
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(15000)) return html_('We could not save your enquiry. Please try again.');
